@@ -1,3 +1,4 @@
+#' @export
 #################################################################
 #===============================================================#
 #=#############################################################=#
@@ -28,7 +29,7 @@
 #= WHEN THE CONDITION FOR CAUSALITY IS FALSE WE RETRIEVE "0" (ZERO)
 #= WHEN THERE IS MISSING VALUE WE A PRIORI RETIREVE "NA"
 #= At time "i" we calculate causality from X[i] to Y[i+h]
-#= SpectrumOfCausalityReal VS Predicted is only about the strength of causality. 
+#= SpectrumOfCausalityReal VS Predicted is only about the strength of causality.
 #  Both are calculated only when causality is valid.
 
 #= "h" IS ONLY NEEDED WHEN WE WANT TO PREDICT OUT OF SAMPLE
@@ -39,7 +40,7 @@
 #= find existing NNS in the projected Neighborhood of Y.
 
 #= WHAT ABOUT "h" and LEAD LAG FORMAT OF X and Y???
-#= "h" is irrelevant to lead-lag between X and Y. It's only a buffer variable 
+#= "h" is irrelevant to lead-lag between X and Y. It's only a buffer variable
 #= that MAY POSSIBLY sacrifice causal strength seeking via NNs in X
 #= in order to be able to predict future states of Y.
 
@@ -107,7 +108,7 @@ dataBank <- function(type,dimensions) {
                       paste(rep(paste("Coord.", 1:dimensions[4]),dimensions[3]),
                             rep(1:dimensions[3], each = dimensions[4]),
                             sep = " of NN"))
-  } 
+  }
   return(db)
 }
 
@@ -118,8 +119,8 @@ firstCausalityPoint <- function(E,tau,h,X) {
   PredSPAN = h
   FCP = 1 + NNSPAN + CCSPAN + PredSPAN
   if (NNSPAN + CCSPAN + PredSPAN >= length(X)-CCSPAN) {
-    stop("The First Point to consider for Causality does not have sufficient 
-         Nearest Neighbors. Please Check parameters: 
+    stop("The First Point to consider for Causality does not have sufficient
+         Nearest Neighbors. Please Check parameters:
          E, lag, p as well as the length of X and Y")
   } else {
     FCP = 1 + NNSPAN + CCSPAN + PredSPAN # First Causality Point to be considered
@@ -226,7 +227,7 @@ metricDistance <- function(vec1,vec2,n) {
   #   distance = NA
   # } else if ( anyNA(vec2)) {
   #   distance = NA
-  # } else if (!anyNA(vec1)) { 
+  # } else if (!anyNA(vec1)) {
   #     if (!anyNA(vec2)) {
   #       print(paste("vec1 -vec2: ", as.numeric(vec1-vec2)))
   #       res = as.numeric(vec1-vec2)
@@ -247,7 +248,7 @@ distanceVector <- function(point,candidateNNs,n) {
 pastNNsInfo <- function(CCSPAN,NNSPAN,Mx,Dx,SMx,PSMx,i,h) {
   # REMOVE COMMON COORDINATE VECTORS + horizon FROM CANDIDATE NNs
   candidateNNs <- Dx[i,1:(i-CCSPAN-h)]
-  # NEAREST NEIGHBORS OF Y TO PREDICT IN X 
+  # NEAREST NEIGHBORS OF Y TO PREDICT IN X
   times <- as.numeric(names(candidateNNs[order(candidateNNs)])[1:NNSPAN])
   dists <- candidateNNs[order(candidateNNs)][1:NNSPAN]
   #= THEIR SIGNATURES
@@ -263,7 +264,7 @@ pastNNsInfo <- function(CCSPAN,NNSPAN,Mx,Dx,SMx,PSMx,i,h) {
 pastNNsInfo_Lite <- function(CCSPAN,NNSPAN,Mx,Dx,SMx,PSMx,i,h) {
   # REMOVE COMMON COORDINATE VECTORS + horizon FROM CANDIDATE NNs
   candidateNNs <- Dx
-  # NEAREST NEIGHBORS OF Y TO PREDICT IN X 
+  # NEAREST NEIGHBORS OF Y TO PREDICT IN X
   times <- as.numeric(names(candidateNNs[order(candidateNNs)])[1:NNSPAN])
   dists <- candidateNNs[order(candidateNNs)][1:NNSPAN]
   #cat(paste("At Loop time (i):", i, ".."))
@@ -409,7 +410,7 @@ natureOfCausality <- function(PC,dur,hashedpatterns,len) {
                   }
                   negativeCausality[i] <- 0
                   darkCausality[i] <- 0
-                  
+
                 } else { # STO KENTRO TOY PC MATRIX
                   ### NO CAUSALITY CHECK
                   if (PC[cell[1],cell[2],i] == 0) {
@@ -421,9 +422,9 @@ natureOfCausality <- function(PC,dur,hashedpatterns,len) {
                   }
                   negativeCausality[i] <- 0
                   positiveCausality[i] <- 0
-                  
+
                 }
-              } 
+              }
               #======================#
               #= NEGATIVE CAUSALITY =#
               #======================#
@@ -439,7 +440,7 @@ natureOfCausality <- function(PC,dur,hashedpatterns,len) {
                   }
                   positiveCausality[i] <- 0
                   darkCausality[i] <- 0
-                  
+
                 } else {
                   ### NO CAUSALITY CHECK
                   if (PC[cell[1],cell[2],i] == 0) {
@@ -451,9 +452,9 @@ natureOfCausality <- function(PC,dur,hashedpatterns,len) {
                   }
                   negativeCausality[i] <- 0
                   positiveCausality[i] <- 0
-                  
+
                 }
-              } 
+              }
               #==================#
               #= DARK CAUSALITY =#
               #==================#
@@ -468,7 +469,7 @@ natureOfCausality <- function(PC,dur,hashedpatterns,len) {
                 }
                 negativeCausality[i] <- 0
                 positiveCausality[i] <- 0
-                
+
               }
             }
           }
@@ -531,8 +532,8 @@ PC.Mk.II.Full.Details <- function(X,Y,E,tau,metric,h,weighted) {
   realValuesY <- dataBank(type = "matrix",dimensions = c(length(Y),E))
   colnames(realValuesY) <- c("currVal",rep("futuVal",E-1))
   #= KEEPING NEIGHBORHOODS DETAILS
-  NNsX <- rep(list(),length(Y)) 
-  NNsYproj <- rep(list(),length(Y))  
+  NNsX <- rep(list(),length(Y))
+  NNsYproj <- rep(list(),length(Y))
   pb <- tkProgressBar(title = "Deploying PC Mk. II", min = 0,
                       max = length(al_loop_dur), width = 500)
   real_loop <- NA
@@ -1006,7 +1007,7 @@ causalNetworkIgraph <- function(complexNetMatrix,type,validTime,isWeighted) {
   iNetworks <- list()
   i <- 1
   for (t in validTime) {
-    g <- graph.adjacency(dynamicNetwork[,,t], 
+    g <- graph.adjacency(dynamicNetwork[,,t],
                          mode = "directed", weighted = isWeighted, diag = FALSE,
                          add.colnames = NULL, add.rownames = NA)
     V(g)$names <- complexNetMatrix$items
@@ -1048,7 +1049,7 @@ optimalParametersSearch <- function(Emax,tauMax,metric,dataset,comCoordRemoval) 
     print(paste("Testing | E: ",E))
     for (tau in tau_array) {
       print(paste("Testing | tau: ",tau))
-      temp <- pcAccuracy(dataset = dataset, 
+      temp <- pcAccuracy(dataset = dataset,
                          E=E, tau=tau, metric = metric, h=0, FALSE,comCoordRemoval)
       testsTotal[E-1,tau] <- temp$total
       testsPosi[E-1,tau] <- temp$positive
@@ -1105,7 +1106,7 @@ averageCausalityAspectsPerT <- function(dataset, network) {
 }
 
 graphPCTimeSeries <- function(dataset,colorPalette,surroundTheme,titles) {
-  g <- ggplot(dataset, aes(x = time)) + 
+  g <- ggplot(dataset, aes(x = time)) +
     geom_line(aes(y=positive, colour="Positive"),size=1) +
     geom_line(aes(y=negative, colour="Negative"),size=1) +
     geom_line(aes(y=dark, colour="Dark"),size=1) +
@@ -1116,7 +1117,7 @@ graphPCTimeSeries <- function(dataset,colorPalette,surroundTheme,titles) {
     labs(title = titles[1],
          x = titles[2],
          y = titles[3]) +
-    theme_minimal() + 
+    theme_minimal() +
     theme(panel.grid = element_blank()) +
     #theme(legend.position="bottom", legend.box = "horizontal") +
     theme(plot.margin = margin(5.5, 5.5, 5.5, 5.5)) +
@@ -1134,7 +1135,7 @@ ggplotThemeDesigner <- function(titleSize,axesTitleSize,
                                 axesTextSizeX,axesTextSizeY,
                                 axesTicksLength,legElemTextSize,
                                 legX,legY) {
-  customTheme <- theme(plot.title = element_text(family="Times", 
+  customTheme <- theme(plot.title = element_text(family="Times",
                                                  face="bold", colour="black",
                                                  size=titleSize, hjust = 0.5),
                        axis.title.x = element_text(size = axesTitleSize, family="Times",
@@ -1150,9 +1151,9 @@ ggplotThemeDesigner <- function(titleSize,axesTitleSize,
                        panel.grid = element_blank(),
                        legend.position = c(legX, legY),
                        legend.direction = "vertical",
-                       panel.grid.major = element_blank(), 
+                       panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(),
-                       panel.background = element_blank(), 
+                       panel.background = element_blank(),
                        axis.line = element_line(colour = "black"),
                        axis.ticks.length= unit(-axesTicksLength, "cm"),
                        legend.title = element_text(size = legElemTextSize, family="Times"),
@@ -1160,7 +1161,7 @@ ggplotThemeDesigner <- function(titleSize,axesTitleSize,
                        legend.key = element_rect(fill = "white"),
                        legend.key.size = unit(2,"line"),
                        legend.box.background = element_rect(size=1),
-                       legend.box.margin = margin(0, 0, 0, 0)) 
+                       legend.box.margin = margin(0, 0, 0, 0))
   return(customTheme)
 }
 
@@ -1238,7 +1239,7 @@ optimalParametersSearch_DistanceVectors <- function(Emax,tauMax,metric,dataset,c
     #print(paste("Testing | E: ",E))
     for (tau in tau_array) {
       #print(paste("Testing | tau: ",tau))
-      temp <- pcAccuracy_CustomStructure(dataset = dataset, 
+      temp <- pcAccuracy_CustomStructure(dataset = dataset,
                          E=E, tau=tau, metric = metric, h=0, FALSE,comCoordRemoval,
                          causes,effects,cardinality)
       testsTotal[E-1,tau] <- temp$total
@@ -1328,7 +1329,7 @@ multiDatasetOptimalParameterSearch_DistanceVectors <- function(Emax,tauMax,
     EandTauperDatasetDark[,i] <-test$`of which Dark`
     setTkProgressBar(pb, i, label=paste( i/length(datasetLIST)*100, 0),
                      "% towards Arc Reactor")
-    
+
   }
   end.time <- Sys.time()
   time.taken <- end.time - start.time
@@ -1381,7 +1382,7 @@ patternCausalityDynamicNetwork_DistanceVectors <- function(dataset,E,tau,metric,
             couplingsPosi[i,j] <- temp$nature$positive * couplingsTotal[i,j]
             couplingsNega[i,j] <- temp$nature$negative * couplingsTotal[i,j]
             couplingsDark[i,j] <- temp$nature$dark * couplingsTotal[i,j]
-            
+
             couplingsPosi[i,j] <- ifelse(is.nan(couplingsPosi[i,j]),NA,couplingsPosi[i,j])
             couplingsNega[i,j] <- ifelse(is.nan(couplingsNega[i,j]),NA,couplingsNega[i,j])
             couplingsDark[i,j] <- ifelse(is.nan(couplingsDark[i,j]),NA,couplingsDark[i,j])
@@ -1412,7 +1413,7 @@ multiDatasetPCNET_DistanceVectors <- function(E,tau,metric,h,datasetLIST,weighte
     PC_Networks_List[[i]] <- temp
     setTkProgressBar(pb, i, label=paste( i/length(datasetLIST)*100, 0),
                      "% towards Arc Reactor")
-    
+
   }
   names(PC_Networks_List) <- names(datasetLIST)
   end.time <- Sys.time()
