@@ -10,6 +10,7 @@ License: GPL (>= 2)
 Imports: snow, snowfall, tcltk2, moments
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
 Author: Stavros K. Stavroglou [aut, cre] (<https://orcid.org/0000-0003-3931-0391>)
 Suggests: 
     testthat (>= 3.0.0)
