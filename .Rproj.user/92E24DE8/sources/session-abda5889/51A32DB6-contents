@@ -1,0 +1,15 @@
+Package: PatternCausality
+Type: Package
+Title: Pattern causality algorithm
+Version: 0.1.0
+Author@R: c(person("Stavros", "Stavroglou", role=c("aut", "cre"), email = "stavros.stavroglou@ed.ac.uk"),
+	     person("Athanasios", "Pantelous", role=c("aut"), email = "athanasios.pantelous@monash.edu"))
+Maintainer: Hui Wang <hui.wang1@monash.edu>
+Description: A general model for the causality prediction with the view of nonlinear dynamics and chaos theory.
+License: GPL (>= 2)
+Imports: snow, snowfall, tcltk2, moments
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
