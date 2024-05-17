@@ -26,7 +26,7 @@
 #' nm_db <- dataBank("neighborhood memories", dimensions_nm)
 #' print(nm_db)
 
-
+#' @export
 #= Initializing Data Structures
 dataBank <- function(type,dimensions) {
   if (type=="array") {
