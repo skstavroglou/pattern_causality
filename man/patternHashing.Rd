@@ -2,13 +2,25 @@
 % Please edit documentation in R/patternHashing.R
 \name{patternHashing}
 \alias{patternHashing}
-\title{Pattern Hashing function}
+\title{Pattern Hashing Function}
 \usage{
 patternHashing(E)
 }
 \arguments{
-\item{E}{the embedded dimensions}
+\item{E}{The embedding dimension which influences the complexity and variety of patterns generated.
+This parameter adjusts the granularity with which the system's dynamics are analyzed and interpreted.}
+}
+\value{
+hashedpatterns Returns a vector of hashed values representing each pattern or \code{NA} if the
+pattern generation was not possible, typically due to insufficient or overly simplified input.
 }
 \description{
-Appointing Unique Identifiers to Symbolic Patterns
+This function hashes all possible patterns generated from a dataset to facilitate analysis
+of their distribution and frequency, supporting risk assessment in decision-making processes related
+to the causality and dynamics of complex systems.
+}
+\examples{
+# Assume E is set to 3, which is suitable for generating moderately complex patterns.
+hashed_result <- patternHashing(3)
+print(hashed_result)
 }

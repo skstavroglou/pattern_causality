@@ -2,16 +2,17 @@ Package: PatternCausality
 Type: Package
 Title: Pattern causality algorithm
 Version: 0.1.0
-Author@R: c(person("Stavros", "Stavroglou", role=c("aut", "cre"), email = "stavros.stavroglou@ed.ac.uk"),
-	     person("Athanasios", "Pantelous", role=c("aut"), email = "athanasios.pantelous@monash.edu"))
 Maintainer: Hui Wang <hui.wang1@monash.edu>
+Authors@R: c(person("Stavros", "Stavroglou", role=c("aut", "cre"), email = "stavros.stavroglou@ed.ac.uk"),
+	     person("Athanasios", "Pantelous", role=c("aut"), email = "athanasios.pantelous@monash.edu"))
 Description: A general model for the causality prediction with the view of nonlinear dynamics and chaos theory.
 License: GPL (>= 2)
 Imports: snow, snowfall, tcltk2, moments
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Author: Stavros K. Stavroglou [aut, cre] (<https://orcid.org/0000-0003-3931-0391>)
+Author: Stavros K. Stavroglou [aut, cre] (<https://orcid.org/0000-0003-3931-0391>),
+  Athanasios Pantelous [aut] (<https://orcid.org/0000-0001-5738-1471>)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

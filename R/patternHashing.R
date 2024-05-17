@@ -1,11 +1,21 @@
 #========================#
 #= FOUNDATION | LAYER 0 =#
 #========================#
-#' Pattern Hashing function
+#' @title Pattern Hashing Function
+#' @description This function hashes all possible patterns generated from a dataset to facilitate analysis
+#' of their distribution and frequency, supporting risk assessment in decision-making processes related
+#' to the causality and dynamics of complex systems.
 #'
+#' @param E The embedding dimension which influences the complexity and variety of patterns generated.
+#' This parameter adjusts the granularity with which the system's dynamics are analyzed and interpreted.
 #'
-#' @description Appointing Unique Identifiers to Symbolic Patterns
-#' @param E the embedded dimensions
+#' @return hashedpatterns Returns a vector of hashed values representing each pattern or `NA` if the
+#' pattern generation was not possible, typically due to insufficient or overly simplified input.
+#'
+#' @examples
+#' # Assume E is set to 3, which is suitable for generating moderately complex patterns.
+#' hashed_result <- patternHashing(3)
+#' print(hashed_result)
 #' @export
 #= Appointing Unique Identifiers to Symbolic Patterns
 patternHashing <- function(E) {
