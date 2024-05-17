@@ -1,11 +1,11 @@
 Package: PatternCausality
 Type: Package
-Title: Pattern causality algorithm
+Title: Pattern Causality Algorithm
 Version: 0.1.0
 Maintainer: Hui Wang <hui.wang1@monash.edu>
 Authors@R: c(person("Stavros", "Stavroglou", role=c("aut", "cre"), email = "stavros.stavroglou@ed.ac.uk"),
 	     person("Athanasios", "Pantelous", role=c("aut"), email = "athanasios.pantelous@monash.edu"))
-Description: A general model for the causality prediction with the view of nonlinear dynamics and chaos theory.
+Description: The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. It demonstrates significant accuracy in predicting interdependencies within systems by applying the method across diverse fields such as ecology, neurology, and finance, substantiating its efficacy with a 90% accuracy rate across over 100,000 simulations. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.
 License: GPL (>= 2)
 Imports: snow, snowfall, tcltk2, moments
 Encoding: UTF-8
