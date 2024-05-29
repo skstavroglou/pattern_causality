@@ -34,6 +34,7 @@
 pastNNsInfo_Lite <- function(CCSPAN,NNSPAN,Mx,Dx,SMx,PSMx,i,h) {
   # REMOVE COMMON COORDINATE VECTORS + horizon FROM CANDIDATE NNs
   candidateNNs <- Dx
+  names(candidateNNs) <- 1:(i-CCSPAN-h)
   # NEAREST NEIGHBORS OF Y TO PREDICT IN X 
   times <- as.numeric(names(candidateNNs[order(candidateNNs)])[1:NNSPAN])
   dists <- candidateNNs[order(candidateNNs)][1:NNSPAN]

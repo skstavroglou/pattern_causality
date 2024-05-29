@@ -12,9 +12,10 @@
 #' # Assume M is an already constructed state space matrix of a time series
 #' M <- matrix(rnorm(100), nrow=10)
 #' distanceMat <- distanceMatrix(M, "euclidean")
-#' print(as.matrix(distanceMat))  # Optionally convert to a full matrix for display
+#' print(distanceMat)  # Optionally convert to a full matrix for display
 distanceMatrix <- function(M, metric) {
-  d <- dist(M, metric, upper = TRUE)
+  #d <- dist(M, metric, upper = TRUE)
+  d <- as.matrix(dist(M,metric, upper=T))
   return(d)
 }
 

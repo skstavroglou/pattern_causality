@@ -21,5 +21,5 @@ This function computes the distance matrix from a given embedded matrix, \code{M
 # Assume M is an already constructed state space matrix of a time series
 M <- matrix(rnorm(100), nrow=10)
 distanceMat <- distanceMatrix(M, "euclidean")
-print(as.matrix(distanceMat))  # Optionally convert to a full matrix for display
+print(distanceMat)  # Optionally convert to a full matrix for display
 }

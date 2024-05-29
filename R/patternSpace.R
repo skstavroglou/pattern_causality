@@ -17,6 +17,12 @@ patternSpace <- function(SM, E) {
   return(PSM)
 }
 
+#' Pattern Vector
+#' @description
+#' Help funtions in the pattern difference.
+#' @noRd
+# @keywords internal
+# @export
 patternVectorDifference <- function(sVec, E) {
   if (anyNA(sVec)) {
     p.vec <- rep(NA, E-1)
@@ -25,6 +31,13 @@ patternVectorDifference <- function(sVec, E) {
   }
   return(hashing(p.vec))
 }
+
+#' Hashing value generated
+#' @description
+#' Help function in the hashing value generation.
+#' @noRd
+# @keywords internal
+# @export
 hashing <- function(vec) {
   hash = 0
   for (i in 1:length(vec)) {

@@ -43,13 +43,13 @@ set.seed(123)
 E <- 3
 tau <- 1
 Mx <- matrix(rnorm(200), nrow=20)
-Dx <- as.matrix(distanceMatrix(Mx,"minkowski"))
+Dx <- distanceMatrix(Mx,"minkowski")
 SMx <- signatureSpace(Mx,E)
 PSMx <- patternSpace(SMx,E)
 CCSPAN <- (E-1)*tau
 NNSPAN <- E+1
 i <- 15
 h <- 2
-neighborsInfo <- pastNNsInfo(CCSPAN, NNSPAN, Mx, as.matrix(Dx), SMx, PSMx, i, h)
+neighborsInfo <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 print(neighborsInfo)
 }
