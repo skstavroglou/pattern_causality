@@ -22,7 +22,7 @@
 #' print(matrix_db)
 #'
 #' # Initialize a neighborhood memory structure correctly with sufficient column names.
-#' dimensions_nm <- c(4, 40, 3, 5) # 4 rows, 40 columns, 3 neighbors, 5 signature components per neighbor
+#' dimensions_nm <- c(4, 40, 3, 5) 
 #' nm_db <- dataBank("neighborhood memories", dimensions_nm)
 #' print(nm_db)
 

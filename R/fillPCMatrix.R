@@ -36,14 +36,14 @@
 #' NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 #' timesX <- NNx$times
 #' projNNy <- projectedNNsInfo(My, Dy, SMy, PSMy, timesX, i, h)
-#' predictedSignatureY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedSignatureY
-#' predictedPatternY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedPatternY[1]
-#' realSignatureY <- SMy[(i+h),]
-#' realPatternY <- PSMy[i+h]
+#' pSY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedSignatureY
+#' pPY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedPatternY[1]
+#' rSY <- SMy[(i+h),]
+#' rPY <- PSMy[i+h]
 #' signatureX <- SMx[i,]
 #' patternX <- PSMx[i,]
 #' weighted=1
-#' pc <- fillPCMatrix(weighted, predictedPatternY, realPatternY, predictedSignatureY, realSignatureY, patternX, signatureX)
+#' pc <- fillPCMatrix(weighted, pPY, rPY, pSY, rSY, patternX, signatureX)
 #' @export
 fillPCMatrix <- function(weighted,predictedPatternY,realPatternY,predictedSignatureY,realSignatureY,patternX,signatureX) {
   if (!anyNA(c(predictedPatternY,realPatternY,patternX))) {

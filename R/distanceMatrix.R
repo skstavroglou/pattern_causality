@@ -6,7 +6,7 @@
 #' @param metric Character, the distance metric to be used for computing distances. Common metrics include "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
 #'
 #' @return An object of class `dist`, representing the distance matrix of the embedded matrix `M`. This distance matrix can optionally be converted to a full matrix format if needed for subsequent analyses.
-#'
+#' @import snow snowfall tcltk2 moments stats
 #' @export
 #' @examples
 #' # Assume M is an already constructed state space matrix of a time series
