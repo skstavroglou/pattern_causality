@@ -1,6 +1,6 @@
 # Pattern Causality
 
-A package based on the following references.
+A package based on the following **references**.
 
 - Stavroglou, S. K., Pantelous, A. A., Stanley, H. E., & Zuev, K. M. (2019). Hidden interactions in financial markets. *Proceedings of the National Academy of Sciences, 116(22)*, 10646-10651.
 
