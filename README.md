@@ -17,7 +17,7 @@ We can import the existing data.
 data(climate)
 ```
 
-This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset.
+This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset. 
 
 Then we need to determine the `E` and `tao`.
 
@@ -35,6 +35,18 @@ pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, we
 ```
 
 Then the percentage of each status will be showed below.
+
+If we wonder the status in each time point, we can run the code.
+
+```R
+X <- climate$AO
+Y <- climate$AAO
+detail <- PC.Mk.II.Full.Details(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
+predict_status <- result$spectrumOfCausalityPredicted
+real_stattus <- result$spectrumOfCausalityReal
+```
+
+Then the status series will be saved in `predict_status` and `real_stattus`.
 
 ## References
 
