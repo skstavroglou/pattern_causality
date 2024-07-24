@@ -18,7 +18,8 @@ Matrix where each row represents the vector of differences between successive el
 This function computes the signature space of a matrix obtained from a time series' state space by calculating the successive differences of each embedded vector. The signature space reveals changes between successive points in the time series, capturing dynamics that are crucial for understanding complex system behaviors.
 }
 \examples{
-ts <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+data(climate)
+ts <- climate$AO
 E <- 3
 tau <- 1
 stateSpaceMatrix <- stateSpace(ts, E, tau)

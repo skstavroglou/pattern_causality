@@ -2,42 +2,34 @@
 % Please edit documentation in R/natureOfCausality.R
 \name{natureOfCausality}
 \alias{natureOfCausality}
-\title{Causality Nature Classifier}
+\title{Evaluate the Nature of Causality in Dynamic Complex Systems}
 \usage{
-natureOfCausality(PC, dur, hashedpatterns, len)
+natureOfCausality(PC, dur, hashedpatterns, X)
 }
 \arguments{
-\item{PC}{Array, a three-dimensional pattern causality matrix where each cell represents the causal influence
-from one variable to another over time.}
+\item{PC}{A three-dimensional array where each slice along the third dimension represents a pattern causality matrix at a specific time point, encoding the strength and type of causality between pairs of variables.}
 
-\item{dur}{Integer vector, the indices of time steps at which to evaluate causality.}
+\item{dur}{A numeric vector indicating the time points (slices of the PC matrix) to analyze for causality.}
 
-\item{hashedpatterns}{Numeric vector, typically an indexed representation of the variables or patterns under analysis.}
+\item{hashedpatterns}{A numeric vector of hashed or indexed pattern identifiers that correspond to variables in the system, used for interpreting matrix dimensions in causality checks.}
 
-\item{len}{Integer, the expected length of the output vectors for each type of causality.}
+\item{X}{An auxiliary numeric vector used to determine the length of the output vectors for causality results, typically aligning with the number of time points or variables.}
 }
 \value{
-A dataframe with four columns: \code{noCausality}, \code{Positive}, \code{Negative}, and \code{Dark}, each indicating
-the presence (1) or absence (0) of the respective type of causality at each time step.
+A data frame with four columns: 'noCausality', 'Positive', 'Negative', and 'Dark', each containing binary indicators (1 for presence, 0 for absence) that correspond to the presence of each causality type at each time point analyzed.
 }
 \description{
-Processes a 3-dimensional pattern causality matrix to identify and classify the nature of causal
-relationships over a specified duration. It determines if the causality is positive, negative, dark, or nonexistent
-based on the matrix values.
-}
-\details{
-Classify the Nature of Causality from a Pattern Causality Matrix
-
-This function analyzes the pattern causality matrix over a given duration to classify the nature of causality
-(positive, negative, dark, or no causality) between variables in a dynamic complex system. The function checks
-for causal relationships based on the entries in the pattern causality matrix (PC) and categorizes the nature
-of these interactions.
+This function analyzes a three-dimensional pattern causality matrix to classify the nature of causality (positive, negative, dark, or no causality) between pairs of variables across specified time points. It is designed to interpret the dynamics within complex systems by examining the causal relationships encoded in the matrix.
 }
 \examples{
-# Example usage:
-PC <- array(runif(100), dim = c(10, 10, 10))
-dur <- 1:10
-hashedpatterns <- seq(1, 10)
-len <- 10
-result <- natureOfCausality(PC, dur, hashedpatterns, len)
+# Generate a sample 3D causality matrix with random data
+set.seed(123) # For reproducibility
+PC <- array(runif(300), dim = c(10, 10, 3)) # 10x10 matrix over 3 time points
+dur <- 1:3 # Time points to analyze
+hashedpatterns <- seq(1, 10) # Simulated hashed pattern identifiers
+X <- rep(0, 3) # Auxiliary vector for output length
+
+# Run the natureOfCausality function
+results <- natureOfCausality(PC, dur, hashedpatterns, X)
+print(results)
 }

@@ -17,6 +17,7 @@
 #' @param patternX Numeric vector, the current observed pattern of variable X, used as the basis for prediction.
 #' @param signatureX Numeric vector, the current observed signature vector of variable X.
 #' @return A dataframe with two columns: 'real' and 'predicted', representing the real and predicted causality strengths.
+#' @export
 #' @examples
 #' set.seed(123)
 #' E <- 3
@@ -42,7 +43,7 @@
 #' rPY <- PSMy[i+h]
 #' signatureX <- SMx[i,]
 #' patternX <- PSMx[i,]
-#' weighted=1
+#' weighted=0
 #' pc <- fillPCMatrix(weighted, pPY, rPY, pSY, rSY, patternX, signatureX)
 #' @export
 fillPCMatrix <- function(weighted,predictedPatternY,realPatternY,predictedSignatureY,realSignatureY,patternX,signatureX) {

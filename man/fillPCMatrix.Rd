@@ -70,6 +70,6 @@ rSY <- SMy[(i+h),]
 rPY <- PSMy[i+h]
 signatureX <- SMx[i,]
 patternX <- PSMx[i,]
-weighted=1
+weighted=0
 pc <- fillPCMatrix(weighted, pPY, rPY, pSY, rSY, patternX, signatureX)
 }
