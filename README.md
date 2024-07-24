@@ -42,8 +42,8 @@ If we wonder the status in each time point, we can run the code.
 X <- climate$AO
 Y <- climate$AAO
 detail <- PC.Mk.II.Full.Details(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
-predict_status <- result$spectrumOfCausalityPredicted
-real_stattus <- result$spectrumOfCausalityReal
+predict_status <- detail$spectrumOfCausalityPredicted
+real_stattus <- detail$spectrumOfCausalityReal
 ```
 
 Then the status series will be saved in `predict_status` and `real_stattus`.
