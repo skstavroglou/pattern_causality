@@ -22,34 +22,38 @@
 #' print(matrix_db)
 #'
 #' # Initialize a neighborhood memory structure correctly with sufficient column names.
-#' dimensions_nm <- c(4, 40, 3, 5) 
+#' dimensions_nm <- c(4, 40, 3, 5)
 #' nm_db <- dataBank("neighborhood memories", dimensions_nm)
 #' print(nm_db)
 
 #' @export
-#= Initializing Data Structures
-dataBank <- function(type,dimensions) {
-  if (type=="array") {
-    db <- array(NA,dim = dimensions)
-  } else if (type=="vector") {
-    db <- vector(mode = "double",length = dimensions[1])
-    db <- rep(NA,length(db))
-  } else if (type=="matrix") {
-    db <- matrix(data = NA,nrow=dimensions[1],ncol=dimensions[2])
-  } else if (type=="neighborhood memories") {
-    if(dimensions[2] != 1+4*dimensions[3]+(dimensions[4]-1)*dimensions[3]+dimensions[4]*dimensions[3]){
+# = Initializing Data Structures
+dataBank <- function(type, dimensions) {
+  if (type == "array") {
+    db <- array(NA, dim = dimensions)
+  } else if (type == "vector") {
+    db <- vector(mode = "double", length = dimensions[1])
+    db <- rep(NA, length(db))
+  } else if (type == "matrix") {
+    db <- matrix(data = NA, nrow = dimensions[1], ncol = dimensions[2])
+  } else if (type == "neighborhood memories") {
+    if (dimensions[2] != 1 + 4 * dimensions[3] + (dimensions[4] - 1) * dimensions[3] + dimensions[4] * dimensions[3]) {
       stop("The dimensions 2 is wrong!")
-    } else{
-      db <- as.data.frame(matrix(data = NA,nrow=dimensions[1],ncol=dimensions[2]))
-      colnames(db) <- c("i",rep("nn-times",dimensions[3]),rep("nn-dists",dimensions[3]),
-                        rep("nn-weights",dimensions[3]),rep("nn-patt",dimensions[3]),
-                        paste(rep(paste("Sig-Comp.", 1:(dimensions[4]-1)),dimensions[3]),
-                              rep(1:dimensions[3], each = dimensions[4]-1),
-                              sep = " of NN"),
-                        paste(rep(paste("Coord.", 1:dimensions[4]),dimensions[3]),
-                              rep(1:dimensions[3], each = dimensions[4]),
-                              sep = " of NN"))
+    } else {
+      db <- as.data.frame(matrix(data = NA, nrow = dimensions[1], ncol = dimensions[2]))
+      colnames(db) <- c(
+        "i", rep("nn-times", dimensions[3]), rep("nn-dists", dimensions[3]),
+        rep("nn-weights", dimensions[3]), rep("nn-patt", dimensions[3]),
+        paste(rep(paste("Sig-Comp.", 1:(dimensions[4] - 1)), dimensions[3]),
+          rep(1:dimensions[3], each = dimensions[4] - 1),
+          sep = " of NN"
+        ),
+        paste(rep(paste("Coord.", 1:dimensions[4]), dimensions[3]),
+          rep(1:dimensions[3], each = dimensions[4]),
+          sep = " of NN"
+        )
+      )
     }
-  } 
+  }
   return(db)
 }

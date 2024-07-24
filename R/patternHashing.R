@@ -1,6 +1,6 @@
-#========================#
-#= FOUNDATION | LAYER 0 =#
-#========================#
+# ========================#
+# = FOUNDATION | LAYER 0 =#
+# ========================#
 #' @title Pattern Hashing Function
 #' @description This function hashes all possible patterns generated from a dataset to facilitate analysis
 #' of their distribution and frequency, supporting risk assessment in decision-making processes related
@@ -17,7 +17,7 @@
 #' hashed_result <- patternHashing(3)
 #' print(hashed_result)
 #' @export
-#= Appointing Unique Identifiers to Symbolic Patterns
+# = Appointing Unique Identifiers to Symbolic Patterns
 patternHashing <- function(E) {
   a <- possiblePatterns(E)
   if (!anyNA(a)) {
@@ -27,19 +27,19 @@ patternHashing <- function(E) {
   }
   return(hashedpatterns)
 }
-#=== Prerequisites
+# === Prerequisites
 possiblePatterns <- function(E) {
-  if (E<=1) {
+  if (E <= 1) {
     p <- NA
   } else {
-    p <- as.matrix(expand.grid(rep(list(1:3), E-1)))
+    p <- as.matrix(expand.grid(rep(list(1:3), E - 1)))
   }
   return(p)
 }
 hashing <- function(vec) {
-  hash = 0
+  hash <- 0
   for (i in 1:length(vec)) {
-    hash = hash + vec[i]*factorial(i+2)
+    hash <- hash + vec[i] * factorial(i + 2)
   }
   return(hash)
 }

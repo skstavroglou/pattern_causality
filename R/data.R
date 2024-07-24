@@ -4,5 +4,5 @@
 #'
 #'
 #' @examples
-#'   head(climate)
+#' head(climate)
 "climate"

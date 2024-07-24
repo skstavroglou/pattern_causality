@@ -20,32 +20,34 @@
 #' set.seed(123)
 #' E <- 3
 #' tau <- 1
-#' Mx <- matrix(rnorm(200), nrow=20)
-#' CCSPAN <- (E-1)*tau
-#' NNSPAN <- E+1
-#' i = 15
+#' Mx <- matrix(rnorm(200), nrow = 20)
+#' CCSPAN <- (E - 1) * tau
+#' NNSPAN <- E + 1
+#' i <- 15
 #' h <- 2
-#' Dx <- distanceVector(point = Mx[i,], candidateNNs = Mx[1:(i-CCSPAN-h),],n = 2)
-#' SMx <- signatureSpace(Mx,E)
-#' PSMx <- patternSpace(SMx,E)
+#' Dx <- distanceVector(point = Mx[i, ], candidateNNs = Mx[1:(i - CCSPAN - h), ], n = 2)
+#' SMx <- signatureSpace(Mx, E)
+#' PSMx <- patternSpace(SMx, E)
 #' neighborsInfoLite <- pastNNsInfo_Lite(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 #' print(neighborsInfoLite)
 #' @export
-pastNNsInfo_Lite <- function(CCSPAN,NNSPAN,Mx,Dx,SMx,PSMx,i,h) {
+pastNNsInfo_Lite <- function(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h) {
   # REMOVE COMMON COORDINATE VECTORS + horizon FROM CANDIDATE NNs
   candidateNNs <- Dx
-  names(candidateNNs) <- 1:(i-CCSPAN-h)
-  # NEAREST NEIGHBORS OF Y TO PREDICT IN X 
+  names(candidateNNs) <- 1:(i - CCSPAN - h)
+  # NEAREST NEIGHBORS OF Y TO PREDICT IN X
   times <- as.numeric(names(candidateNNs[order(candidateNNs)])[1:NNSPAN])
   dists <- candidateNNs[order(candidateNNs)][1:NNSPAN]
-  #cat(paste("At Loop time (i):", i, ".."))
-  #cat(paste("times:", times, ".."))
-  #cat(paste("dists:", dists, ".."))
-  #= THEIR SIGNATURES
-  signatures = SMx[times,]
-  #= DELIVERABLE =#
-  thePast <- list("i"=i,"times"=times,"dists"=dists,
-                  "signatures"=signatures,"patterns"=PSMx[times],
-                  "coordinates"=Mx[times,])
+  # cat(paste("At Loop time (i):", i, ".."))
+  # cat(paste("times:", times, ".."))
+  # cat(paste("dists:", dists, ".."))
+  # = THEIR SIGNATURES
+  signatures <- SMx[times, ]
+  # = DELIVERABLE =#
+  thePast <- list(
+    "i" = i, "times" = times, "dists" = dists,
+    "signatures" = signatures, "patterns" = PSMx[times],
+    "coordinates" = Mx[times, ]
+  )
   return(thePast)
 }

@@ -12,16 +12,16 @@
 #' set.seed(123)
 #' E <- 3
 #' tau <- 1
-#' Mx <- matrix(rnorm(200), nrow=20)
-#' My <- matrix(rnorm(200), nrow=20)
-#' Dx <- distanceMatrix(Mx,"minkowski")
-#' Dy <- distanceMatrix(My,"minkowski")
-#' SMx <- signatureSpace(Mx,E)
-#' SMy <- signatureSpace(My,E)
-#' PSMx <- patternSpace(SMx,E)
-#' PSMy <- patternSpace(SMy,E)
-#' CCSPAN <- (E-1)*tau
-#' NNSPAN <- E+1
+#' Mx <- matrix(rnorm(200), nrow = 20)
+#' My <- matrix(rnorm(200), nrow = 20)
+#' Dx <- distanceMatrix(Mx, "minkowski")
+#' Dy <- distanceMatrix(My, "minkowski")
+#' SMx <- signatureSpace(Mx, E)
+#' SMy <- signatureSpace(My, E)
+#' PSMx <- patternSpace(SMx, E)
+#' PSMy <- patternSpace(SMy, E)
+#' CCSPAN <- (E - 1) * tau
+#' NNSPAN <- E + 1
 #' i <- 15
 #' h <- 2
 #' NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
@@ -57,21 +57,21 @@ projectedNNsInfo <- function(My, Dy, SMy, PSMy, timesX, i, h) {
 #' set.seed(123)
 #' E <- 3
 #' tau <- 1
-#' Mx <- matrix(rnorm(200), nrow=20)
-#' My <- matrix(rnorm(200), nrow=20)
-#' CCSPAN <- (E-1)*tau
-#' NNSPAN <- E+1
-#' i = 15
+#' Mx <- matrix(rnorm(200), nrow = 20)
+#' My <- matrix(rnorm(200), nrow = 20)
+#' CCSPAN <- (E - 1) * tau
+#' NNSPAN <- E + 1
+#' i <- 15
 #' h <- 2
-#' Dx <- distanceVector(point = Mx[i,], candidateNNs = Mx[1:(i-CCSPAN-h),],n = 2)
-#' Dy <- distanceVector(point = My[i,], candidateNNs = My[1:(i-CCSPAN-h),],n = 2)
-#' SMx <- signatureSpace(Mx,E)
-#' SMy <- signatureSpace(My,E)
-#' PSMx <- patternSpace(SMx,E)
-#' PSMy <- patternSpace(SMy,E)
+#' Dx <- distanceVector(point = Mx[i, ], candidateNNs = Mx[1:(i - CCSPAN - h), ], n = 2)
+#' Dy <- distanceVector(point = My[i, ], candidateNNs = My[1:(i - CCSPAN - h), ], n = 2)
+#' SMx <- signatureSpace(Mx, E)
+#' SMy <- signatureSpace(My, E)
+#' PSMx <- patternSpace(SMx, E)
+#' PSMy <- patternSpace(SMy, E)
 #' NNx <- pastNNsInfo_Lite(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 #' timesX <- NNx$times
-#' projNNy <- projectedNNsInfo_Lite(My,Dy,SMy,PSMy,timesX,i,h)
+#' projNNy <- projectedNNsInfo_Lite(My, Dy, SMy, PSMy, timesX, i, h)
 #' print(projNNy)
 #' @export
 projectedNNsInfo_Lite <- function(My, Dy, SMy, PSMy, timesX, i, h) {

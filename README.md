@@ -1,5 +1,43 @@
 # Pattern Causality
 
+## How to install
+
+This developing package could be installed by `devtool`.
+
+```R
+devtools::install_github("skstavroglou/pattern-causality")
+```
+
+
+## Basic Tutorial
+
+We can import the existing data.
+
+```R
+data(climate)
+```
+
+This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset.
+
+Then we need to determine the `E` and `tao`.
+
+```R
+dataset <- climate[, -1] # remove the date column
+parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
+```
+
+After the parameters are confirmed, we could calculate the pattern causality.
+
+```R
+X <- climate$AO
+Y <- climate$AAO
+pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+```
+
+Then the percentage of each status will be showed below.
+
+## References
+
 A package based on the following **references**.
 
 - Stavroglou, S. K., Pantelous, A. A., Stanley, H. E., & Zuev, K. M. (2019). Hidden interactions in financial markets. *Proceedings of the National Academy of Sciences, 116(22)*, 10646-10651.

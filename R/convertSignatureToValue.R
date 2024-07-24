@@ -14,7 +14,7 @@
 #' @examples
 #' Y <- c(1, 2, 3, 5, 8, 13, 21)
 #' E <- 5
-#' tau <- 1  # Example value, not used in the function
+#' tau <- 1 # Example value, not used in the function
 #' i <- 2
 #' h <- 3
 #' predictedSignatureY <- c(0.5, 1.5, 2.5, 3.5, 4.5)
@@ -22,9 +22,9 @@
 #' print(predictedValues)
 convertSignatureToValue <- function(E, tau, Y, i, h, predictedSignatureY) {
   predictedY <- vector(mode = "double", length = E)
-  predictedY[1] <- Y[i+h]
+  predictedY[1] <- Y[i + h]
   for (k in 2:E) {
-    predictedY[k] <- predictedY[k-1] + predictedSignatureY[k-1]
+    predictedY[k] <- predictedY[k - 1] + predictedSignatureY[k - 1]
   }
   return(predictedY)
 }

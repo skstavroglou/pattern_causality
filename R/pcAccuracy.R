@@ -10,40 +10,42 @@
 #' @export
 #' @examples
 #' data(climate)
-#' data <- climate[,-1]
-#' results <- pcAccuracy(data, E=3, tau=1, metric="euclidean", h=1, weighted=TRUE)
+#' data <- climate[, -1]
+#' results <- pcAccuracy(data, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
 #' print(results)
-pcAccuracy <- function(dataset,E,tau,metric,h,weighted) {
+pcAccuracy <- function(dataset, E, tau, metric, h, weighted) {
   dataset <- as.matrix(dataset)
   # STORAGE ARRAYS
-  couplingsTotal <- dataBank(type = "matrix",dimensions=c(ncol(dataset),ncol(dataset)))
-  couplingsPosi <- dataBank(type = "matrix",dimensions=c(ncol(dataset),ncol(dataset)))
-  couplingsNega <- dataBank(type = "matrix",dimensions=c(ncol(dataset),ncol(dataset)))
-  couplingsDark <- dataBank(type = "matrix",dimensions=c(ncol(dataset),ncol(dataset)))
+  couplingsTotal <- dataBank(type = "matrix", dimensions = c(ncol(dataset), ncol(dataset)))
+  couplingsPosi <- dataBank(type = "matrix", dimensions = c(ncol(dataset), ncol(dataset)))
+  couplingsNega <- dataBank(type = "matrix", dimensions = c(ncol(dataset), ncol(dataset)))
+  couplingsDark <- dataBank(type = "matrix", dimensions = c(ncol(dataset), ncol(dataset)))
   # DEPLOY PC MK. II LIGHT Version
-  #pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
+  # pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
   #                    max = ncol(dataset), width = 300)
   for (i in 1:ncol(dataset)) {
     for (j in 1:ncol(dataset)) {
       if (i != j) {
-        if (firstCausalityPointCHECK(E,tau,h,dataset[,i])) {
-          if (firstCausalityPointCHECK(E,tau,h,dataset[,j])) {
-            #temp <- PC.Mk.II.For.Network.Lite(dataset[,i],dataset[,j],
+        if (firstCausalityPointCHECK(E, tau, h, dataset[, i])) {
+          if (firstCausalityPointCHECK(E, tau, h, dataset[, j])) {
+            # temp <- PC.Mk.II.For.Network.Lite(dataset[,i],dataset[,j],
             #                                  E,tau,metric,h,weighted,comCoordRemoval)
-            temp <- PC.Mk.II.Lightweight(dataset[,i],dataset[,j],E,tau,metric,h,weighted)
-            couplingsTotal[i,j] <- temp$total
-            couplingsPosi[i,j] <- temp$positive
-            couplingsNega[i,j] <- temp$negative
-            couplingsDark[i,j] <- temp$dark
+            temp <- PC.Mk.II.Lightweight(dataset[, i], dataset[, j], E, tau, metric, h, weighted)
+            couplingsTotal[i, j] <- temp$total
+            couplingsPosi[i, j] <- temp$positive
+            couplingsNega[i, j] <- temp$negative
+            couplingsDark[i, j] <- temp$dark
           }
         }
       }
     }
-    #setTkProgressBar(pb, i, label=paste( i/ncol(dataset)*100, 0),
+    # setTkProgressBar(pb, i, label=paste( i/ncol(dataset)*100, 0),
     #                 "% towards Arc Reactor")
   }
-  return(data.frame(E=E,tau=tau,total=mean(couplingsTotal, na.rm = T),
-                    positive=mean(couplingsPosi, na.rm = T),
-                    negative=mean(couplingsNega, na.rm = T),
-                    dark=mean(couplingsDark, na.rm = T)))
+  return(data.frame(
+    E = E, tau = tau, total = mean(couplingsTotal, na.rm = T),
+    positive = mean(couplingsPosi, na.rm = T),
+    negative = mean(couplingsNega, na.rm = T),
+    dark = mean(couplingsDark, na.rm = T)
+  ))
 }

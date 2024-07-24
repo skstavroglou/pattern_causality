@@ -11,7 +11,7 @@
 #'
 #' @return Numeric vector containing the extrapolated future values of the series, starting from Y_pred_last and extending for E steps, adjusted by the predicted signature changes.
 #' @export
-#' 
+#'
 #' @examples
 #' # Suppose Y_pred_last is the last known predicted value of a financial time series
 #' Y_pred_last <- 120
@@ -20,9 +20,9 @@
 #' # Number of future points to predict
 #' E <- 5
 #' # Example values for tau and i, h not used in this function directly
-#' tau <- 1  
-#' i <- 1  
-#' h <- 1  
+#' tau <- 1
+#' i <- 1
+#' h <- 1
 #'
 #' # Generate future predictions
 #' futureValues <- convertSignatureToValueOutOfSample(E, tau, Y_pred_last, i, h, predictedSignatureY)
@@ -31,7 +31,7 @@ convertSignatureToValueOutOfSample <- function(E, tau, Y_pred_last, i, h, predic
   predictedY <- vector(mode = "double", length = E)
   predictedY[1] <- Y_pred_last
   for (k in 2:E) {
-    predictedY[k] <- predictedY[k-1] + predictedSignatureY[k-1]
+    predictedY[k] <- predictedY[k - 1] + predictedSignatureY[k - 1]
   }
   return(predictedY)
 }

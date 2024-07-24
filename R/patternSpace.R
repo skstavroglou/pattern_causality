@@ -6,7 +6,7 @@
 #' @param E Integer, the number of dimensions in the signature matrix which influences the output size of the pattern space matrix.
 #'
 #' @return Matrix, where each row contains hashed pattern identifiers derived from the categorical changes in the signature matrix, facilitating pattern recognition and analysis in complex systems.
-#' 
+#'
 #' @export
 #' @examples
 #' signatureMatrix <- matrix(c(1, -1, 0, 2, -2, 0, 1, -1, 0), nrow = 3, byrow = TRUE)
@@ -25,7 +25,7 @@ patternSpace <- function(SM, E) {
 # @export
 patternVectorDifference <- function(sVec, E) {
   if (anyNA(sVec)) {
-    p.vec <- rep(NA, E-1)
+    p.vec <- rep(NA, E - 1)
   } else {
     p.vec <- ifelse(sVec > 0, 3, ifelse(sVec < 0, 1, 2))
   }
@@ -39,9 +39,9 @@ patternVectorDifference <- function(sVec, E) {
 # @keywords internal
 # @export
 hashing <- function(vec) {
-  hash = 0
+  hash <- 0
   for (i in 1:length(vec)) {
-    hash = hash + vec[i]*factorial(i+2)
+    hash <- hash + vec[i] * factorial(i + 2)
   }
   return(hash)
 }

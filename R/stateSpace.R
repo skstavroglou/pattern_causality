@@ -17,10 +17,10 @@
 #' print(stateSpaceMatrix)
 stateSpace <- function(ts, E, tau) {
   M <- matrix(NA, length(ts) - E + 1 - tau + 1, E)
-  for(i in 1:nrow(M)) {
-    M[i,] <- ts[seq(from = i, to = i + tau * (E - 1), by = tau)]
-    if (anyNA(M[i,])) {
-      M[i,] <- rep(NA, E)
+  for (i in 1:nrow(M)) {
+    M[i, ] <- ts[seq(from = i, to = i + tau * (E - 1), by = tau)]
+    if (anyNA(M[i, ])) {
+      M[i, ] <- rep(NA, E)
     }
   }
   return(M)

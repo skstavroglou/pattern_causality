@@ -29,6 +29,6 @@ signatureSpace <- function(M, E) {
 
 
 signatureVectorDifference <- function(vec) {
-  s.vec <- (vec[-1] - vec[-length(vec)])  # Differences between successive elements
+  s.vec <- (vec[-1] - vec[-length(vec)]) # Differences between successive elements
   return(s.vec)
 }

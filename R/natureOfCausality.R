@@ -21,8 +21,7 @@
 #' # Run the natureOfCausality function
 #' results <- natureOfCausality(PC, dur, hashedpatterns, X)
 #' print(results)
-
-natureOfCausality <- function(PC,dur,hashedpatterns,X) {
+natureOfCausality <- function(PC, dur, hashedpatterns, X) {
   positiveCausality <- vector(mode = "double", length = length(X))
   negativeCausality <- vector(mode = "double", length = length(X))
   darkCausality <- vector(mode = "double", length = length(X))
@@ -31,25 +30,25 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
   # negativeCausality <- rep(NA, len)
   # darkCausality <- rep(NA, len)
   # noCausality <- rep(NA, len)
-  for(i in dur) {
-    cell <- which(!is.na(PC[,,i]), arr.ind = TRUE)
-    #print(paste("FOR",i))
-    if (!is.na(PC[cell[1],cell[2],i])) {
-      #print("Inside IF 1")
-      if (!is.nan(PC[cell[1],cell[2],i])) {
-        #print("Inside IF 2")
-        #if (PC[cell[1],cell[2],i]!=0) {
-        if(!is.na(cell[1])) {
-          #print("Inside IF 3")
-          if(!is.na(cell[2])) {
-            #print("Inside IF 4")
-            #======================#
-            #= POSITIVE CAUSALITY =#
-            #======================#
-            if(cell[1]==cell[2]) {
-              if (cell[1]!=mean(1:length(hashedpatterns))) {
+  for (i in dur) {
+    cell <- which(!is.na(PC[, , i]), arr.ind = TRUE)
+    # print(paste("FOR",i))
+    if (!is.na(PC[cell[1], cell[2], i])) {
+      # print("Inside IF 1")
+      if (!is.nan(PC[cell[1], cell[2], i])) {
+        # print("Inside IF 2")
+        # if (PC[cell[1],cell[2],i]!=0) {
+        if (!is.na(cell[1])) {
+          # print("Inside IF 3")
+          if (!is.na(cell[2])) {
+            # print("Inside IF 4")
+            # ======================#
+            # = POSITIVE CAUSALITY =#
+            # ======================#
+            if (cell[1] == cell[2]) {
+              if (cell[1] != mean(1:length(hashedpatterns))) {
                 ### NO CAUSALITY CHECK
-                if (PC[cell[1],cell[2],i] == 0) {
+                if (PC[cell[1], cell[2], i] == 0) {
                   noCausality[i] <- 1
                   positiveCausality[i] <- 0
                 } else {
@@ -58,10 +57,9 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
                 }
                 negativeCausality[i] <- 0
                 darkCausality[i] <- 0
-                
               } else { # STO KENTRO TOY PC MATRIX
                 ### NO CAUSALITY CHECK
-                if (PC[cell[1],cell[2],i] == 0) {
+                if (PC[cell[1], cell[2], i] == 0) {
                   noCausality[i] <- 1
                   darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
                 } else {
@@ -70,16 +68,15 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
                 }
                 negativeCausality[i] <- 0
                 positiveCausality[i] <- 0
-                
               }
-            } 
-            #======================#
-            #= NEGATIVE CAUSALITY =#
-            #======================#
-            else if ((cell[1]+cell[2])==(length(hashedpatterns)+1)) {
-              if (cell[1]!=mean(1:length(hashedpatterns))) {
+            }
+            # ======================#
+            # = NEGATIVE CAUSALITY =#
+            # ======================#
+            else if ((cell[1] + cell[2]) == (length(hashedpatterns) + 1)) {
+              if (cell[1] != mean(1:length(hashedpatterns))) {
                 ### NO CAUSALITY CHECK
-                if (PC[cell[1],cell[2],i] == 0) {
+                if (PC[cell[1], cell[2], i] == 0) {
                   noCausality[i] <- 1
                   negativeCausality[i] <- 0 # PC[cell[1],cell[2],i]
                 } else {
@@ -88,10 +85,9 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
                 }
                 positiveCausality[i] <- 0
                 darkCausality[i] <- 0
-                
               } else {
                 ### NO CAUSALITY CHECK
-                if (PC[cell[1],cell[2],i] == 0) {
+                if (PC[cell[1], cell[2], i] == 0) {
                   noCausality[i] <- 1
                   darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
                 } else {
@@ -100,15 +96,14 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
                 }
                 negativeCausality[i] <- 0
                 positiveCausality[i] <- 0
-                
               }
-            } 
-            #==================#
-            #= DARK CAUSALITY =#
-            #==================#
+            }
+            # ==================#
+            # = DARK CAUSALITY =#
+            # ==================#
             else {
               ### NO CAUSALITY CHECK
-              if (PC[cell[1],cell[2],i] == 0) {
+              if (PC[cell[1], cell[2], i] == 0) {
                 noCausality[i] <- 1
                 darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
               } else {
@@ -117,17 +112,18 @@ natureOfCausality <- function(PC,dur,hashedpatterns,X) {
               }
               negativeCausality[i] <- 0
               positiveCausality[i] <- 0
-              
             }
           }
         }
-        #}
+        # }
       }
     }
   }
-  NOC <- data.frame(noCausality=noCausality,
-                    Positive=positiveCausality,
-                    Negative=negativeCausality,
-                    Dark=darkCausality)
+  NOC <- data.frame(
+    noCausality = noCausality,
+    Positive = positiveCausality,
+    Negative = negativeCausality,
+    Dark = darkCausality
+  )
   return(NOC)
 }

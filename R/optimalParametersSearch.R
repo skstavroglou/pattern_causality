@@ -8,10 +8,10 @@
 #' @export
 #' @examples
 #' data(climate)
-#' dataset <- climate[,-1]
-#' optimalParams <- optimalParametersSearch(Emax=3, tauMax=3, metric="euclidean", dataset=dataset)
+#' dataset <- climate[, -1]
+#' optimalParams <- optimalParametersSearch(Emax = 3, tauMax = 3, metric = "euclidean", dataset = dataset)
 #' print(optimalParams)
-optimalParametersSearch <- function(Emax,tauMax,metric,dataset) {
+optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
   E_array <- 2:Emax
   tau_array <- 1:tauMax
   testsTotal <- matrix(data = NA, nrow = length(E_array), ncol = length(tau_array))
@@ -19,37 +19,41 @@ optimalParametersSearch <- function(Emax,tauMax,metric,dataset) {
   testsNega <- matrix(data = NA, nrow = length(E_array), ncol = length(tau_array))
   testsDark <- matrix(data = NA, nrow = length(E_array), ncol = length(tau_array))
   start.time <- Sys.time()
-  #pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
+  # pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
   #                    max = max(E_array), width = 300)
   for (E in E_array) {
-    print(paste("Testing | E: ",E))
+    print(paste("Testing | E: ", E))
     for (tau in tau_array) {
-      print(paste("Testing | tau: ",tau))
-      temp <- pcAccuracy(dataset = dataset, 
-                         E=E, tau=tau, metric = metric, h=0, FALSE)
-      testsTotal[E-1,tau] <- temp$total
-      testsPosi[E-1,tau] <- temp$positive
-      testsNega[E-1,tau] <- temp$negative
-      testsDark[E-1,tau] <- temp$dark
+      print(paste("Testing | tau: ", tau))
+      temp <- pcAccuracy(
+        dataset = dataset,
+        E = E, tau = tau, metric = metric, h = 0, FALSE
+      )
+      testsTotal[E - 1, tau] <- temp$total
+      testsPosi[E - 1, tau] <- temp$positive
+      testsNega[E - 1, tau] <- temp$negative
+      testsDark[E - 1, tau] <- temp$dark
     }
-    #setTkProgressBar(pb, E, label=paste( E/max(E_array)*100, 0),
+    # setTkProgressBar(pb, E, label=paste( E/max(E_array)*100, 0),
     #                 "% towards Arc Reactor")
   }
-  #= MANIPULATING THE RESULTS
+  # = MANIPULATING THE RESULTS
   accuracyPerE <- list()
   for (E in 2:Emax) {
-    accuracyPerE[[E-1]] <- cbind(t(testsTotal)[,E-1],
-                                 t(testsPosi)[,E-1],
-                                 t(testsNega)[,E-1],
-                                 t(testsDark)[,E-1])
-    colnames(accuracyPerE[[E-1]]) <- c("Total","of which Positive","of which Negative","of which Dark")
+    accuracyPerE[[E - 1]] <- cbind(
+      t(testsTotal)[, E - 1],
+      t(testsPosi)[, E - 1],
+      t(testsNega)[, E - 1],
+      t(testsDark)[, E - 1]
+    )
+    colnames(accuracyPerE[[E - 1]]) <- c("Total", "of which Positive", "of which Negative", "of which Dark")
     rowLABELS <- vector()
     for (tau in 1:tauMax) {
-      rowLABELS <- c(rowLABELS, c(paste("E =",E,"tau =",tau)))
+      rowLABELS <- c(rowLABELS, c(paste("E =", E, "tau =", tau)))
     }
-    rownames(accuracyPerE[[E-1]]) <- rowLABELS
+    rownames(accuracyPerE[[E - 1]]) <- rowLABELS
   }
-  #= ACCURACY SUMMARY
+  # = ACCURACY SUMMARY
   accuracySummary <- accuracyPerE[[1]]
   for (i in 2:length(accuracyPerE)) {
     accuracySummary <- rbind(accuracySummary, accuracyPerE[[i]])
@@ -61,14 +65,14 @@ optimalParametersSearch <- function(Emax,tauMax,metric,dataset) {
 }
 
 zero_counter <- function(vec) {
-  return(length(which(vec==0)))
+  return(length(which(vec == 0)))
 }
-zero_filtering <- function(vec,threshold) {
-  return(zero_counter(vec)<threshold)
+zero_filtering <- function(vec, threshold) {
+  return(zero_counter(vec) < threshold)
 }
 na_counter <- function(vec) {
   return(length(which(is.na(vec))))
 }
-na_filtering <- function(vec,threshold) {
-  return(na_counter(vec)<threshold)
+na_filtering <- function(vec, threshold) {
+  return(na_counter(vec) < threshold)
 }

@@ -22,44 +22,44 @@
 #' set.seed(123)
 #' E <- 3
 #' tau <- 1
-#' Mx <- matrix(rnorm(200), nrow=20)
-#' My <- matrix(rnorm(200), nrow=20)
-#' Dx <- distanceMatrix(Mx,"minkowski")
-#' Dy <- distanceMatrix(My,"minkowski")
-#' SMx <- signatureSpace(Mx,E)
-#' SMy <- signatureSpace(My,E)
-#' PSMx <- patternSpace(SMx,E)
-#' PSMy <- patternSpace(SMy,E)
-#' CCSPAN <- (E-1)*tau
-#' NNSPAN <- E+1
+#' Mx <- matrix(rnorm(200), nrow = 20)
+#' My <- matrix(rnorm(200), nrow = 20)
+#' Dx <- distanceMatrix(Mx, "minkowski")
+#' Dy <- distanceMatrix(My, "minkowski")
+#' SMx <- signatureSpace(Mx, E)
+#' SMy <- signatureSpace(My, E)
+#' PSMx <- patternSpace(SMx, E)
+#' PSMy <- patternSpace(SMy, E)
+#' CCSPAN <- (E - 1) * tau
+#' NNSPAN <- E + 1
 #' i <- 15
 #' h <- 2
 #' NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 #' timesX <- NNx$times
 #' projNNy <- projectedNNsInfo(My, Dy, SMy, PSMy, timesX, i, h)
-#' pSY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedSignatureY
-#' pPY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedPatternY[1]
-#' rSY <- SMy[(i+h),]
-#' rPY <- PSMy[i+h]
-#' signatureX <- SMx[i,]
-#' patternX <- PSMx[i,]
-#' weighted=0
+#' pSY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedSignatureY
+#' pPY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedPatternY[1]
+#' rSY <- SMy[(i + h), ]
+#' rPY <- PSMy[i + h]
+#' signatureX <- SMx[i, ]
+#' patternX <- PSMx[i, ]
+#' weighted <- 0
 #' pc <- fillPCMatrix(weighted, pPY, rPY, pSY, rSY, patternX, signatureX)
 #' @export
-fillPCMatrix <- function(weighted,predictedPatternY,realPatternY,predictedSignatureY,realSignatureY,patternX,signatureX) {
-  if (!anyNA(c(predictedPatternY,realPatternY,patternX))) {
-    if (length(predictedPatternY)>0) {
-      if (length(patternX)>0) {
-        if (predictedPatternY==realPatternY) { # IF PREDICTION IS ACCURATE PROCCEED
-          predictedCausalityStrength <- ifelse(weighted,erf(norm_vec(predictedSignatureY)/norm_vec(signatureX)),1)
-          realCausalityStrength <- ifelse(weighted,erf(norm_vec(realSignatureY)/norm_vec(signatureX)),1)
-          #predictedCausalityStrength <- ifelse(predictedCausalityStrength==0,1,predictedCausalityStrength)
-          #predictedCausalityStrength <- ifelse(is.nan(predictedCausalityStrength),1,predictedCausalityStrength)
-          #realCausalityStrength <- ifelse(realCausalityStrength==0,1,realCausalityStrength)
-          #realCausalityStrength <- ifelse(is.nan(realCausalityStrength),1,realCausalityStrength)
-          #= THIS IS THE LATEST STANDARD AS OF 27 JUNE 2020
-          #predictedCausalityStrength <- 1
-          #realCausalityStrength <- 1
+fillPCMatrix <- function(weighted, predictedPatternY, realPatternY, predictedSignatureY, realSignatureY, patternX, signatureX) {
+  if (!anyNA(c(predictedPatternY, realPatternY, patternX))) {
+    if (length(predictedPatternY) > 0) {
+      if (length(patternX) > 0) {
+        if (predictedPatternY == realPatternY) { # IF PREDICTION IS ACCURATE PROCCEED
+          predictedCausalityStrength <- ifelse(weighted, erf(norm_vec(predictedSignatureY) / norm_vec(signatureX)), 1)
+          realCausalityStrength <- ifelse(weighted, erf(norm_vec(realSignatureY) / norm_vec(signatureX)), 1)
+          # predictedCausalityStrength <- ifelse(predictedCausalityStrength==0,1,predictedCausalityStrength)
+          # predictedCausalityStrength <- ifelse(is.nan(predictedCausalityStrength),1,predictedCausalityStrength)
+          # realCausalityStrength <- ifelse(realCausalityStrength==0,1,realCausalityStrength)
+          # realCausalityStrength <- ifelse(is.nan(realCausalityStrength),1,realCausalityStrength)
+          # = THIS IS THE LATEST STANDARD AS OF 27 JUNE 2020
+          # predictedCausalityStrength <- 1
+          # realCausalityStrength <- 1
         } else {
           predictedCausalityStrength <- 0
           realCausalityStrength <- 0
@@ -74,9 +74,11 @@ fillPCMatrix <- function(weighted,predictedPatternY,realPatternY,predictedSignat
     predictedCausalityStrength <- NA
     realCausalityStrength <- NA
   }
-  return(data.frame(real=realCausalityStrength,
-                    predicted=predictedCausalityStrength))
+  return(data.frame(
+    real = realCausalityStrength,
+    predicted = predictedCausalityStrength
+  ))
 }
-#=== Prerequisites
+# === Prerequisites
 norm_vec <- function(x) sqrt(sum(x^2))
 erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1

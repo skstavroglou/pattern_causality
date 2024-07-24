@@ -10,12 +10,12 @@
 #' @export
 #' @examples
 #' # Assume M is an already constructed state space matrix of a time series
-#' M <- matrix(rnorm(100), nrow=10)
+#' M <- matrix(rnorm(100), nrow = 10)
 #' distanceMat <- distanceMatrix(M, "euclidean")
-#' print(distanceMat)  # Optionally convert to a full matrix for display
+#' print(distanceMat) # Optionally convert to a full matrix for display
 distanceMatrix <- function(M, metric) {
-  #d <- dist(M, metric, upper = TRUE)
-  d <- as.matrix(dist(M,metric, upper=T))
+  # d <- dist(M, metric, upper = TRUE)
+  d <- as.matrix(dist(M, metric, upper = T))
   return(d)
 }
 
@@ -38,7 +38,7 @@ distanceMatrix <- function(M, metric) {
 #' print(distance)
 metricDistance <- function(vec1, vec2, n) {
   res <- as.numeric(vec1 - vec2)
-  distance <- (sum(abs(res)^n))^(1/n)
+  distance <- (sum(abs(res)^n))^(1 / n)
   return(distance)
 }
 
@@ -55,11 +55,10 @@ metricDistance <- function(vec1, vec2, n) {
 #' @export
 #' @examples
 #' point <- c(1, 2, 3)
-#' candidateNNs <- matrix(c(4, 5, 6, 7, 8, 9), nrow=2, byrow=TRUE)
+#' candidateNNs <- matrix(c(4, 5, 6, 7, 8, 9), nrow = 2, byrow = TRUE)
 #' n <- 2
 #' distances <- distanceVector(point, candidateNNs, n)
 #' print(distances)
 distanceVector <- function(point, candidateNNs, n) {
   apply(X = candidateNNs, MARGIN = 1, FUN = metricDistance, vec2 = point, n = n)
 }
-
