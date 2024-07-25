@@ -9,8 +9,10 @@
 #' @examples
 #' data(climate)
 #' dataset <- climate[, -1]
+#' \dontrun{
 #' optimalParams <- optimalParametersSearch(Emax=3,tauMax=3,metric="euclidean",dataset=dataset)
 #' print(optimalParams)
+#' }
 optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
   E_array <- 2:Emax
   tau_array <- 1:tauMax
