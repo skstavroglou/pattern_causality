@@ -14,6 +14,6 @@ climate
 This is a time series of climate index.
 }
 \examples{
-  head(climate)
+head(climate)
 }
 \keyword{datasets}

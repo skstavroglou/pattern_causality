@@ -35,7 +35,7 @@ matrix_db <- dataBank("matrix", c(3, 5))
 print(matrix_db)
 
 # Initialize a neighborhood memory structure correctly with sufficient column names.
-dimensions_nm <- c(4, 40, 3, 5) 
+dimensions_nm <- c(4, 40, 3, 5)
 nm_db <- dataBank("neighborhood memories", dimensions_nm)
 print(nm_db)
 }

@@ -26,10 +26,10 @@ based on the embedding dimension, time delay, prediction horizon, and the length
 that there are enough data points for conducting a causality analysis without running out of data.
 }
 \examples{
-time_series <- rnorm(1000)  # Generate a random time series of 1000 points
-embedding_dim <- 3  # Set embedding dimension
-time_delay <- 2     # Set time delay
-pred_horizon <- 1   # Set prediction horizon
+time_series <- rnorm(1000) # Generate a random time series of 1000 points
+embedding_dim <- 3 # Set embedding dimension
+time_delay <- 2 # Set time delay
+pred_horizon <- 1 # Set prediction horizon
 
 # Calculate the first causality point
 fc_point <- firstCausalityPoint(embedding_dim, time_delay, pred_horizon, time_series)

@@ -49,27 +49,27 @@ relationships based on norm vectors and optionally weights these strengths using
 set.seed(123)
 E <- 3
 tau <- 1
-Mx <- matrix(rnorm(200), nrow=20)
-My <- matrix(rnorm(200), nrow=20)
-Dx <- distanceMatrix(Mx,"minkowski")
-Dy <- distanceMatrix(My,"minkowski")
-SMx <- signatureSpace(Mx,E)
-SMy <- signatureSpace(My,E)
-PSMx <- patternSpace(SMx,E)
-PSMy <- patternSpace(SMy,E)
-CCSPAN <- (E-1)*tau
-NNSPAN <- E+1
+Mx <- matrix(rnorm(200), nrow = 20)
+My <- matrix(rnorm(200), nrow = 20)
+Dx <- distanceMatrix(Mx, "minkowski")
+Dy <- distanceMatrix(My, "minkowski")
+SMx <- signatureSpace(Mx, E)
+SMy <- signatureSpace(My, E)
+PSMx <- patternSpace(SMx, E)
+PSMy <- patternSpace(SMy, E)
+CCSPAN <- (E - 1) * tau
+NNSPAN <- E + 1
 i <- 15
 h <- 2
 NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 timesX <- NNx$times
 projNNy <- projectedNNsInfo(My, Dy, SMy, PSMy, timesX, i, h)
-pSY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedSignatureY
-pPY <- predictionY(E,projNNy,zeroTolerance=E-1)$predictedPatternY[1]
-rSY <- SMy[(i+h),]
-rPY <- PSMy[i+h]
-signatureX <- SMx[i,]
-patternX <- PSMx[i,]
-weighted=0
+pSY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedSignatureY
+pPY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedPatternY[1]
+rSY <- SMy[(i + h), ]
+rPY <- PSMy[i + h]
+signatureX <- SMx[i, ]
+patternX <- PSMx[i, ]
+weighted <- 0
 pc <- fillPCMatrix(weighted, pPY, rPY, pSY, rSY, patternX, signatureX)
 }

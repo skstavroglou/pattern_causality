@@ -28,7 +28,7 @@ This function calculates predicted values of a series based on its previous valu
 \examples{
 Y <- c(1, 2, 3, 5, 8, 13, 21)
 E <- 5
-tau <- 1  # Example value, not used in the function
+tau <- 1 # Example value, not used in the function
 i <- 2
 h <- 3
 predictedSignatureY <- c(0.5, 1.5, 2.5, 3.5, 4.5)

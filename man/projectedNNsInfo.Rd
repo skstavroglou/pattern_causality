@@ -31,16 +31,16 @@ Extracts and returns information about the projected nearest neighbors in a time
 set.seed(123)
 E <- 3
 tau <- 1
-Mx <- matrix(rnorm(200), nrow=20)
-My <- matrix(rnorm(200), nrow=20)
-Dx <- distanceMatrix(Mx,"minkowski")
-Dy <- distanceMatrix(My,"minkowski")
-SMx <- signatureSpace(Mx,E)
-SMy <- signatureSpace(My,E)
-PSMx <- patternSpace(SMx,E)
-PSMy <- patternSpace(SMy,E)
-CCSPAN <- (E-1)*tau
-NNSPAN <- E+1
+Mx <- matrix(rnorm(200), nrow = 20)
+My <- matrix(rnorm(200), nrow = 20)
+Dx <- distanceMatrix(Mx, "minkowski")
+Dy <- distanceMatrix(My, "minkowski")
+SMx <- signatureSpace(Mx, E)
+SMy <- signatureSpace(My, E)
+PSMx <- patternSpace(SMx, E)
+PSMy <- patternSpace(SMy, E)
+CCSPAN <- (E - 1) * tau
+NNSPAN <- E + 1
 i <- 15
 h <- 2
 NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)

@@ -27,10 +27,10 @@ the provided embedding dimension, time delay, and prediction horizon. This funct
 indicating the feasibility of conducting the analysis.
 }
 \examples{
-time_series <- rnorm(1000)  # Generate a random time series of 1000 points
-embedding_dim <- 3  # Set embedding dimension
-time_delay <- 2     # Set time delay (not used in current implementation)
-pred_horizon <- 1   # Set prediction horizon
+time_series <- rnorm(1000) # Generate a random time series of 1000 points
+embedding_dim <- 3 # Set embedding dimension
+time_delay <- 2 # Set time delay (not used in current implementation)
+pred_horizon <- 1 # Set prediction horizon
 
 # Check if the first causality point can be considered
 is_feasible <- firstCausalityPointCHECK(embedding_dim, time_delay, pred_horizon, time_series)

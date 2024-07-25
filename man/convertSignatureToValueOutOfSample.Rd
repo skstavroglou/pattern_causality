@@ -40,9 +40,9 @@ predictedSignatureY <- c(2, 3, 4, 5, 6)
 # Number of future points to predict
 E <- 5
 # Example values for tau and i, h not used in this function directly
-tau <- 1  
-i <- 1  
-h <- 1  
+tau <- 1
+i <- 1
+h <- 1
 
 # Generate future predictions
 futureValues <- convertSignatureToValueOutOfSample(E, tau, Y_pred_last, i, h, predictedSignatureY)

@@ -21,7 +21,7 @@ This function applies the 'metricDistance' function to calculate distances from 
 }
 \examples{
 point <- c(1, 2, 3)
-candidateNNs <- matrix(c(4, 5, 6, 7, 8, 9), nrow=2, byrow=TRUE)
+candidateNNs <- matrix(c(4, 5, 6, 7, 8, 9), nrow = 2, byrow = TRUE)
 n <- 2
 distances <- distanceVector(point, candidateNNs, n)
 print(distances)

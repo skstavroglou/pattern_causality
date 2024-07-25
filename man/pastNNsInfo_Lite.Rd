@@ -42,14 +42,14 @@ This function is a simplified version of \code{pastNNsInfo}, identifying the nea
 set.seed(123)
 E <- 3
 tau <- 1
-Mx <- matrix(rnorm(200), nrow=20)
-CCSPAN <- (E-1)*tau
-NNSPAN <- E+1
-i = 15
+Mx <- matrix(rnorm(200), nrow = 20)
+CCSPAN <- (E - 1) * tau
+NNSPAN <- E + 1
+i <- 15
 h <- 2
-Dx <- distanceVector(point = Mx[i,], candidateNNs = Mx[1:(i-CCSPAN-h),],n = 2)
-SMx <- signatureSpace(Mx,E)
-PSMx <- patternSpace(SMx,E)
+Dx <- distanceVector(point = Mx[i, ], candidateNNs = Mx[1:(i - CCSPAN - h), ], n = 2)
+SMx <- signatureSpace(Mx, E)
+PSMx <- patternSpace(SMx, E)
 neighborsInfoLite <- pastNNsInfo_Lite(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 print(neighborsInfoLite)
 }

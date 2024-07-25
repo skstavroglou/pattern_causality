@@ -31,6 +31,6 @@ This function implements the Pattern Causality Model Mk. II for lightweight anal
 data(climate)
 X <- climate$AO
 Y <- climate$AAO
-result <- PC.Mk.II.Lightweight(X,Y, E=3, tau=1, metric="euclidean", h=2, weighted=TRUE)
+result <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 print(result)
 }
