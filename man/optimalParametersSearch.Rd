@@ -24,6 +24,6 @@ Searches for the optimal embedding dimension (E) and time delay (tau) to maximiz
 \examples{
 data(climate)
 dataset <- climate[, -1]
-optimalParams <- optimalParametersSearch(Emax = 3, tauMax = 3, metric = "euclidean", dataset = dataset)
+optimalParams <- optimalParametersSearch(Emax=3,tauMax=3,metric="euclidean",dataset=dataset)
 print(optimalParams)
 }

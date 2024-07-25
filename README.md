@@ -81,27 +81,12 @@ data(stock)
 
 We can visualize this stock price.
 
-``` r
-library(ggplot2)
-df = data.frame(Date = as.Date(rownames(stock)), 
-                Value = c(stock$AAPL.Close,
-                          stock$MSFT.Close),
-                Type = c(rep("AAPL", dim(stock)[1]),
-                         rep("MSFT", dim(stock)[1])))
-ggplot(df) +
-  geom_line(aes(Date, Value, group=Type, colour = Type), linewidth=0.4) +
-  theme_bw(base_size = 12, base_family = "Times New Roman") + xlab("Time") + ylab("Stock Price")+
-  theme(legend.position = c(0.1,0.85), legend.box.background = element_rect(fill=NA,color = "black",linetype = 1), legend.key = element_blank(), 
-        legend.title=element_blank(), legend.background = element_blank(), axis.text   = element_text(size = rel(0.8)), 
-        strip.text  = element_text(size = rel(0.8)))+
-  scale_color_manual(values=c("#DC143C","#191970"))
-#> Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-#> 3.5.0.
-#> ℹ Please use the `legend.position.inside` argument of `theme()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-```
+    #> Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+    #> 3.5.0.
+    #> ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+    #> This warning is displayed once every 8 hours.
+    #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    #> generated.
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 

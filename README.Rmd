@@ -82,7 +82,7 @@ data(stock)
 
 We can visualize this stock price.
 
-```{r}
+```{r echo=FALSE}
 library(ggplot2)
 df = data.frame(Date = as.Date(rownames(stock)), 
                 Value = c(stock$AAPL.Close,
