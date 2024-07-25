@@ -9,10 +9,12 @@
 #' @return A data frame with the embedding parameters and average values of total, positive, negative, and dark causality across all time series pairs in the dataset.
 #' @export
 #' @examples
+#' \dontrun{
 #' data(climate)
 #' data <- climate[, -1]
 #' results <- pcAccuracy(data, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
 #' print(results)
+#' }
 pcAccuracy <- function(dataset, E, tau, metric, h, weighted) {
   dataset <- as.matrix(dataset)
   # STORAGE ARRAYS
