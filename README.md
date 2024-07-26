@@ -7,7 +7,13 @@
 <!-- badges: end -->
 
 The goal of patterncausality is to measure the causality in the complex
-system and financial market,
+system and financial market.
+
+This algorithm has a lot of advantages than .
+
+- You can find the hidden pattern in the complex system.
+- You can measure the causality in different fields.
+- You can search for the best parameters for the complex system.
 
 ## Installation
 
@@ -41,8 +47,20 @@ Then we need to determine the `E` and `tao`.
 
 ``` r
 dataset <- climate[, -1] # remove the date column
-parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
+parameter <- optimalParametersSearch(Emax = 3, tauMax = 3, metric = "euclidean", dataset = dataset)
 ```
+
+|       |         | Total     | of which Positive | of which Negative | of which Dark |
+|-------|---------|-----------|-------------------|-------------------|---------------|
+| E = 2 | tau = 1 | 0.5543614 | 0.5519477         | 0.4474361         | 0.0006162144  |
+| E = 2 | tau = 2 | 0.5727414 | 0.5736100         | 0.4232828         | 0.0031071596  |
+| E = 2 | tau = 3 | 0.5711838 | 0.5469069         | 0.4513270         | 0.0017660870  |
+| E = 3 | tau = 1 | 0.3305296 | 0.3457169         | 0.2470929         | 0.4071902523  |
+| E = 3 | tau = 2 | 0.3500000 | 0.4037138         | 0.2547524         | 0.3415338782  |
+| E = 3 | tau = 3 | 0.3570093 | 0.3657638         | 0.2690536         | 0.3651826225  |
+
+Of course, we can also change the distance style to calculate the
+distance matrix.
 
 After the parameters are confirmed, we could calculate the pattern
 causality.
@@ -127,6 +145,17 @@ ggplot(df, aes(x=name, y=val, fill=name)) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+### Conclusion
+
+After calculating the causality, we can get the result here.
+
+| Pairs         | total     | positive  | negative  | dark      |
+|---------------|-----------|-----------|-----------|-----------|
+| AAPL –\> MSFT | 0.2445206 | 0.2443325 | 0.2382872 | 0.5173804 |
+| MSFT –\> AAPL | 0.237174  | 0.2249351 | 0.2592208 | 0.5158442 |
+| AO –\> AAO    | 0.3140187 | 0.2371795 | 0.3846154 | 0.3782051 |
+| AAO –\> AO    | 0.2934579 | 0.3241379 | 0.1724138 | 0.5034483 |
 
 ## References
 
