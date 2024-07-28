@@ -47,7 +47,7 @@ Then we need to determine the `E` and `tao`.
 
 ``` r
 dataset <- climate[, -1] # remove the date column
-parameter <- optimalParametersSearch(Emax = 3, tauMax = 3, metric = "euclidean", dataset = dataset)
+parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
 |       |         | Total     | of which Positive | of which Negative | of which Dark |
@@ -68,10 +68,10 @@ causality.
 ``` r
 X <- climate$AO
 Y <- climate$AAO
-pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(pc)
-#>       total  positive  negative      dark
-#> 1 0.3140187 0.2371795 0.3846154 0.3782051
+#>       total positive  negative     dark
+#> 1 0.2841121 0.326087 0.2318841 0.442029
 ```
 
 Then the percentage of each status will be showed below.
@@ -111,7 +111,8 @@ We can visualize this stock price.
 Then search the best parameters for the PC.
 
 ``` r
-dataset <- stock
+#dataset <- stock
+dataset <- cbind(stock$AAPL.Close,stock$MSFT.Close)
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
@@ -120,10 +121,10 @@ After that, calculate the causality of each status.
 ``` r
 X <- stock$AAPL.Close
 Y <- stock$MSFT.Close
-pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(pc)
 #>       total  positive  negative      dark
-#> 1 0.2445206 0.2443325 0.2382872 0.5173804
+#> 1 0.2698665 0.3881279 0.1369863 0.4748858
 ```
 
 Lastly we can also visualize this result.
@@ -152,10 +153,10 @@ After calculating the causality, we can get the result here.
 
 | Pairs         | total     | positive  | negative  | dark      |
 |---------------|-----------|-----------|-----------|-----------|
-| AAPL –\> MSFT | 0.2445206 | 0.2443325 | 0.2382872 | 0.5173804 |
-| MSFT –\> AAPL | 0.237174  | 0.2249351 | 0.2592208 | 0.5158442 |
-| AO –\> AAO    | 0.3140187 | 0.2371795 | 0.3846154 | 0.3782051 |
-| AAO –\> AO    | 0.2934579 | 0.3241379 | 0.1724138 | 0.5034483 |
+| AAPL –\> MSFT | 0.2698665 | 0.3881279 | 0.1369863 | 0.4748858 |
+| MSFT –\> AAPL | 0.2759887 | 0.4075893 | 0.1388393 | 0.4535714 |
+| AO –\> AAO    | 0.2841121 | 0.326087  | 0.2318841 | 0.442029  |
+| AAO –\> AO    | 0.2803738 | 0.3602941 | 0.2647059 | 0.375     |
 
 ## References
 
