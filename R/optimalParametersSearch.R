@@ -9,11 +9,14 @@
 #' @examples
 #' data(climate)
 #' dataset <- climate[, -1]
-#' \dontrun{
+#' \donttest{
 #' optimalParams <- optimalParametersSearch(Emax=3,tauMax=3,metric="euclidean",dataset=dataset)
 #' print(optimalParams)
 #' }
 optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
+  if( Emax<3){
+    stop("Please enter the Emax with the number > 2")
+  }
   E_array <- 2:Emax
   tau_array <- 1:tauMax
   testsTotal <- matrix(data = NA, nrow = length(E_array), ncol = length(tau_array))
@@ -24,9 +27,9 @@ optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
   # pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
   #                    max = max(E_array), width = 300)
   for (E in E_array) {
-    print(paste("Testing | E: ", E))
+    message(paste("Testing | E: ", E))
     for (tau in tau_array) {
-      print(paste("Testing | tau: ", tau))
+      message(paste("Testing | tau: ", tau))
       temp <- pcAccuracy(
         dataset = dataset,
         E = E, tau = tau, metric = metric, h = 0, FALSE
@@ -62,7 +65,7 @@ optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
   }
   end.time <- Sys.time()
   time.taken <- end.time - start.time
-  print(paste("Calculation duration: ", time.taken))
+  message(paste("Calculation duration: ", time.taken))
   return(accuracySummary)
 }
 

@@ -31,6 +31,6 @@ Implements an advanced pattern causality algorithm to explore the causal relatio
 data(climate)
 X <- climate$AO
 Y <- climate$AAO
-result <- PC.Mk.II.Full.Details(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
+result <- PC.Mk.II.Full.Details(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(result)
 }

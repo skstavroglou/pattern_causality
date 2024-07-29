@@ -26,7 +26,7 @@ A data frame with the embedding parameters and average values of total, positive
 This function evaluates the causality prediction accuracy across multiple time series within a dataset using the PC Mk. II Light method. It checks the feasibility of causality analysis between all pairs, computes different types of causality (total, positive, negative, dark), and aggregates these results.
 }
 \examples{
-\dontrun{
+\donttest{
 data(climate)
 data <- climate[, -1]
 results <- pcAccuracy(data, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)

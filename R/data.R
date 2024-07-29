@@ -15,3 +15,12 @@
 #' @examples
 #' head(stock)
 "stock"
+
+#' A data from Illapel
+#'
+#' Raw rodent and rainfall data from the study site at Las Chinchillas National Reserve near the city of Illapel, Coquimbo Region of Chil.
+#'
+#'
+#' @examples
+#' head(AUCO)
+"AUCO"

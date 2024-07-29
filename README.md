@@ -6,10 +6,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of patterncausality is to measure the causality in the complex
-system and financial market.
+## Overview
 
-This algorithm has a lot of advantages than .
+The goal of patterncausality is to measure the causality in the complex
+system. The core of this algorithm is measure the strength of each
+causality status like positive, negative, and dark in the view of
+complex system, this method could be used for many different fields like
+financial market, ecosystem, medical diagnosis and so on.
+
+This algorithm has a lot of advantages.
 
 - You can find the hidden pattern in the complex system.
 - You can measure the causality in different fields.
@@ -18,7 +23,7 @@ This algorithm has a lot of advantages than .
 ## Installation
 
 You can install the development version of patterncausality from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/skstavroglou/pattern-causality) with:
 
 ``` r
 # install.packages("devtools")
@@ -38,6 +43,14 @@ library(patterncausality)
 
 ``` r
 data(climate)
+head(climate)
+#>         Date      AO    AAO   NAO   PNA
+#> 1 1979-01-01 -2.2328 0.2088 -1.38 -0.69
+#> 2 1979-02-01 -0.6967 0.3563 -0.67 -1.82
+#> 3 1979-03-01 -0.8141 0.8992  0.78  0.38
+#> 4 1979-04-01 -1.1568 0.6776 -1.71  0.09
+#> 5 1979-05-01 -0.2501 0.7237 -1.03  1.35
+#> 6 1979-06-01  0.9332 1.7000  1.60 -1.64
 ```
 
 This dataset contains 4 time series of climate index, we could use the
@@ -95,6 +108,21 @@ First of all, we can import the data of AAPL and MSFT.
 
 ``` r
 data(stock)
+head(stock)
+#>            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted
+#> 1986-03-13  0.110491  0.111607 0.108817   0.110491   115964800    0.08527586
+#> 1986-03-14  0.110491  0.117188 0.110491   0.116629   384854400    0.09001311
+#> 1986-03-17  0.116071  0.116071 0.113281   0.116071   118720000    0.08958244
+#> 1986-03-18  0.116071  0.121652 0.115513   0.119978   249356800    0.09259786
+#> 1986-03-19  0.119978  0.121652 0.117746   0.118304   189884800    0.09130585
+#> 1986-03-20  0.125000  0.132254 0.125000   0.126116   904131200    0.09733511
+#>            MSFT.Open MSFT.High MSFT.Low MSFT.Close MSFT.Volume MSFT.Adjusted
+#> 1986-03-13  0.088542  0.101563 0.088542   0.097222  1031788800    0.06005456
+#> 1986-03-14  0.097222  0.102431 0.097222   0.100694   308160000    0.06219922
+#> 1986-03-17  0.100694  0.103299 0.100694   0.102431   133171200    0.06327216
+#> 1986-03-18  0.102431  0.103299 0.098958   0.099826    67766400    0.06166304
+#> 1986-03-19  0.099826  0.100694 0.097222   0.098090    47894400    0.06059071
+#> 1986-03-20  0.098090  0.098090 0.094618   0.095486    58435200    0.05898221
 ```
 
 We can visualize this stock price.
@@ -111,8 +139,7 @@ We can visualize this stock price.
 Then search the best parameters for the PC.
 
 ``` r
-#dataset <- stock
-dataset <- cbind(stock$AAPL.Close,stock$MSFT.Close)
+dataset <- stock
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
@@ -151,16 +178,16 @@ ggplot(df, aes(x=name, y=val, fill=name)) +
 
 After calculating the causality, we can get the result here.
 
-| Pairs         | total     | positive  | negative  | dark      |
-|---------------|-----------|-----------|-----------|-----------|
-| AAPL –\> MSFT | 0.2698665 | 0.3881279 | 0.1369863 | 0.4748858 |
-| MSFT –\> AAPL | 0.2759887 | 0.4075893 | 0.1388393 | 0.4535714 |
-| AO –\> AAO    | 0.2841121 | 0.326087  | 0.2318841 | 0.442029  |
-| AAO –\> AO    | 0.2803738 | 0.3602941 | 0.2647059 | 0.375     |
+| Pairs         | total     | positive  | negative  | dark      | Dataset |
+|---------------|-----------|-----------|-----------|-----------|---------|
+| AAPL –\> MSFT | 0.2698665 | 0.3881279 | 0.1369863 | 0.4748858 | stock   |
+| MSFT –\> AAPL | 0.2759887 | 0.4075893 | 0.1388393 | 0.4535714 | stock   |
+| AO –\> AAO    | 0.2841121 | 0.326087  | 0.2318841 | 0.442029  | climate |
+| AAO –\> AO    | 0.2803738 | 0.3602941 | 0.2647059 | 0.375     | climate |
+| AO –\> P      | 0.3084112 | 0.1192053 | 0.4503311 | 0.4304636 | AUCO    |
+| P –\> AO      | 0.3308411 | 0.3374233 | 0.2515337 | 0.4110429 | AUCO    |
 
 ## References
-
-Based on the following **references**.
 
 - Stavroglou, S. K., Pantelous, A. A., Stanley, H. E., & Zuev, K. M.
   (2019). Hidden interactions in financial markets. *Proceedings of the
