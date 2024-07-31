@@ -23,7 +23,7 @@ This algorithm has a lot of advantages.
 ## Installation
 
 You can install the development version of patterncausality from
-[GitHub](https://github.com/skstavroglou/pattern-causality) with:
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
