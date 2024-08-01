@@ -23,11 +23,19 @@ This algorithm has a lot of advantages.
 ## Installation
 
 You can install the development version of patterncausality from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/skstavroglou/pattern-causality) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("skstavroglou/pattern-causality")
+```
+
+You can also install this package from
+[CRAN](https://cran.r-project.org/web/packages/patterncausality/index.html)
+with:
+
+``` r
+install.packages("patterncausality")
 ```
 
 ## Example
