@@ -30,7 +30,7 @@ You can install the development version of patterncausality from
 devtools::install_github("skstavroglou/pattern-causality")
 ```
 
-You can also install this package from
+You can also install the package from
 [CRAN](https://cran.r-project.org/web/packages/patterncausality/index.html)
 with:
 
