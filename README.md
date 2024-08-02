@@ -23,11 +23,11 @@ This algorithm has a lot of advantages.
 ## Installation
 
 You can install the development version of patterncausality from
-[GitHub](https://github.com/skstavroglou/pattern-causality) with:
+[GitHub](https://github.com/skstavroglou/pattern_causality) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("skstavroglou/pattern-causality")
+devtools::install_github("skstavroglou/pattern_causality")
 ```
 
 You can also install the package from
@@ -208,8 +208,3 @@ After calculating the causality, we can get the result here.
 - Stavroglou, S. K., Ayyub, B. M., Kallinterakis, V., Pantelous, A. A.,
   & Stanley, H. E. (2021). A novel causal risk‐based decision‐making
   methodology: The case of coronavirus. *Risk Analysis, 41(5)*, 814-830.
-
-- Stavroglou, S. K., Pantelous, A. A., Ayyub, B. M., Lambert, J. H.,
-  Hall, J. W., & Stanley, H. E. (2023). Prometheus Framework for Public
-  Policy Decisions on Environmental Health Risks. *Available at SSRN
-  4526256*.
