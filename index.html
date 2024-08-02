@@ -5,48 +5,52 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.">
 <title>Pattern Causality Algorithm • patterncausality</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Pattern Causality Algorithm">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Pattern Causality Algorithm">
+<meta name="description" content="The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.">
 <meta property="og:description" content="The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary" data-bs-theme="dark"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
+<li class="nav-item"><a class="nav-link" href="articles/patterncausality.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+      </ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/skstavroglou/pattern_causality/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-home">
 <div class="row">
@@ -85,10 +89,8 @@
 </h3>
 <p>We can import the existing data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">patterncausality</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in fun(libname, pkgname): couldn't connect to display ":0"</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">climate</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         Date      AO    AAO   NAO   PNA</span></span>
 <span><span class="co">#&gt; 1 1979-01-01 -2.2328 0.2088 -1.38 -0.69</span></span>
@@ -99,17 +101,17 @@
 <span><span class="co">#&gt; 6 1979-06-01  0.9332 1.7000  1.60 -1.64</span></span></code></pre></div>
 <p>This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset.</p>
 <p>Then we need to determine the <code>E</code> and <code>tao</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
 <span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="8%">
-<col width="11%">
-<col width="13%">
-<col width="23%">
-<col width="23%">
-<col width="18%">
+<col width="6%">
+<col width="9%">
+<col width="14%">
+<col width="25%">
+<col width="25%">
+<col width="19%">
 </colgroup>
 <thead><tr class="header">
 <th></th>
@@ -121,48 +123,48 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>E = 2</td>
-<td>tau = 1</td>
+<td>E=2</td>
+<td>tau=1</td>
 <td>0.5543614</td>
 <td>0.5519477</td>
 <td>0.4474361</td>
 <td>0.0006162144</td>
 </tr>
 <tr class="even">
-<td>E = 2</td>
-<td>tau = 2</td>
+<td>E=2</td>
+<td>tau=2</td>
 <td>0.5727414</td>
 <td>0.5736100</td>
 <td>0.4232828</td>
 <td>0.0031071596</td>
 </tr>
 <tr class="odd">
-<td>E = 2</td>
-<td>tau = 3</td>
+<td>E=2</td>
+<td>tau=3</td>
 <td>0.5711838</td>
 <td>0.5469069</td>
 <td>0.4513270</td>
 <td>0.0017660870</td>
 </tr>
 <tr class="even">
-<td>E = 3</td>
-<td>tau = 1</td>
+<td>E=3</td>
+<td>tau=1</td>
 <td>0.3305296</td>
 <td>0.3457169</td>
 <td>0.2470929</td>
 <td>0.4071902523</td>
 </tr>
 <tr class="odd">
-<td>E = 3</td>
-<td>tau = 2</td>
+<td>E=3</td>
+<td>tau=2</td>
 <td>0.3500000</td>
 <td>0.4037138</td>
 <td>0.2547524</td>
 <td>0.3415338782</td>
 </tr>
 <tr class="even">
-<td>E = 3</td>
-<td>tau = 3</td>
+<td>E=3</td>
+<td>tau=3</td>
 <td>0.3570093</td>
 <td>0.3657638</td>
 <td>0.2690536</td>
@@ -172,7 +174,7 @@
 </table>
 <p>Of course, we can also change the distance style to calculate the distance matrix.</p>
 <p>After the parameters are confirmed, we could calculate the pattern causality.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AAO</span></span>
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/PC.Mk.II.Lightweight.html">PC.Mk.II.Lightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -181,71 +183,13 @@
 <span><span class="co">#&gt; 1 0.2841121 0.326087 0.2318841 0.442029</span></span></code></pre></div>
 <p>Then the percentage of each status will be showed below.</p>
 <p>If we wonder the status in each time point, we can run the code.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AAO</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/PC.Mk.II.Full.Details.html">PC.Mk.II.Full.Details</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">3</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
-<span><span class="va">real_stattus</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span></code></pre></div>
+<span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span></code></pre></div>
 <p>Then the status series will be saved in <code>predict_status</code> and <code>real_status</code>.</p>
-</div>
-<div class="section level3">
-<h3 id="application-in-financial-market">Application in financial market<a class="anchor" aria-label="anchor" href="#application-in-financial-market"></a>
-</h3>
-<p>First of all, we can import the data of AAPL and MSFT.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">stock</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">stock</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted</span></span>
-<span><span class="co">#&gt; 1986-03-13  0.110491  0.111607 0.108817   0.110491   115964800    0.08527586</span></span>
-<span><span class="co">#&gt; 1986-03-14  0.110491  0.117188 0.110491   0.116629   384854400    0.09001311</span></span>
-<span><span class="co">#&gt; 1986-03-17  0.116071  0.116071 0.113281   0.116071   118720000    0.08958244</span></span>
-<span><span class="co">#&gt; 1986-03-18  0.116071  0.121652 0.115513   0.119978   249356800    0.09259786</span></span>
-<span><span class="co">#&gt; 1986-03-19  0.119978  0.121652 0.117746   0.118304   189884800    0.09130585</span></span>
-<span><span class="co">#&gt; 1986-03-20  0.125000  0.132254 0.125000   0.126116   904131200    0.09733511</span></span>
-<span><span class="co">#&gt;            MSFT.Open MSFT.High MSFT.Low MSFT.Close MSFT.Volume MSFT.Adjusted</span></span>
-<span><span class="co">#&gt; 1986-03-13  0.088542  0.101563 0.088542   0.097222  1031788800    0.06005456</span></span>
-<span><span class="co">#&gt; 1986-03-14  0.097222  0.102431 0.097222   0.100694   308160000    0.06219922</span></span>
-<span><span class="co">#&gt; 1986-03-17  0.100694  0.103299 0.100694   0.102431   133171200    0.06327216</span></span>
-<span><span class="co">#&gt; 1986-03-18  0.102431  0.103299 0.098958   0.099826    67766400    0.06166304</span></span>
-<span><span class="co">#&gt; 1986-03-19  0.099826  0.100694 0.097222   0.098090    47894400    0.06059071</span></span>
-<span><span class="co">#&gt; 1986-03-20  0.098090  0.098090 0.094618   0.095486    58435200    0.05898221</span></span></code></pre></div>
-<p>We can visualize this stock price.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#&gt; Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; 3.5.0.</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; ℹ Please use the `legend.position.inside` argument of `theme()` instead.</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; generated.</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
-<p>Then search the best parameters for the PC.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">stock</span></span>
-<span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
-<p>After that, calculate the causality of each status.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">AAPL.Close</span></span>
-<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">MSFT.Close</span></span>
-<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/PC.Mk.II.Lightweight.html">PC.Mk.II.Lightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       total  positive  negative      dark</span></span>
-<span><span class="co">#&gt; 1 0.2698665 0.3881279 0.1369863 0.4748858</span></span></code></pre></div>
-<p>Lastly we can also visualize this result.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  name<span class="op">=</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  val<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">name</span>, y<span class="op">=</span><span class="va">val</span>, fill<span class="op">=</span><span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span>, alpha<span class="op">=</span><span class="fl">.6</span>, width<span class="op">=</span><span class="fl">.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html" class="external-link">scale_fill_grey</a></span><span class="op">(</span>start<span class="op">=</span><span class="fl">0</span>, end<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># start and end define the range of grays</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">'Status'</span>,y<span class="op">=</span><span class="st">'Strength'</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span>, base_family <span class="op">=</span> <span class="st">"Times New Roman"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"none"</span>, axis.text   <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                strip.text  <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
@@ -322,6 +266,16 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="about-the-authors">About the authors<a class="anchor" aria-label="anchor" href="#about-the-authors"></a>
+</h2>
+<p><strong>Stavros</strong> is lecturer in credit risk and fin-tech at the university of Edinburgh Business School and is the main creator for the algorithm of the pattern causality.</p>
+<p><a href="mailto:stavros.k.stavroglou@gmail.com"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"></a> <a href="https://github.com/skstavroglou" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"></a> <a href="https://orcid.org/0000-0003-3931-0391" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"></a> <a href="https://www.linkedin.com/in/stavroskstavroglou/" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"></a> <a href="https://scholar.google.co.uk/citations?user=jpSj6xgAAAAJ&amp;hl=en" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"></a></p>
+<p><strong>Athanasios</strong> is professor in econometrics and business Statistics of Monash Business School and is the main author of the pattern causality.</p>
+<p><a href="mailto:Athanasios.Pantelous@monash.edu"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"></a> <a href="https://orcid.org/0000-0001-5738-1471" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"></a> <a href="https://www.linkedin.com/in/athanasios-pantelous-6129513b/" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"></a> <a href="https://scholar.google.gr/citations?user=ZMaiiQwAAAAJ&amp;hl=en" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"></a></p>
+<p><strong>Hui</strong> is MPhil student in econometrics and business Statistics of Monash Business School and is the author and maintainer of the <code>patterncausality</code> package.</p>
+<p><a href="mailto:huiw1128@gmail.com"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"></a> <a href="https://orcid.org/0009-0006-0095-0243" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"></a> <a href="https://www.linkedin.com/in/hui-wang-29b30029b/" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"></a> <a href="https://github.com/wanghui5801" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"></a></p>
+</div>
+<div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <ul>
@@ -335,6 +289,8 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=patterncausality" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/skstavroglou/pattern_causality/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -374,15 +330,15 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
