@@ -159,12 +159,15 @@ Monash Business School and is the author and maintainer of the
 
 <a href="mailto:huiw1128@gmail.com">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>
+</a> <a href="https://github.com/wanghui5801">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/>
 </a> <a href="https://orcid.org/0009-0006-0095-0243">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/>
 </a> <a href="https://www.linkedin.com/in/hui-wang-29b30029b/">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/>
-</a> <a href="https://github.com/wanghui5801">
-<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/>
+</a>
+<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=_FRaLycAAAAJ">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"/>
 </a>
 
 ## References
