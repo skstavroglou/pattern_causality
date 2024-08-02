@@ -10,11 +10,11 @@
 #' data(climate)
 #' dataset <- climate[, -1]
 #' \donttest{
-#' optimalParams <- optimalParametersSearch(Emax=3,tauMax=3,metric="euclidean",dataset=dataset)
+#' optimalParams <- optimalParametersSearch(Emax=3, tauMax=3, metric="euclidean", dataset=dataset)
 #' print(optimalParams)
 #' }
 optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
-  if( Emax<3){
+  if (Emax < 3) {
     stop("Please enter the Emax with the number > 2")
   }
   E_array <- 2:Emax
