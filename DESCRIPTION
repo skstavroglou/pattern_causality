@@ -1,7 +1,7 @@
 Package: patterncausality
 Type: Package
 Title: Pattern Causality Algorithm
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c( person("Stavros", "Stavroglou", role = c("aut"),
                      email = "stavros.k.stavroglou@gmail.com",
                      comment = c(ORCID = "0000-0003-3931-0391")),
@@ -11,7 +11,7 @@ Authors@R: c( person("Stavros", "Stavroglou", role = c("aut"),
               person("Hui", "Wang", role = c("aut", "cre"), 
                      email = "huiw1128@gmail.com",
                      comment = c(ORCID = "0009-0006-0095-0243")))
-Maintainer: Hui Wang <hui.wang1@monash.edu>
+Maintainer: Hui Wang <huiw1128@gmail.com>
 Description: The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.
 License: MIT + file LICENSE
 Depends: R (>= 4.1.0)
@@ -20,6 +20,11 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
+URL: https://github.com/skstavroglou/pattern_causality/
+BugReports: https://github.com/skstavroglou/pattern_causality/issues
 Config/testthat/edition: 3
 RoxygenNote: 7.3.1
+VignetteBuilder: knitr

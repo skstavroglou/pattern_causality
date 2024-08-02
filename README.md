@@ -46,10 +46,6 @@ We can import the existing data.
 
 ``` r
 library(patterncausality)
-#> Warning in fun(libname, pkgname): couldn't connect to display ":0"
-```
-
-``` r
 data(climate)
 head(climate)
 #>         Date      AO    AAO   NAO   PNA
@@ -71,14 +67,14 @@ dataset <- climate[, -1] # remove the date column
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
-|       |         | Total     | of which Positive | of which Negative | of which Dark |
-|-------|---------|-----------|-------------------|-------------------|---------------|
-| E = 2 | tau = 1 | 0.5543614 | 0.5519477         | 0.4474361         | 0.0006162144  |
-| E = 2 | tau = 2 | 0.5727414 | 0.5736100         | 0.4232828         | 0.0031071596  |
-| E = 2 | tau = 3 | 0.5711838 | 0.5469069         | 0.4513270         | 0.0017660870  |
-| E = 3 | tau = 1 | 0.3305296 | 0.3457169         | 0.2470929         | 0.4071902523  |
-| E = 3 | tau = 2 | 0.3500000 | 0.4037138         | 0.2547524         | 0.3415338782  |
-| E = 3 | tau = 3 | 0.3570093 | 0.3657638         | 0.2690536         | 0.3651826225  |
+|     |       | Total     | of which Positive | of which Negative | of which Dark |
+|-----|-------|-----------|-------------------|-------------------|---------------|
+| E=2 | tau=1 | 0.5543614 | 0.5519477         | 0.4474361         | 0.0006162144  |
+| E=2 | tau=2 | 0.5727414 | 0.5736100         | 0.4232828         | 0.0031071596  |
+| E=2 | tau=3 | 0.5711838 | 0.5469069         | 0.4513270         | 0.0017660870  |
+| E=3 | tau=1 | 0.3305296 | 0.3457169         | 0.2470929         | 0.4071902523  |
+| E=3 | tau=2 | 0.3500000 | 0.4037138         | 0.2547524         | 0.3415338782  |
+| E=3 | tau=3 | 0.3570093 | 0.3657638         | 0.2690536         | 0.3651826225  |
 
 Of course, we can also change the distance style to calculate the
 distance matrix.
@@ -104,83 +100,11 @@ X <- climate$AO
 Y <- climate$AAO
 detail <- PC.Mk.II.Full.Details(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
-real_stattus <- detail$spectrumOfCausalityReal
+real_status <- detail$spectrumOfCausalityReal
 ```
 
 Then the status series will be saved in `predict_status` and
 `real_status`.
-
-### Application in financial market
-
-First of all, we can import the data of AAPL and MSFT.
-
-``` r
-data(stock)
-head(stock)
-#>            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted
-#> 1986-03-13  0.110491  0.111607 0.108817   0.110491   115964800    0.08527586
-#> 1986-03-14  0.110491  0.117188 0.110491   0.116629   384854400    0.09001311
-#> 1986-03-17  0.116071  0.116071 0.113281   0.116071   118720000    0.08958244
-#> 1986-03-18  0.116071  0.121652 0.115513   0.119978   249356800    0.09259786
-#> 1986-03-19  0.119978  0.121652 0.117746   0.118304   189884800    0.09130585
-#> 1986-03-20  0.125000  0.132254 0.125000   0.126116   904131200    0.09733511
-#>            MSFT.Open MSFT.High MSFT.Low MSFT.Close MSFT.Volume MSFT.Adjusted
-#> 1986-03-13  0.088542  0.101563 0.088542   0.097222  1031788800    0.06005456
-#> 1986-03-14  0.097222  0.102431 0.097222   0.100694   308160000    0.06219922
-#> 1986-03-17  0.100694  0.103299 0.100694   0.102431   133171200    0.06327216
-#> 1986-03-18  0.102431  0.103299 0.098958   0.099826    67766400    0.06166304
-#> 1986-03-19  0.099826  0.100694 0.097222   0.098090    47894400    0.06059071
-#> 1986-03-20  0.098090  0.098090 0.094618   0.095486    58435200    0.05898221
-```
-
-We can visualize this stock price.
-
-    #> Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-    #> 3.5.0.
-    #> ℹ Please use the `legend.position.inside` argument of `theme()` instead.
-    #> This warning is displayed once every 8 hours.
-    #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-    #> generated.
-
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
-
-Then search the best parameters for the PC.
-
-``` r
-dataset <- stock
-parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
-```
-
-After that, calculate the causality of each status.
-
-``` r
-X <- stock$AAPL.Close
-Y <- stock$MSFT.Close
-pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
-print(pc)
-#>       total  positive  negative      dark
-#> 1 0.2698665 0.3881279 0.1369863 0.4748858
-```
-
-Lastly we can also visualize this result.
-
-``` r
-library(ggplot2)
-df = data.frame(
-  name=stringr::str_to_title(c(colnames(pc))),
-  val=as.vector(unlist(pc))
-)
-
-ggplot(df, aes(x=name, y=val, fill=name)) +
-  geom_bar(stat="identity", alpha=.6, width=.4) +
-  scale_fill_grey(start=0, end=0.8) +  # start and end define the range of grays
-  labs(x='Status',y='Strength')+
-  theme_bw(base_size = 12, base_family = "Times New Roman") +
-  theme(legend.position="none", axis.text   = element_text(size = rel(0.8)), 
-                strip.text  = element_text(size = rel(0.8)))
-```
-
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 ### Conclusion
 
@@ -194,6 +118,54 @@ After calculating the causality, we can get the result here.
 | AAO –\> AO    | 0.2803738 | 0.3602941 | 0.2647059 | 0.375     | climate |
 | AO –\> P      | 0.3084112 | 0.1192053 | 0.4503311 | 0.4304636 | AUCO    |
 | P –\> AO      | 0.3308411 | 0.3374233 | 0.2515337 | 0.4110429 | AUCO    |
+
+## About the authors
+
+**Stavros** is lecturer in credit risk and fin-tech at the university of
+Edinburgh Business School and is the main creator for the algorithm of
+the pattern causality.
+
+<a href="mailto:stavros.k.stavroglou@gmail.com">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>
+</a> <a href="https://github.com/skstavroglou">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/>
+</a> <a href="https://orcid.org/0000-0003-3931-0391">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/>
+</a> <a href="https://www.linkedin.com/in/stavroskstavroglou/">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/>
+</a>
+<a href="https://scholar.google.co.uk/citations?user=jpSj6xgAAAAJ&hl=en">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"/>
+</a>
+
+**Athanasios** is professor in econometrics and business Statistics of
+Monash Business School and is the main author of the pattern causality.
+
+<a href="mailto:Athanasios.Pantelous@monash.edu">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>
+</a> <a href="https://orcid.org/0000-0001-5738-1471">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/>
+</a>
+<a href="https://www.linkedin.com/in/athanasios-pantelous-6129513b/">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/>
+</a>
+<a href="https://scholar.google.gr/citations?user=ZMaiiQwAAAAJ&hl=en">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"/>
+</a>
+
+**Hui** is MPhil student in econometrics and business Statistics of
+Monash Business School and is the author and maintainer of the
+`patterncausality` package.
+
+<a href="mailto:huiw1128@gmail.com">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>
+</a> <a href="https://orcid.org/0009-0006-0095-0243">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/>
+</a> <a href="https://www.linkedin.com/in/hui-wang-29b30029b/">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/>
+</a> <a href="https://github.com/wanghui5801">
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/>
+</a>
 
 ## References
 
