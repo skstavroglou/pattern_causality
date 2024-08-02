@@ -121,7 +121,7 @@ After calculating the causality, we can get the result here.
 
 ## About the authors
 
-**Stavros** is lecturer in credit risk and fin-tech at the university of
+**Stavros** is lecturer in credit risk and fin-tech at the University of
 Edinburgh Business School and is the main creator for the algorithm of
 the pattern causality.
 
@@ -138,7 +138,7 @@ the pattern causality.
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"/>
 </a>
 
-**Athanasios** is professor in econometrics and business Statistics of
+**Athanasios** is professor in econometrics and business statistics of
 Monash Business School and is the main author of the pattern causality.
 
 <a href="mailto:Athanasios.Pantelous@monash.edu">
@@ -153,7 +153,7 @@ Monash Business School and is the main author of the pattern causality.
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/google.svg" width="40" height="40"/>
 </a>
 
-**Hui** is MPhil student in econometrics and business Statistics of
+**Hui** is MPhil student in econometrics and business statistics of
 Monash Business School and is the author and maintainer of the
 `patterncausality` package.
 
