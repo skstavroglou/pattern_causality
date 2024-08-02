@@ -137,13 +137,13 @@ import data from the <strong>yahooo</strong> api.</p>
 <div class="section level3">
 <h3 id="full-details">Full details<a class="anchor" aria-label="anchor" href="#full-details"></a>
 </h3>
-<p>The details could be found by with.</p>
+<p>The details could be found with following code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">AAPL.Close</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">MSFT.Close</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PC.Mk.II.Full.Details.html">PC.Mk.II.Full.Details</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
-<span><span class="va">real_stattus</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span>
+<span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">detail</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "backtestTime"                 "realValidTime"               </span></span>
 <span><span class="co">#&gt;  [3] "spectrumOfCausalityReal"      "spectrumOfCausalityPredicted"</span></span>
