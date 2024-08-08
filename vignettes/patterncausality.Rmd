@@ -99,14 +99,14 @@ ggplot(df, aes(x = name, y = val, fill = name)) +
 
 ### Full details
 
-The details could be found by with.
+The details could be found with following code.
 
 ```{r}
 X <- stock$AAPL.Close
 Y <- stock$MSFT.Close
 detail <- PC.Mk.II.Full.Details(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
-real_stattus <- detail$spectrumOfCausalityReal
+real_status <- detail$spectrumOfCausalityReal
 names(detail)
 ```
 

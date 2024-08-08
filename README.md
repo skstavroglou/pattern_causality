@@ -77,7 +77,8 @@ parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean",
 | E=3 | tau=3 | 0.3570093 | 0.3657638         | 0.2690536         | 0.3651826225  |
 
 Of course, we can also change the distance style to calculate the
-distance matrix.
+distance matrix. Then according the combo that produces the highest
+percentages collectively, we can choose the best parameters here.
 
 After the parameters are confirmed, we could calculate the pattern
 causality.
