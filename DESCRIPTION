@@ -26,6 +26,8 @@ Suggests:
     stringr,
     ggplot2,
     testthat (>= 3.0.0)
+Config/Needs/website:
+    tidyverse/tidytemplate
 URL: https://github.com/skstavroglou/pattern_causality/
 BugReports: https://github.com/skstavroglou/pattern_causality/issues
 Config/testthat/edition: 3
