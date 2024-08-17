@@ -1,9 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Pattern Causality
+# Pattern Causality <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/patterncausality)](https://cran.r-project.org/package=patterncausality)
+[![R-CMD-check](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/skstavroglou/pattern_causality/graph/badge.svg)](https://app.codecov.io/gh/skstavroglou/pattern_causality)
 <!-- badges: end -->
 
 ## Overview
