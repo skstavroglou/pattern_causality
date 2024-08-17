@@ -7,8 +7,6 @@
 <url><loc>https://github.com/skstavroglou/pattern_causality/authors.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/index.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/AUCO.html</loc></url>
-<url><loc>https://github.com/skstavroglou/pattern_causality/reference/PC.Mk.II.Full.Details.html</loc></url>
-<url><loc>https://github.com/skstavroglou/pattern_causality/reference/PC.Mk.II.Lightweight.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/climate.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/convertSignatureToValue.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/convertSignatureToValueOutOfSample.html</loc></url>
@@ -27,6 +25,8 @@
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/patternHashing.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/patternSpace.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/pcAccuracy.html</loc></url>
+<url><loc>https://github.com/skstavroglou/pattern_causality/reference/pc_fulldetails.html</loc></url>
+<url><loc>https://github.com/skstavroglou/pattern_causality/reference/pc_lightweight.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/predictionY.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/projectedNNsInfo.html</loc></url>
 <url><loc>https://github.com/skstavroglou/pattern_causality/reference/projectedNNsInfo_Lite.html</loc></url>
