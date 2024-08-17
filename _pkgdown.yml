@@ -1,13 +1,8 @@
-url: https://github.com/skstavroglou/pattern_causality/
+url: https://www.stavroglou.com/pattern_causality/
+
 template:
   bootstrap: 5
-  light-switch: true
-  bslib:
-    bootswatch: zephyr
-    pkgdown-nav-height: 100px
+  package: tidytemplate
+  
   development:
     mode: auto
-  navbar:
-    bg: dark
-    structure:
-      right: [github]
