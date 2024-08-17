@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   patterncausality: patterncausality.html
-last_built: 2024-08-17T14:35Z
+last_built: 2024-08-17T14:43Z
 urls:
   reference: https://github.com/skstavroglou/pattern_causality/reference
   article: https://github.com/skstavroglou/pattern_causality/articles
