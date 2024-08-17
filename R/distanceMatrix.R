@@ -6,7 +6,6 @@
 #' @param metric Character, the distance metric to be used for computing distances. Common metrics include "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
 #'
 #' @return An object of class `dist`, representing the distance matrix of the embedded matrix `M`. This distance matrix can optionally be converted to a full matrix format if needed for subsequent analyses.
-#' @import snowfall tcltk2 moments stats
 #' @export
 #' @examples
 #' # Assume M is an already constructed state space matrix of a time series
@@ -15,7 +14,7 @@
 #' print(distanceMat) # Optionally convert to a full matrix for display
 distanceMatrix <- function(M, metric) {
   # d <- dist(M, metric, upper = TRUE)
-  d <- as.matrix(dist(M, metric, upper = T))
+  d <- as.matrix(stats::dist(M, metric, upper = T))
   return(d)
 }
 

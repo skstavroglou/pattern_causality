@@ -73,7 +73,7 @@ After that, calculate the causality of each status.
 ```{r}
 X <- stock$AAPL.Close
 Y <- stock$MSFT.Close
-pc <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
+pc <- pc_lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(pc)
 ```
 
@@ -104,7 +104,7 @@ The details could be found with following code.
 ```{r}
 X <- stock$AAPL.Close
 Y <- stock$MSFT.Close
-detail <- PC.Mk.II.Full.Details(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
+detail <- pc_fulldetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
 real_status <- detail$spectrumOfCausalityReal
 names(detail)

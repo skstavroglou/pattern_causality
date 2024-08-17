@@ -26,6 +26,7 @@ optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
   start.time <- Sys.time()
   # pb <- tkProgressBar(title = "Still Running on Coal :P", min = 0,
   #                    max = max(E_array), width = 300)
+  #pb <- txtProgressBar(min = 0, max = max(E_array), style = 3, char="#")
   for (E in E_array) {
     message(paste("Testing | E: ", E))
     for (tau in tau_array) {
@@ -41,6 +42,7 @@ optimalParametersSearch <- function(Emax, tauMax, metric, dataset) {
     }
     # setTkProgressBar(pb, E, label=paste( E/max(E_array)*100, 0),
     #                 "% towards Arc Reactor")
+    #setTxtProgressBar(pb, i)
   }
   # = MANIPULATING THE RESULTS
   accuracyPerE <- list()

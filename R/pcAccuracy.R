@@ -32,7 +32,7 @@ pcAccuracy <- function(dataset, E, tau, metric, h, weighted) {
           if (firstCausalityPointCHECK(E, tau, h, dataset[, j])) {
             # temp <- PC.Mk.II.For.Network.Lite(dataset[,i],dataset[,j],
             #                                  E,tau,metric,h,weighted,comCoordRemoval)
-            temp <- PC.Mk.II.Lightweight(dataset[, i], dataset[, j], E, tau, metric, h, weighted)
+            temp <- pc_lightweight(dataset[, i], dataset[, j], E, tau, metric, h, weighted, tpb=FALSE)
             couplingsTotal[i, j] <- temp$total
             couplingsPosi[i, j] <- temp$positive
             couplingsNega[i, j] <- temp$negative

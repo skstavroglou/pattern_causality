@@ -81,4 +81,4 @@ fillPCMatrix <- function(weighted, predictedPatternY, realPatternY, predictedSig
 }
 # === Prerequisites
 norm_vec <- function(x) sqrt(sum(x^2))
-erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
+erf <- function(x) 2 * stats::pnorm(x * sqrt(2)) - 1

@@ -13,9 +13,9 @@
 #' data(climate)
 #' X <- climate$AO
 #' Y <- climate$AAO
-#' result <- PC.Mk.II.Full.Details(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
+#' result <- pc_fulldetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 #' print(result)
-PC.Mk.II.Full.Details <- function(X, Y, E, tau, metric, h, weighted) {
+pc_fulldetails <- function(X, Y, E, tau, metric, h, weighted) {
   ###################################
   ### STEP 0: PREPARATORY ACTIONS ###
   ###################################
@@ -62,6 +62,7 @@ PC.Mk.II.Full.Details <- function(X, Y, E, tau, metric, h, weighted) {
   NNsYproj <- rep(list(), length(Y))
   # pb <- tkProgressBar(title = "Deploying PC Mk. II", min = 0,
   #                    max = length(al_loop_dur), width = 500)
+  pb <- utils::txtProgressBar(min = 0, max = length(al_loop_dur), style = 3, char="#")
   real_loop <- NA
   for (i in al_loop_dur) {
     if (!anyNA(c(Mx[i, ], My[i + h, ]))) {
@@ -122,6 +123,7 @@ PC.Mk.II.Full.Details <- function(X, Y, E, tau, metric, h, weighted) {
       }
     }
     # setTkProgressBar(pb, i, label=paste( i/al_loop_dur[length(al_loop_dur)], 0),"% PC Mk. II Assignment Completion")
+    utils::setTxtProgressBar(pb, i)
   }
   spectrumOfCausalityReal <- natureOfCausality(realPCMatrix, real_loop, hashedpatterns, X)
   spectrumOfCausalityPredicted <- natureOfCausality(predictedPCMatrix, real_loop, hashedpatterns, X)

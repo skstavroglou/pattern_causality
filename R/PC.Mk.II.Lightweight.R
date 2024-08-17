@@ -1,4 +1,4 @@
-#' @title PC Mk. II Lightweight Function
+#' @title Pattern Causality Lightweight Function
 #' @description This function implements the Pattern Causality Model Mk. II for lightweight analysis of causal interactions between two time series using pattern and signature spaces. It assesses causality through reconstructed state spaces and hashed pattern analysis.
 #' @param X A numeric vector representing the first time series.
 #' @param Y A numeric vector representing the second time series.
@@ -7,15 +7,17 @@
 #' @param metric A character string indicating the distance metric to be used (e.g., 'euclidean', 'maximum').
 #' @param h The prediction horizon, representing the number of steps ahead for which predictions are needed.
 #' @param weighted A logical indicating whether to use a weighted approach in the causality strength calculations.
+#' @param tpb A bool parameter to show progress bar.
+
 #' @return A data frame with columns for total, positive, negative, and dark causality percentages across evaluated time points, giving insights into the nature of causality between the time series.
 #' @export
 #' @examples
 #' data(climate)
 #' X <- climate$AO
 #' Y <- climate$AAO
-#' result <- PC.Mk.II.Lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+#' result <- pc_lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 #' print(result)
-PC.Mk.II.Lightweight <- function(X, Y, E, tau, metric, h, weighted) {
+pc_lightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {
   ###################################
   ### STEP 0: PREPARATORY ACTIONS ###
   ###################################
@@ -45,7 +47,8 @@ PC.Mk.II.Lightweight <- function(X, Y, E, tau, metric, h, weighted) {
   out_of_sample_loop_dur <- ((length(X) - (E - 1) * tau - h) + 1):nrow(Mx)
   # = KEEPING THE PC MATRICES | Causality is considered only from FCP onwards
   predictedPCMatrix <- dataBank(type = "array", dimensions = c(3^(E - 1), 3^(E - 1), length(Y)))
-  # pb <- tkProgressBar(title = "Deploying PC Mk. II", min = 0,
+  if(tpb==TRUE){pb <- utils::txtProgressBar(min = 0, max = length(al_loop_dur), style = 3, char="#")}
+  #pb <- tkProgressBar(title = "Deploying PC Mk. II", min = 0,
   #                    max = length(al_loop_dur), width = 500)
   real_loop <- NA
   for (i in al_loop_dur) {
@@ -88,7 +91,8 @@ PC.Mk.II.Lightweight <- function(X, Y, E, tau, metric, h, weighted) {
         }
       }
     }
-    # setTkProgressBar(pb, i, label=paste( i/al_loop_dur[length(al_loop_dur)], 0),"% PC Mk. II In-Sample Assignment Completion")
+    #setTkProgressBar(pb, i, label=paste( i/al_loop_dur[length(al_loop_dur)], 0),"% PC Mk. II In-Sample Assignment Completion")
+    if(tpb==TRUE){utils::setTxtProgressBar(pb, i)}
   }
   causality <- natureOfCausality(predictedPCMatrix, real_loop, hashedpatterns, X)
   totalCausPercent <- 1 - mean(causality$noCausality, na.rm = T)
