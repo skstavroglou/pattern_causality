@@ -35,8 +35,7 @@ devtools::install_github("skstavroglou/pattern_causality")
 ```
 
 You can also install the package from
-[CRAN](https://cran.r-project.org/web/packages/patterncausality/index.html)
-with:
+[CRAN](https://CRAN.R-project.org/package=patterncausality) with:
 
 ``` r
 install.packages("patterncausality")
