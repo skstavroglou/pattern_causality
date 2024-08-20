@@ -1,6 +1,6 @@
 ---
 title: "Introduction to patterncausality"
-author: "Hui Wang"
+author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to patterncausality}
