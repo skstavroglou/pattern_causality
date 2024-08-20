@@ -13,9 +13,9 @@
 #' data(climate)
 #' X <- climate$AO
 #' Y <- climate$AAO
-#' result <- pc_fulldetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
+#' result <- pcFullDetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 #' print(result)
-pc_fulldetails <- function(X, Y, E, tau, metric, h, weighted) {
+pcFullDetails <- function(X, Y, E, tau, metric, h, weighted) {
   ###################################
   ### STEP 0: PREPARATORY ACTIONS ###
   ###################################

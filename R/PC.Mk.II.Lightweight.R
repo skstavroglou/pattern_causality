@@ -15,9 +15,9 @@
 #' data(climate)
 #' X <- climate$AO
 #' Y <- climate$AAO
-#' result <- pc_lightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+#' result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 #' print(result)
-pc_lightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {
+pcLightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {
   ###################################
   ### STEP 0: PREPARATORY ACTIONS ###
   ###################################

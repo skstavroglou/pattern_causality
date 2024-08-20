@@ -89,7 +89,7 @@ causality.
 ``` r
 X <- climate$AO
 Y <- climate$AAO
-pc <- pc_lightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
+pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
 print(pc)
 #>       total positive  negative     dark
 #> 1 0.2841121 0.326087 0.2318841 0.442029
@@ -102,7 +102,7 @@ If we wonder the status in each time point, we can run the code.
 ``` r
 X <- climate$AO
 Y <- climate$AAO
-detail <- pc_fulldetails(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
+detail <- pcFullDetails(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
 real_status <- detail$spectrumOfCausalityReal
 ```
