@@ -25,8 +25,8 @@ First of all, we can import the data of AAPL and MSFT, also we can import data f
 
 ```{r message = FALSE}
 library(patterncausality)
-data(stock)
-head(stock)
+data(DJS)
+head(DJS)
 ```
 
 We can visualize this stock price.
@@ -34,14 +34,14 @@ We can visualize this stock price.
 ```{r echo=FALSE}
 library(ggplot2)
 df <- data.frame(
-  Date = as.Date(rownames(stock)),
+  Date = as.Date(DJS$Date),
   Value = c(
-    stock$AAPL.Close,
-    stock$MSFT.Close
+    DJS$Apple,
+    DJS$Microsoft
   ),
   Type = c(
-    rep("AAPL", dim(stock)[1]),
-    rep("MSFT", dim(stock)[1])
+    rep("Apple", dim(DJS)[1]),
+    rep("Microsoft", dim(DJS)[1])
   )
 )
 ggplot(df) +
@@ -50,7 +50,7 @@ ggplot(df) +
   xlab("Time") +
   ylab("Stock Price") +
   theme(
-    legend.position = c(0.1, 0.85), legend.box.background = element_rect(fill = NA, color = "black", linetype = 1), legend.key = element_blank(),
+    legend.position = c(0.25, 0.85), legend.box.background = element_rect(fill = NA, color = "black", linetype = 1), legend.key = element_blank(),
     legend.title = element_blank(), legend.background = element_blank(), axis.text = element_text(size = rel(0.8)),
     strip.text = element_text(size = rel(0.8))
   ) +
@@ -62,7 +62,7 @@ ggplot(df) +
 Then search the best parameters for the PC.
 
 ```{r eval=FALSE}
-dataset <- stock
+dataset <- DJS[,-1]
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
@@ -71,8 +71,8 @@ parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean",
 After that, calculate the causality of each status.
 
 ```{r}
-X <- stock$AAPL.Close
-Y <- stock$MSFT.Close
+X <- DJS$Apple
+Y <- DJS$Microsoft
 pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
 print(pc)
 ```
@@ -102,8 +102,8 @@ ggplot(df, aes(x = name, y = val, fill = name)) +
 The details could be found with following code.
 
 ```{r eval=FALSE}
-X <- stock$AAPL.Close
-Y <- stock$MSFT.Close
+X <- DJS$Apple
+Y <- DJS$Microsoft
 detail <- pcFullDetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
 real_status <- detail$spectrumOfCausalityReal

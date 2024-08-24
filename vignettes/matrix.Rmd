@@ -1,0 +1,78 @@
+---
+title: "Pattern Causality in a large dataset"
+author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to patterncausality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+If we want to catch the hidden causality in a large and complex system, which includes a lot series, we also provide some functions to show it better.
+
+## Pattern causality matrix
+
+The DJS data includes 29 stock price series, which is large enough for our analysis.
+
+```{r message=FALSE}
+library(patterncausality)
+data(DJS)
+#head(DJS)
+```
+
+Then we could estimate the pattern causality in this dataset by `pcMatrix` function.
+
+```{r eval=FALSE}
+dataset <- DJS[,-1] # remove the date column
+result <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+```
+
+```{r echo=FALSE}
+result <- readRDS("djsmatrix.rds")
+```
+
+Then we could see the three matrixs after calculating.
+```{r}
+head(result$positive)
+```
+
+Then we can visualize the result by `plotMatrix` function.
+
+- positive status
+
+```{r}
+plotMatrix(result, status = "positive", method = "circle")
+```
+
+- negative status
+
+```{r}
+plotMatrix(result, status = "negative", method = "circle")
+```
+
+- dark status
+
+```{r}
+plotMatrix(result, status = "dark", method = "circle")
+```
+
+We could see that there is a obvious positive connection in this system.
+
+## Pattern causality effect
+
+After we get the matrix, we can find the total effect in the system, we provide the function `pcEffect` to achieve this target.
+
+```{r}
+effects <- pcEffect(result)
+print(effects)
+```
+
+Then we could observe the total effect in pattern causality.

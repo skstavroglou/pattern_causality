@@ -1,0 +1,48 @@
+---
+title: "Pattern Causality between two series"
+author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to patterncausality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This page will show more details of analyzing the causality between two series.
+
+## Cross validation
+
+As an example, we could import climate from `patterncausality` package.
+
+```{r message = FALSE}
+library(patterncausality)
+data(climate)
+```
+
+Then we consider a method of cross-validation to see the robustness of pattern causality.
+
+```{r}
+set.seed(123)
+X <- climate$PNA
+Y <- climate$NAO
+numberset <- c(100,200,300,400,500)
+result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
+print(result)
+```
+
+In order to make the results better observed, we provide the `plotCV` function to give a line chart of the result.
+
+```{r}
+plotCV(result)
+```
+
+We can find that the causality keep the same position when the sample number is large enough, this method indeed captures hidden patterns and causal connections in sequences.
+

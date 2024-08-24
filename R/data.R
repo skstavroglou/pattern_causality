@@ -7,14 +7,14 @@
 #' head(climate)
 "climate"
 
-#' Stock index
+#' Dow Jones stock price
 #'
-#' This is a time series of stock series which contains AAPL and MSFT from March 13, 1986 to August 6, 2018.
+#' It includes 29 time series of stock series in Dow Jones.
 #'
 #'
 #' @examples
-#' head(stock)
-"stock"
+#' head(DJS)
+"DJS"
 
 #' A data from Illapel
 #'
