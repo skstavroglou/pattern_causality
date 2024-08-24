@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,13 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/patterncausality.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a large dataset</a></li>
+    <li><a class="dropdown-item" href="../articles/series.html">Pattern Causality between two series</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -78,29 +85,50 @@ many kinds of series, so that it is statistically sufficient.</p>
 import data from the <strong>yahooo</strong> api.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">stock</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">stock</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume</span></span>
-<span><span class="co">#&gt; 1986-03-13  0.110491  0.111607 0.108817   0.110491   115964800</span></span>
-<span><span class="co">#&gt; 1986-03-14  0.110491  0.117188 0.110491   0.116629   384854400</span></span>
-<span><span class="co">#&gt; 1986-03-17  0.116071  0.116071 0.113281   0.116071   118720000</span></span>
-<span><span class="co">#&gt; 1986-03-18  0.116071  0.121652 0.115513   0.119978   249356800</span></span>
-<span><span class="co">#&gt; 1986-03-19  0.119978  0.121652 0.117746   0.118304   189884800</span></span>
-<span><span class="co">#&gt; 1986-03-20  0.125000  0.132254 0.125000   0.126116   904131200</span></span>
-<span><span class="co">#&gt;            AAPL.Adjusted MSFT.Open MSFT.High MSFT.Low MSFT.Close</span></span>
-<span><span class="co">#&gt; 1986-03-13    0.08527586  0.088542  0.101563 0.088542   0.097222</span></span>
-<span><span class="co">#&gt; 1986-03-14    0.09001311  0.097222  0.102431 0.097222   0.100694</span></span>
-<span><span class="co">#&gt; 1986-03-17    0.08958244  0.100694  0.103299 0.100694   0.102431</span></span>
-<span><span class="co">#&gt; 1986-03-18    0.09259786  0.102431  0.103299 0.098958   0.099826</span></span>
-<span><span class="co">#&gt; 1986-03-19    0.09130585  0.099826  0.100694 0.097222   0.098090</span></span>
-<span><span class="co">#&gt; 1986-03-20    0.09733511  0.098090  0.098090 0.094618   0.095486</span></span>
-<span><span class="co">#&gt;            MSFT.Volume MSFT.Adjusted</span></span>
-<span><span class="co">#&gt; 1986-03-13  1031788800    0.06005456</span></span>
-<span><span class="co">#&gt; 1986-03-14   308160000    0.06219922</span></span>
-<span><span class="co">#&gt; 1986-03-17   133171200    0.06327216</span></span>
-<span><span class="co">#&gt; 1986-03-18    67766400    0.06166304</span></span>
-<span><span class="co">#&gt; 1986-03-19    47894400    0.06059071</span></span>
-<span><span class="co">#&gt; 1986-03-20    58435200    0.05898221</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         Date     X3M American.Express    Apple  Boeing Caterpillar</span></span>
+<span><span class="co">#&gt; 1 2000-01-03 47.1875         45.88031 3.997768 40.1875    24.31250</span></span>
+<span><span class="co">#&gt; 2 2000-01-04 45.3125         44.14794 3.660714 40.1250    24.00000</span></span>
+<span><span class="co">#&gt; 3 2000-01-05 46.6250         42.96264 3.714286 42.6250    24.56250</span></span>
+<span><span class="co">#&gt; 4 2000-01-06 50.3750         43.83794 3.392857 43.0625    25.81250</span></span>
+<span><span class="co">#&gt; 5 2000-01-07 51.3750         44.47618 3.553571 44.3125    26.65625</span></span>
+<span><span class="co">#&gt; 6 2000-01-10 51.1250         45.09618 3.491071 43.6875    25.78125</span></span>
+<span><span class="co">#&gt;    Chevron Cisco.Systems Coca.Cola DowDuPont ExxonMobil General.Electric</span></span>
+<span><span class="co">#&gt; 1 41.81250      54.03125  28.18750  44.20833   39.15625         50.00000</span></span>
+<span><span class="co">#&gt; 2 41.81250      51.00000  28.21875  43.00000   38.40625         48.00000</span></span>
+<span><span class="co">#&gt; 3 42.56250      50.84375  28.46875  44.39583   40.50000         47.91667</span></span>
+<span><span class="co">#&gt; 4 44.37500      50.00000  28.50000  45.64583   42.59375         48.55727</span></span>
+<span><span class="co">#&gt; 5 45.15625      52.93750  30.37500  46.66667   42.46875         50.43750</span></span>
+<span><span class="co">#&gt; 6 43.93750      54.90625  29.40625  45.47917   41.87500         50.41667</span></span>
+<span><span class="co">#&gt;   Goldman.Sachs      IBM    Intel Johnson...Johnson JPMorgan.Chase</span></span>
+<span><span class="co">#&gt; 1       88.3125 116.0000 43.50000          46.09375       48.58333</span></span>
+<span><span class="co">#&gt; 2       82.7500 112.0625 41.46875          44.40625       47.25000</span></span>
+<span><span class="co">#&gt; 3       78.8750 116.0000 41.81250          44.87500       46.95833</span></span>
+<span><span class="co">#&gt; 4       82.2500 114.0000 39.37500          46.28125       47.62500</span></span>
+<span><span class="co">#&gt; 5       82.5625 113.5000 41.00000          48.25000       48.50000</span></span>
+<span><span class="co">#&gt; 6       84.3750 118.0000 42.87500          47.03125       47.66667</span></span>
+<span><span class="co">#&gt;   McDonald.s   Merck Microsoft     Nike  Pfizer Procter...Gamble</span></span>
+<span><span class="co">#&gt; 1    39.6250 67.6250  58.28125 6.015625 31.8750         53.59375</span></span>
+<span><span class="co">#&gt; 2    38.8125 65.2500  56.31250 5.687500 30.6875         52.56250</span></span>
+<span><span class="co">#&gt; 3    39.4375 67.8125  56.90625 6.015625 31.1875         51.56250</span></span>
+<span><span class="co">#&gt; 4    38.8750 68.3750  55.00000 5.984375 32.3125         53.93750</span></span>
+<span><span class="co">#&gt; 5    39.8750 74.9375  55.71875 5.984375 34.5000         58.25000</span></span>
+<span><span class="co">#&gt; 6    40.0625 72.7500  56.12500 6.085938 34.4375         57.96875</span></span>
+<span><span class="co">#&gt;   The.Home.Depot Travelers United.Technologies UnitedHealth.Group</span></span>
+<span><span class="co">#&gt; 1        65.1875   33.0000            31.25000           6.718750</span></span>
+<span><span class="co">#&gt; 2        61.7500   32.5625            29.96875           6.632813</span></span>
+<span><span class="co">#&gt; 3        63.0000   32.3125            29.37500           6.617188</span></span>
+<span><span class="co">#&gt; 4        60.0000   32.9375            30.78125           6.859375</span></span>
+<span><span class="co">#&gt; 5        63.5000   34.2500            32.00000           7.664063</span></span>
+<span><span class="co">#&gt; 6        63.1875   33.6250            32.31250           7.531250</span></span>
+<span><span class="co">#&gt;    Verizon Walmart Walt.Disney</span></span>
+<span><span class="co">#&gt; 1 53.90316 66.8125    29.46252</span></span>
+<span><span class="co">#&gt; 2 52.16072 64.3125    31.18836</span></span>
+<span><span class="co">#&gt; 3 53.90316 63.0000    32.48274</span></span>
+<span><span class="co">#&gt; 4 53.28487 63.6875    31.18836</span></span>
+<span><span class="co">#&gt; 5 52.89142 68.5000    30.69527</span></span>
+<span><span class="co">#&gt; 6 52.61038 67.2500    35.37968</span></span></code></pre></div>
 <p>We can visualize this stock price.</p>
 <p><img src="patterncausality_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="section level3">
@@ -108,7 +136,7 @@ import data from the <strong>yahooo</strong> api.</p>
 </h3>
 <p>Then search the best parameters for the PC.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">stock</span></span>
+<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -116,12 +144,12 @@ import data from the <strong>yahooo</strong> api.</p>
 </h3>
 <p>After that, calculate the causality of each status.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">AAPL.Close</span></span>
-<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">MSFT.Close</span></span>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, tpb<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       total  positive  negative      dark</span></span>
-<span><span class="co">#&gt; 1 0.2698665 0.3881279 0.1369863 0.4748858</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.2776053 0.3933764 0.1567044 0.4499192</span></span></code></pre></div>
 <p>Lastly we can also visualize this result.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -146,8 +174,8 @@ import data from the <strong>yahooo</strong> api.</p>
 </h3>
 <p>The details could be found with following code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">AAPL.Close</span></span>
-<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">stock</span><span class="op">$</span><span class="va">MSFT.Close</span></span>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
 <span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span>
