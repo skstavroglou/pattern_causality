@@ -76,3 +76,7 @@ print(effects)
 ```
 
 Then we could observe the total effect in pattern causality.
+
+```{r}
+plotEffect(effects, "negative",TRUE)
+```

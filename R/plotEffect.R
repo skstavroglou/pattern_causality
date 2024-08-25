@@ -3,7 +3,7 @@
 #' @description
 #' The `plotEffect` function generates a plot to visualize the effects of positive, negative, or dark causality based on the results from the `pcEffect` function. It displays the influence exerted versus influence received for each item, providing a clear graphical representation of the causality effects.
 #' 
-#' @importFrom plot3D text2D scatter2D
+#' @importFrom plot3D text2D scatter2D ramp.col
 #' @importFrom corrplot COL1
 #' @param effects A list containing data frames of causality effects for positive, negative, and dark influences, as returned by the `pcEffect` function. Each data frame includes columns for received influence, exerted influence, and the difference between them.
 #' @param status A character string specifying which causality effect to plot. Must be one of `"positive"`, `"negative"`, or `"dark"`.
