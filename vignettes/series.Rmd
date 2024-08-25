@@ -3,7 +3,7 @@ title: "Pattern Causality between two series"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to patterncausality}
+  %\VignetteIndexEntry{Pattern Causality between two series}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

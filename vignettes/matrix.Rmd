@@ -3,7 +3,7 @@ title: "Pattern Causality in a large dataset"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to patterncausality}
+  %\VignetteIndexEntry{Pattern Causality in a large dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
