@@ -20,7 +20,7 @@
 #' set.seed(123)
 #' E <- 3
 #' tau <- 1
-#' Mx <- matrix(rnorm(200), nrow = 20)
+#' Mx <- matrix(rnorm(300), nrow = 100)
 #' Dx <- distanceMatrix(Mx, "minkowski")
 #' SMx <- signatureSpace(Mx, E)
 #' PSMx <- patternSpace(SMx, E)
