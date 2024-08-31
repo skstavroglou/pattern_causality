@@ -36,8 +36,8 @@ The predictions adjust according to a specified zero tolerance level to manage s
 set.seed(123)
 E <- 3
 tau <- 1
-Mx <- matrix(rnorm(200), nrow = 20)
-My <- matrix(rnorm(200), nrow = 20)
+Mx <- matrix(rnorm(300), nrow = 100)
+My <- matrix(rnorm(300), nrow = 100)
 Dx <- distanceMatrix(Mx, "minkowski")
 Dy <- distanceMatrix(My, "minkowski")
 SMx <- signatureSpace(Mx, E)

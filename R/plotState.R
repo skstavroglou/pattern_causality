@@ -12,9 +12,11 @@
 #' 
 #' @export
 #' @examples
+#' \donttest{
 #' data(climate)
 #' state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
 #' plotState(state_data,phi=20)
+#' }
 plotState <- function(statedata, ...){
   if(dim(statedata)[2] != 3){
     stop("Your E is not equal to 3, please correct.")

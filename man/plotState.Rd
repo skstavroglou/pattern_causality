@@ -18,7 +18,9 @@ A 3D scatter plot that visualizes the state space of the time series data. The p
 The \code{plotState} function generates a 3D plot of the reconstructed state space for time series data with an embedding dimension of 3. It uses the \code{scatter3D_fancy} function to create a detailed 3D scatter plot, which helps visualize the dynamics of the system in three dimensions.
 }
 \examples{
+\donttest{
 data(climate)
 state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
 plotState(state_data,phi=20)
+}
 }
