@@ -43,7 +43,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotCV</span><span class="op">(</span><span class="va">pcCV</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotCV</span><span class="op">(</span><span class="va">pcCV</span>, fr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -52,6 +52,10 @@
 
 <dl><dt id="arg-pccv">pcCV<a class="anchor" aria-label="anchor" href="#arg-pccv"></a></dt>
 <dd><p>A data frame containing the cross-validation results from the <code>pcCrossValidation</code> function. The data frame should include columns for positive, negative, and dark causality strengths, along with the corresponding sample sizes.</p></dd>
+
+
+<dt id="arg-fr">fr<a class="anchor" aria-label="anchor" href="#arg-fr"></a></dt>
+<dd><p>A bool value for the plot frame</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -68,7 +72,7 @@
 <span class="r-in"><span><span class="va">numberset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">3000</span>,<span class="fl">4000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="pcCrossValidation.html">pcCrossValidation</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">Y</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="st">"euclidean"</span>,<span class="fl">1</span>,<span class="cn">FALSE</span>,<span class="va">numberset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                        |                                                                |   0%  |                                                                        |#####################                                           |  33%  |                                                                        |###########################################                     |  67%  |                                                                        |################################################################| 100%</span>
-<span class="r-in"><span><span class="fu">plotCV</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotCV</span><span class="op">(</span><span class="va">result</span>,<span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotCV-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
