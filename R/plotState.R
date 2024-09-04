@@ -15,16 +15,24 @@
 #' \donttest{
 #' data(climate)
 #' state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
-#' plotState(state_data,phi=20)
+#' plotState(state_data,phi=20, style=2)
 #' }
-plotState <- function(statedata, ...){
+plotState <- function(statedata, ..., style=2){
   if(dim(statedata)[2] != 3){
     stop("Your E is not equal to 3, please correct.")
   }
-  else{
+  if(style==2){
+    scatter3D(statedata[,1], statedata[,2], statedata[,3], pch = 18, bty = "u", colkey = FALSE, 
+              col.panel ="steelblue", expand =0.4,
+              col.grid = "darkblue")
+  }
+  else if(style==1){
     scatter3D_fancy(statedata[,1], statedata[,2], statedata[,3], pch = 16,
                     xlab='',ylab='',zlab='',ticktype = "detailed", ...,
                     theta = 15, d = 2 )
+  }
+  else{
+    stop("The style parameter should be 1 or 2.")
   }
 }
 

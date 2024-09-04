@@ -4,7 +4,7 @@
 \alias{plotState}
 \title{3D State Space Plot for Phase Space Reconstruction}
 \usage{
-plotState(statedata, ...)
+plotState(statedata, ..., style = 2)
 }
 \arguments{
 \item{statedata}{A matrix or data frame containing the reconstructed state space data, where each column corresponds to a different dimension. The input must have exactly 3 columns, corresponding to an embedding dimension (\code{E}) of 3.}
@@ -21,6 +21,6 @@ The \code{plotState} function generates a 3D plot of the reconstructed state spa
 \donttest{
 data(climate)
 state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
-plotState(state_data,phi=20)
+plotState(state_data,phi=20, style=2)
 }
 }
