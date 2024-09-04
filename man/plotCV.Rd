@@ -4,10 +4,12 @@
 \alias{plotCV}
 \title{Plot Cross-Validation Results for Pattern Causality}
 \usage{
-plotCV(pcCV)
+plotCV(pcCV, fr = FALSE)
 }
 \arguments{
 \item{pcCV}{A data frame containing the cross-validation results from the \code{pcCrossValidation} function. The data frame should include columns for positive, negative, and dark causality strengths, along with the corresponding sample sizes.}
+
+\item{fr}{A bool value for the plot frame}
 }
 \value{
 A plot visualizing the positive, negative, and dark causality strengths across different sample sizes. The plot includes points and lines for each causality type, along with a legend for easy interpretation.
@@ -22,6 +24,6 @@ X <- DJS$X3M
 Y <- DJS$American.Express
 numberset <- c(1000,2000,3000,4000)
 result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
-plotCV(result)
+plotCV(result,FALSE)
 }
 }

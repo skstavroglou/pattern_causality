@@ -60,6 +60,7 @@ pcCrossValidation <- function(X, Y, E, tau, metric, h, weighted, numberset){
 #' The `plotCV` function generates a plot to visualize the results of cross-validation for pattern causality. It displays the positive, negative, and dark causality strengths across different sample sizes, providing a clear graphical representation of the cross-validation outcomes.
 #' 
 #' @param pcCV A data frame containing the cross-validation results from the `pcCrossValidation` function. The data frame should include columns for positive, negative, and dark causality strengths, along with the corresponding sample sizes.
+#' @param fr A bool value for the plot frame
 #' 
 #' @return
 #' A plot visualizing the positive, negative, and dark causality strengths across different sample sizes. The plot includes points and lines for each causality type, along with a legend for easy interpretation.
@@ -73,12 +74,12 @@ pcCrossValidation <- function(X, Y, E, tau, metric, h, weighted, numberset){
 #' Y <- DJS$American.Express
 #' numberset <- c(1000,2000,3000,4000)
 #' result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
-#' plotCV(result)
+#' plotCV(result,FALSE)
 #' }
-plotCV <- function(pcCV){
+plotCV <- function(pcCV,fr=FALSE){
   pcCV$number <- rownames(pcCV)
   plot(pcCV$number, pcCV$positive, type = "b", pch = 19,xlab="L",ylab="Causality Strength", 
-       col = "blue", frame = TRUE, ylim=c(0,1))
+       col = "blue", frame = fr, ylim=c(0,1))
   lines(pcCV$number, pcCV$negative, pch = 19, col = "red", type = "b")
   lines(pcCV$number, pcCV$dark, pch = 19, col = "purple", type = "b")
   legend("topright",0.98,c("positive", "negative","dark"),col=c("blue","red","purple"),pch=19,lty=1, bty = "n")
