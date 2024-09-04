@@ -6,6 +6,7 @@
 #' @importFrom plot3D trans3D scatter2D scatter3D
 #' @param statedata A matrix or data frame containing the reconstructed state space data, where each column corresponds to a different dimension. The input must have exactly 3 columns, corresponding to an embedding dimension (`E`) of 3.
 #' @param ... Some other settings for plot
+#' @param style choose a style for the 3D plot
 #' 
 #' @return
 #' A 3D scatter plot that visualizes the state space of the time series data. The plot provides insights into the underlying structure and behavior of the dynamical system being studied.
@@ -15,7 +16,7 @@
 #' \donttest{
 #' data(climate)
 #' state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
-#' plotState(state_data,phi=20, style=2)
+#' plotState(state_data,phi=20, style=1)
 #' }
 plotState <- function(statedata, ..., style=2){
   if(dim(statedata)[2] != 3){
