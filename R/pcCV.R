@@ -77,12 +77,17 @@ pcCrossValidation <- function(X, Y, E, tau, metric, h, weighted, numberset){
 #' }
 plotCV <- function(pcCV){
   pcCV$number <- rownames(pcCV)
-  plot(pcCV$number, pcCV$positive,pch=15,col="DarkTurquoise",ylim=c(0,1),xlab="L",ylab="Causality Strength")
-  points(pcCV$number, pcCV$negative,pch=16,col="DeepPink",cex=1)
-  points(pcCV$number, pcCV$dark,pch=17,col="RosyBrown",cex=1)
-  lines(pcCV$number, pcCV$positive,col="DarkTurquoise",lty=1)
-  lines(pcCV$number, pcCV$negative,col="DeepPink",lty=2)
-  lines(pcCV$number, pcCV$dark,col="RosyBrown",lty=3)
-  legend("topright",0.98,c("positive", "negative","dark"),col=c("DarkTurquoise","DeepPink","RosyBrown"),text.col=c("DarkTurquoise","DeepPink","RosyBrown"),pch=c(15,16,17),lty=c(1,2,3))
+  plot(pcCV$number, pcCV$positive, type = "b", pch = 19,xlab="L",ylab="Causality Strength", 
+       col = "blue", frame = TRUE, ylim=c(0,1))
+  lines(pcCV$number, pcCV$negative, pch = 19, col = "red", type = "b")
+  lines(pcCV$number, pcCV$dark, pch = 19, col = "purple", type = "b")
+  legend("topright",0.98,c("positive", "negative","dark"),col=c("blue","red","purple"),pch=19,lty=1, bty = "n")
+  # plot(pcCV$number, pcCV$positive,pch=15,col="DarkTurquoise",ylim=c(0,1),xlab="L",ylab="Causality Strength")
+  # points(pcCV$number, pcCV$negative,pch=16,col="DeepPink",cex=1)
+  # points(pcCV$number, pcCV$dark,pch=17,col="RosyBrown",cex=1)
+  # lines(pcCV$number, pcCV$positive,col="DarkTurquoise",lty=1)
+  # lines(pcCV$number, pcCV$negative,col="DeepPink",lty=2)
+  # lines(pcCV$number, pcCV$dark,col="RosyBrown",lty=3)
+  # legend("topright",0.98,c("positive", "negative","dark"),col=c("DarkTurquoise","DeepPink","RosyBrown"),text.col=c("DarkTurquoise","DeepPink","RosyBrown"),pch=c(15,16,17),lty=c(1,2,3))
 }
 

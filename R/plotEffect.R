@@ -38,9 +38,9 @@ plotEffect <- function(effects, status,addlabel=TRUE){
   else{
     mcolor <- "Purples"
   }
-  with(effects, text2D(x = c(effects[status][[1]][2])[[1]], y = c(effects[status][[1]][1]+max(effects[status][[1]][1])*0.01)[[1]], colvar = c(effects[status][[1]][3])[[1]], 
+  with(effects, text2D(x = c(effects[status][[1]][2])[[1]], y = c(effects[status][[1]][1]+(max(effects[status][[1]][1])-min(effects[status][[1]][1]))*0.05)[[1]], colvar = c(effects[status][[1]][3])[[1]], 
                          xlab = "Influence exerted", ylab = "Influence received", ylim=c(min(effects[status][[1]][1])-1,max(effects[status][[1]][1])+1+max(effects[status][[1]][1])*0.01),labels = rownames(effects[status][[1]]), cex = 0.6, 
-                         adj = 0.5, font = 2, col=ramp.col(col = COL1(mcolor), n = 100, alpha = 1)))
+                         adj = 0.5, font = 2, col=ramp.col(col = COL1(mcolor)[100:200], n = 100, alpha = 1)))
   with(effects, scatter2D(x = c(effects[status][[1]][2])[[1]], y = c(effects[status][[1]][1])[[1]], colvar = c(effects[status][[1]][3])[[1]], 
-                            pch = 16, add = addlabel, xlab = "Influence exerted", ylab = "Influence received", colkey = TRUE, col=ramp.col(col = COL1(mcolor), n = 100, alpha = 1)))
+                            pch = 16, add = addlabel, xlab = "Influence exerted", ylab = "Influence received", colkey = TRUE, col=ramp.col(col = COL1(mcolor)[100:200], n = 100, alpha = 1)))
 }
