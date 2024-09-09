@@ -41,5 +41,10 @@ plotMatrix <- function(pcmatrix,status,method){
   }
   cdata[is.na(cdata)] <- 0
   cdata <- cdata*100
-  corrplot(cdata,is.corr = FALSE, method, addrect = 2, tl.pos='n',addgrid.col = NA, col=COL1(mcolor), col.lim=c(0,max(cdata)+(5-max(cdata)%%5)))
+  if(mcolor == "Purples"){
+    corrplot(cdata,is.corr = FALSE, method, addrect = 2, tl.pos='n',addgrid.col = NA, col=COL1(mcolor)[0:160], col.lim=c(0,max(cdata)+(5-max(cdata)%%5)))
+  }
+  else{
+    corrplot(cdata,is.corr = FALSE, method, addrect = 2, tl.pos='n',addgrid.col = NA, col=COL1(mcolor), col.lim=c(0,max(cdata)+(5-max(cdata)%%5)))
+  }
 }
