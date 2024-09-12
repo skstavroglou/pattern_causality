@@ -14,7 +14,7 @@
 #' 
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(climate)
 #' dataset <- climate[,-1]
 #' pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)

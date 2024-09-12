@@ -20,7 +20,7 @@ A scatter plot visualizing the relationship between influence exerted and influe
 The \code{plotEffect} function generates a plot to visualize the effects of positive, negative, or dark causality based on the results from the \code{pcEffect} function. It displays the influence exerted versus influence received for each item, providing a clear graphical representation of the causality effects.
 }
 \examples{
-\dontrun{
+\donttest{
 data(climate)
 dataset <- climate[,-1]
 pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
