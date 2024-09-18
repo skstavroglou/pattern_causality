@@ -4,8 +4,8 @@
 #'
 #'
 #' @examples
-#' head(climate)
-"climate"
+#' head(climate_indices)
+"climate_indices"
 
 #' Dow Jones stock price
 #'
