@@ -27,8 +27,6 @@ Suggests:
     knitr,
     rmarkdown,
     stringr,
-    ggplot2,
-    tcltk,
     testthat (>= 3.0.0)
 Config/Needs/website:
     tidyverse/tidytemplate
