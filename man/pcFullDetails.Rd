@@ -28,9 +28,9 @@ A list containing various outputs including matrices of nearest neighbors, predi
 Implements an advanced pattern causality algorithm to explore the causal relationships between two time series datasets. This function reconstructs state spaces, calculates distances, and evaluates causality using predefined metrics and pattern analysis. The methodology supports complex system analysis where traditional linear methods fall short.
 }
 \examples{
-data(climate)
-X <- climate$AO
-Y <- climate$AAO
+data(climate_indices)
+X <- climate_indices$AO
+Y <- climate_indices$AAO
 result <- pcFullDetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(result)
 }

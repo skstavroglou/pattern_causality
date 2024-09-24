@@ -9,8 +9,8 @@
 #'
 #' @export
 #' @examples
-#' data(climate)
-#' ts <- climate$AO
+#' data(climate_indices)
+#' ts <- climate_indices$AO
 #' E <- 3
 #' tau <- 1
 #' stateSpaceMatrix <- stateSpace(ts, E, tau)

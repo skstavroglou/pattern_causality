@@ -7,8 +7,8 @@
 #' @return A data frame summarizing the causality analysis results across all tested E and tau values, showing the mean total, positive, negative, and dark causality accuracies for each parameter combination.
 #' @export
 #' @examples
-#' data(climate)
-#' dataset <- climate[, -1]
+#' data(climate_indices)
+#' dataset <- climate_indices[, -1]
 #' \donttest{
 #' optimalParams <- optimalParametersSearch(Emax=3, tauMax=3, metric="euclidean", dataset=dataset)
 #' print(optimalParams)

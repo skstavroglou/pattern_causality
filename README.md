@@ -49,8 +49,8 @@ We can import the existing data.
 
 ``` r
 library(patterncausality)
-data(climate)
-head(climate)
+data(climate_indices)
+head(climate_indices)
 #>         Date      AO    AAO   NAO   PNA
 #> 1 1979-01-01 -2.2328 0.2088 -1.38 -0.69
 #> 2 1979-02-01 -0.6967 0.3563 -0.67 -1.82
@@ -66,7 +66,7 @@ patterncausality in this dataset.
 Then we need to determine the `E` and `tao`.
 
 ``` r
-dataset <- climate[, -1] # remove the date column
+dataset <- climate_indices[, -1] # remove the date column
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
@@ -87,8 +87,8 @@ After the parameters are confirmed, we could calculate the pattern
 causality.
 
 ``` r
-X <- climate$AO
-Y <- climate$AAO
+X <- climate_indices$AO
+Y <- climate_indices$AAO
 pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
 print(pc)
 #>       total positive  negative     dark
@@ -100,8 +100,8 @@ Then the percentage of each status will be showed below.
 If we wonder the status in each time point, we can run the code.
 
 ``` r
-X <- climate$AO
-Y <- climate$AAO
+X <- climate_indices$AO
+Y <- climate_indices$AAO
 detail <- pcFullDetails(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
 predict_status <- detail$spectrumOfCausalityPredicted
 real_status <- detail$spectrumOfCausalityReal

@@ -22,8 +22,8 @@ A data frame summarizing the causality analysis results across all tested E and 
 Searches for the optimal embedding dimension (E) and time delay (tau) to maximize the accuracy of causality predictions in a dataset. It evaluates each combination of E and tau for their ability to predict different types of causality: total, positive, negative, and dark.
 }
 \examples{
-data(climate)
-dataset <- climate[, -1]
+data(climate_indices)
+dataset <- climate_indices[, -1]
 \donttest{
 optimalParams <- optimalParametersSearch(Emax=3, tauMax=3, metric="euclidean", dataset=dataset)
 print(optimalParams)

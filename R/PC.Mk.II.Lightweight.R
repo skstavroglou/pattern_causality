@@ -12,9 +12,9 @@
 #' @return A data frame with columns for total, positive, negative, and dark causality percentages across evaluated time points, giving insights into the nature of causality between the time series.
 #' @export
 #' @examples
-#' data(climate)
-#' X <- climate$AO
-#' Y <- climate$AAO
+#' data(climate_indices)
+#' X <- climate_indices$AO
+#' Y <- climate_indices$AAO
 #' result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 #' print(result)
 pcLightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {

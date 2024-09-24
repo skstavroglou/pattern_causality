@@ -27,8 +27,8 @@ This function performs dynamic network analysis to detect causal interactions be
 }
 \examples{
 \donttest{
-data(climate)
-dataset <- climate[,-1] # remove the date column
+data(climate_indices)
+dataset <- climate_indices[,-1] # remove the date column
 result <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 print(result)
 }

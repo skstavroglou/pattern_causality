@@ -10,9 +10,9 @@
 #' @return A list containing various outputs including matrices of nearest neighbors, predicted and actual causality matrices, signature matrices, pattern vectors, and diagnostics related to the time series analysis and causality assessment.
 #' @export
 #' @examples
-#' data(climate)
-#' X <- climate$AO
-#' Y <- climate$AAO
+#' data(climate_indices)
+#' X <- climate_indices$AO
+#' Y <- climate_indices$AAO
 #' result <- pcFullDetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 #' print(result)
 pcFullDetails <- function(X, Y, E, tau, metric, h, weighted) {

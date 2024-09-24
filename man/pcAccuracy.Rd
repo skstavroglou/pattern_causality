@@ -27,8 +27,8 @@ This function evaluates the causality prediction accuracy across multiple time s
 }
 \examples{
 \donttest{
-data(climate)
-data <- climate[, -1]
+data(climate_indices)
+data <- climate_indices[, -1]
 results <- pcAccuracy(data, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
 print(results)
 }

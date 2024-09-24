@@ -30,9 +30,9 @@ A data frame with columns for total, positive, negative, and dark causality perc
 This function implements the Pattern Causality Model Mk. II for lightweight analysis of causal interactions between two time series using pattern and signature spaces. It assesses causality through reconstructed state spaces and hashed pattern analysis.
 }
 \examples{
-data(climate)
-X <- climate$AO
-Y <- climate$AAO
+data(climate_indices)
+X <- climate_indices$AO
+Y <- climate_indices$AAO
 result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
 print(result)
 }

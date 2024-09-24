@@ -24,15 +24,15 @@ As an example, we could import climate from `patterncausality` package.
 
 ```{r message = FALSE}
 library(patterncausality)
-data(climate)
+data(climate_indices)
 ```
 
 Then we consider a method of cross-validation to see the robustness of pattern causality.
 
 ```{r}
 set.seed(123)
-X <- climate$PNA
-Y <- climate$NAO
+X <- climate_indices$PNA
+Y <- climate_indices$NAO
 numberset <- c(100,200,300,400,500)
 result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
 print(result)

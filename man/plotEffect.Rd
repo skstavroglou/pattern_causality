@@ -21,8 +21,8 @@ The \code{plotEffect} function generates a plot to visualize the effects of posi
 }
 \examples{
 \donttest{
-data(climate)
-dataset <- climate[,-1]
+data(climate_indices)
+dataset <- climate_indices[,-1]
 pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
 effects <- pcEffect(pcmatrix)
 plotEffect(effects, status = "positive", addlabel = TRUE)

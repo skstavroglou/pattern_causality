@@ -14,8 +14,8 @@
 #' @export
 #' @examples
 #' \donttest{
-#' data(climate)
-#' state_data <- stateSpace(climate$AAO, E = 3, tau = 2)
+#' data(climate_indices)
+#' state_data <- stateSpace(climate_indices$AAO, E = 3, tau = 2)
 #' plotState(state_data,phi=20, style=1)
 #' }
 plotState <- function(statedata, ..., style=2){
