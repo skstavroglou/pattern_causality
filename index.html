@@ -100,8 +100,8 @@
 <p>We can import the existing data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">climate</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate_indices</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">climate_indices</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         Date      AO    AAO   NAO   PNA</span></span>
 <span><span class="co">#&gt; 1 1979-01-01 -2.2328 0.2088 -1.38 -0.69</span></span>
 <span><span class="co">#&gt; 2 1979-02-01 -0.6967 0.3563 -0.67 -1.82</span></span>
@@ -112,7 +112,7 @@
 <p>This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset.</p>
 <p>Then we need to determine the <code>E</code> and <code>tao</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
+<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
 <span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -185,8 +185,8 @@
 <p>Of course, we can also change the distance style to calculate the distance matrix. Then according the combo that produces the highest percentages collectively, we can choose the best parameters here.</p>
 <p>After the parameters are confirmed, we could calculate the pattern causality.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AO</span></span>
-<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AAO</span></span>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, tpb<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       total positive  negative     dark</span></span>
@@ -194,8 +194,8 @@
 <p>Then the percentage of each status will be showed below.</p>
 <p>If we wonder the status in each time point, we can run the code.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AO</span></span>
-<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate</span><span class="op">$</span><span class="va">AAO</span></span>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">3</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
 <span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span></code></pre></div>
