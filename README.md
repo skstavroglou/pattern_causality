@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # Pattern Causality <img src='man/figures/logo.png' align="right" height="139" />
@@ -8,6 +7,8 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/patterncausality)](https://cran.r-project.org/package=patterncausality)
 [![R-CMD-check](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml)
+[![Downloads](https://cranlogs.r-pkg.org/badges/patterncausality)](https://cran.r-project.org/package=patterncausality)
+
 <!-- badges: end -->
 
 ## Overview
@@ -29,7 +30,7 @@ This algorithm has a lot of advantages.
 You can install the development version of patterncausality from
 [GitHub](https://github.com/skstavroglou/pattern_causality) with:
 
-``` r
+```r
 # install.packages("devtools")
 devtools::install_github("skstavroglou/pattern_causality")
 ```
@@ -37,7 +38,7 @@ devtools::install_github("skstavroglou/pattern_causality")
 You can also install the package from
 [CRAN](https://CRAN.R-project.org/package=patterncausality) with:
 
-``` r
+```r
 install.packages("patterncausality")
 ```
 
@@ -47,7 +48,7 @@ install.packages("patterncausality")
 
 We can import the existing data.
 
-``` r
+```r
 library(patterncausality)
 data(climate_indices)
 head(climate_indices)
@@ -65,13 +66,13 @@ patterncausality in this dataset.
 
 Then we need to determine the `E` and `tao`.
 
-``` r
+```r
 dataset <- climate_indices[, -1] # remove the date column
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
 |     |       | Total     | of which Positive | of which Negative | of which Dark |
-|-----|-------|-----------|-------------------|-------------------|---------------|
+| --- | ----- | --------- | ----------------- | ----------------- | ------------- |
 | E=2 | tau=1 | 0.5543614 | 0.5519477         | 0.4474361         | 0.0006162144  |
 | E=2 | tau=2 | 0.5727414 | 0.5736100         | 0.4232828         | 0.0031071596  |
 | E=2 | tau=3 | 0.5711838 | 0.5469069         | 0.4513270         | 0.0017660870  |
@@ -86,7 +87,7 @@ percentages collectively, we can choose the best parameters here.
 After the parameters are confirmed, we could calculate the pattern
 causality.
 
-``` r
+```r
 X <- climate_indices$AO
 Y <- climate_indices$AAO
 pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
@@ -99,7 +100,7 @@ Then the percentage of each status will be showed below.
 
 If we wonder the status in each time point, we can run the code.
 
-``` r
+```r
 X <- climate_indices$AO
 Y <- climate_indices$AAO
 detail <- pcFullDetails(X, Y, E = 2, tau = 1, metric = "euclidean", h = 3, weighted = TRUE)
@@ -115,7 +116,7 @@ Then the status series will be saved in `predict_status` and
 After calculating the causality, we can get the result here.
 
 | Pairs         | total     | positive  | negative  | dark      | Dataset |
-|---------------|-----------|-----------|-----------|-----------|---------|
+| ------------- | --------- | --------- | --------- | --------- | ------- |
 | AAPL –\> MSFT | 0.2698665 | 0.3881279 | 0.1369863 | 0.4748858 | stock   |
 | MSFT –\> AAPL | 0.2759887 | 0.4075893 | 0.1388393 | 0.4535714 | stock   |
 | AO –\> AAO    | 0.2841121 | 0.326087  | 0.2318841 | 0.442029  | climate |
@@ -178,13 +179,13 @@ Monash Business School and is the author and maintainer of the
 ## References
 
 - Stavroglou, S. K., Pantelous, A. A., Stanley, H. E., & Zuev, K. M.
-  (2019). Hidden interactions in financial markets. *Proceedings of the
-  National Academy of Sciences, 116(22)*, 10646-10651.
+  (2019). Hidden interactions in financial markets. _Proceedings of the
+  National Academy of Sciences, 116(22)_, 10646-10651.
 
 - Stavroglou, S. K., Pantelous, A. A., Stanley, H. E., & Zuev, K. M.
-  (2020). Unveiling causal interactions in complex systems. *Proceedings
-  of the National Academy of Sciences, 117(14)*, 7599-7605.
+  (2020). Unveiling causal interactions in complex systems. _Proceedings
+  of the National Academy of Sciences, 117(14)_, 7599-7605.
 
 - Stavroglou, S. K., Ayyub, B. M., Kallinterakis, V., Pantelous, A. A.,
   & Stanley, H. E. (2021). A novel causal risk‐based decision‐making
-  methodology: The case of coronavirus. *Risk Analysis, 41(5)*, 814-830.
+  methodology: The case of coronavirus. _Risk Analysis, 41(5)_, 814-830.
