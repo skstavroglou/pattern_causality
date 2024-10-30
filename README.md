@@ -7,7 +7,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/patterncausality)](https://cran.r-project.org/package=patterncausality)
 [![R-CMD-check](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/skstavroglou/pattern_causality/actions/workflows/R-CMD-check.yaml)
-[![Downloads](https://cranlogs.r-pkg.org/badges/patterncausality)](https://cran.r-project.org/package=patterncausality)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/patterncausality)](https://cran.r-project.org/package=patterncausality)
 
 <!-- badges: end -->
 
