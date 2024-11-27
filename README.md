@@ -189,3 +189,14 @@ Monash Business School and is the author and maintainer of the
 - Stavroglou, S. K., Ayyub, B. M., Kallinterakis, V., Pantelous, A. A.,
   & Stanley, H. E. (2021). A novel causal risk‐based decision‐making
   methodology: The case of coronavirus. _Risk Analysis, 41(5)_, 814-830.
+
+## Test environments
+* local R installation, R 4.1.0
+* ubuntu 20.04 (on GitHub Actions), R 4.1.0
+* win-builder (devel)
+
+## R CMD check results
+0 errors | 0 warnings | 0 notes
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package

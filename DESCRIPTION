@@ -13,7 +13,7 @@ Authors@R: c( person("Stavros", "Stavroglou", role = c("aut"),
                      comment = c(ORCID = "0009-0006-0095-0243")))
 Maintainer: Hui Wang <huiw1128@gmail.com>
 Description: The model proposes a robust methodology for detecting and reconstructing the hidden structure of dynamic complex systems through short-term forecasts and information embedded in reconstructed state spaces. The approach not only identifies critical components and causal interactions within these systems but also provides a practical tool for optimizing system performance and stability.
-License: MIT + file LICENSE
+License: GPL-3 | file LICENSE
 Depends: R (>= 4.1.0)
 Imports: 
     stats,
@@ -28,7 +28,8 @@ Suggests:
     rmarkdown,
     stringr,
     ggplot2,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    lintr
 Config/Needs/website:
     tidyverse/tidytemplate
 URL: https://github.com/skstavroglou/pattern_causality/
