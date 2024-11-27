@@ -1,4 +1,4 @@
-#' @title Evaluate the Nature of Causality in Dynamic Complex Systems
+#' @title Determine Nature of Causality
 #'
 #' @description This function analyzes a three-dimensional pattern causality matrix to classify the nature of causality (positive, negative, dark, or no causality) between pairs of variables across specified time points. It is designed to interpret the dynamics within complex systems by examining the causal relationships encoded in the matrix.
 #'

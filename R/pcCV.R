@@ -1,4 +1,4 @@
-#' @title Pattern Causality Cross-Validation
+#' @title Perform Pattern Causality Cross Validation
 #' 
 #' @description
 #' The `pcCrossValidation` function performs cross-validation on time series data to evaluate the robustness of pattern causality measures. It repeatedly samples subsets of the data, applies the pattern causality algorithm, and aggregates the results to provide a comprehensive assessment of the causality metrics.
@@ -54,7 +54,7 @@ pcCrossValidation <- function(X, Y, E, tau, metric, h, weighted, numberset){
 }
 
 
-#' @title Plot Cross-Validation Results for Pattern Causality
+#' @title Plot Cross Validation Results
 #' 
 #' @description
 #' The `plotCV` function generates a plot to visualize the results of cross-validation for pattern causality. It displays the positive, negative, and dark causality strengths across different sample sizes, providing a clear graphical representation of the cross-validation outcomes.

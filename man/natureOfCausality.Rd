@@ -2,7 +2,7 @@
 % Please edit documentation in R/natureOfCausality.R
 \name{natureOfCausality}
 \alias{natureOfCausality}
-\title{Evaluate the Nature of Causality in Dynamic Complex Systems}
+\title{Determine Nature of Causality}
 \usage{
 natureOfCausality(PC, dur, hashedpatterns, X)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/patternSpace.R
 \name{patternSpace}
 \alias{patternSpace}
-\title{Create Pattern Space from Signature Matrix}
+\title{Create Pattern Space}
 \usage{
 patternSpace(SM, E)
 }

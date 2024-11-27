@@ -1,4 +1,4 @@
-#' @title First Causality Point Function
+#' @title Find First Causality Point
 #' @description Calculates the earliest index in a time series from which causality analysis can begin,
 #' based on the embedding dimension, time delay, prediction horizon, and the length of the series. It ensures
 #' that there are enough data points for conducting a causality analysis without running out of data.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fillPCMatrix.R
 \name{fillPCMatrix}
 \alias{fillPCMatrix}
-\title{Calculate and Record Causality Strengths}
+\title{Fill Pattern Causality Matrix}
 \usage{
 fillPCMatrix(
   weighted,
@@ -37,13 +37,6 @@ A dataframe with two columns: 'real' and 'predicted', representing the real and 
 Computes the causality strengths based on the comparison between predicted and real patterns
 and signatures in a system's dynamic model. It applies a normalization function to measure the intensity of
 causal influences and uses an error function for weighting if required.
-}
-\details{
-Fill Pattern Causality Matrix with Causality Strengths
-
-This function calculates and fills the causality strengths between predicted and real patterns and signatures
-for a complex system analysis. It evaluates the accuracy of predictions and computes the strength of causal
-relationships based on norm vectors and optionally weights these strengths using the error function (erf).
 }
 \examples{
 set.seed(123)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/stateSpace.R
 \name{stateSpace}
 \alias{stateSpace}
-\title{Construct State Space Matrix from Time Series}
+\title{Create State Space}
 \usage{
 stateSpace(ts, E, tau)
 }

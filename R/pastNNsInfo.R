@@ -1,4 +1,4 @@
-#' @title Finding Nearest Neighbors and Keeping their Topological Information
+#' @title Get Past Nearest Neighbors Information
 #' @description This function identifies the nearest neighbors of a given point in a time series, excluding common coordinate vectors and a specified horizon from the candidate nearest neighbors. It returns detailed information about these neighbors, including their times, distances, signatures, patterns, and coordinates.
 #' @param CCSPAN Integer, the span of common coordinates to exclude from the nearest neighbor search.
 #' @param NNSPAN Integer, the number of nearest neighbors to consider for the analysis.

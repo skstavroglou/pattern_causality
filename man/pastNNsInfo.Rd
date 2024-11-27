@@ -2,7 +2,7 @@
 % Please edit documentation in R/pastNNsInfo.R
 \name{pastNNsInfo}
 \alias{pastNNsInfo}
-\title{Finding Nearest Neighbors and Keeping their Topological Information}
+\title{Get Past Nearest Neighbors Information}
 \usage{
 pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
 }

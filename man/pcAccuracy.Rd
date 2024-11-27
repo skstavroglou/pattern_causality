@@ -2,7 +2,7 @@
 % Please edit documentation in R/pcAccuracy.R
 \name{pcAccuracy}
 \alias{pcAccuracy}
-\title{PC Accuracy Evaluation Function}
+\title{Calculate Pattern Causality Accuracy}
 \usage{
 pcAccuracy(dataset, E, tau, metric, h, weighted)
 }

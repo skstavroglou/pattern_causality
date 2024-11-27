@@ -1,6 +1,5 @@
-#' Construct State Space Matrix from Time Series
-#'
-#' This function reconstructs the state space of a given time series by creating a delay embedding matrix. Each row in the matrix represents a point in the reconstructed state space, with embeddings based on specified lag (tau) and dimension (E). This approach is essential for analyzing the dynamics of complex systems, as it reveals underlying structures and patterns that are not immediately apparent in the raw time series data.
+#' @title Create State Space
+#' @description This function reconstructs the state space of a given time series by creating a delay embedding matrix. Each row in the matrix represents a point in the reconstructed state space, with embeddings based on specified lag (tau) and dimension (E). This approach is essential for analyzing the dynamics of complex systems, as it reveals underlying structures and patterns that are not immediately apparent in the raw time series data.
 #'
 #' @param ts Numeric vector, the original time series data from which the state space is to be reconstructed.
 #' @param E Integer, the embedding dimension, which determines the number of delayed copies of the time series to include in each row of the matrix.

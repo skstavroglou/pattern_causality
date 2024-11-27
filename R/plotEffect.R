@@ -1,4 +1,4 @@
-#' @title Visualize Pattern Causality Effects
+#' @title Plot Causality Effects
 #' 
 #' @description
 #' The `plotEffect` function generates a plot to visualize the effects of positive, negative, or dark causality based on the results from the `pcEffect` function. It displays the influence exerted versus influence received for each item, providing a clear graphical representation of the causality effects.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/distanceMatrix.R
 \name{distanceMatrix}
 \alias{distanceMatrix}
-\title{Compute Distance Matrix for an Embedded Matrix}
+\title{Calculate Distance Matrix}
 \usage{
 distanceMatrix(M, metric)
 }
@@ -18,7 +18,6 @@ An object of class \code{dist}, representing the distance matrix of the embedded
 This function computes the distance matrix from a given embedded matrix, \code{M}, using a specified metric. The distance matrix is essential for exploring the underlying structure in complex systems by quantifying the distances between different points (or states) in the embedded space. This matrix can be crucial for further analysis like clustering, nearest neighbor searches, or causality inference in complex systems.
 }
 \examples{
-# Assume M is an already constructed state space matrix of a time series
 M <- matrix(rnorm(100), nrow = 10)
 distanceMat <- distanceMatrix(M, "euclidean")
 print(distanceMat) # Optionally convert to a full matrix for display

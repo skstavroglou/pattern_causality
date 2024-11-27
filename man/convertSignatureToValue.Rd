@@ -2,7 +2,7 @@
 % Please edit documentation in R/convertSignatureToValue.R
 \name{convertSignatureToValue}
 \alias{convertSignatureToValue}
-\title{Convert Signature to Predicted Values}
+\title{Convert Signature to Value}
 \usage{
 convertSignatureToValue(E, tau, Y, i, h, predictedSignatureY)
 }

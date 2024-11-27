@@ -2,7 +2,7 @@
 % Please edit documentation in R/firstCausalityPointCHECK.R
 \name{firstCausalityPointCHECK}
 \alias{firstCausalityPointCHECK}
-\title{First Causality Point Check Function}
+\title{Check First Causality Point}
 \usage{
 firstCausalityPointCHECK(E, tau, h, X)
 }

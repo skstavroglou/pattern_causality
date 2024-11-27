@@ -1,12 +1,6 @@
-#' Predict the signatures and patterns for a complex system
+#' @title Predict Y Values
+#' @description This function predicts the signature and pattern vectors for a given state based on projections and weights derived from neural network outputs within a complex system. The predictions adjust according to a specified zero tolerance level to manage sparsity.
 #'
-#' This function predicts the signature and pattern vectors for a given state based on
-#' projections and weights derived from neural network outputs within a complex system.
-#' The predictions adjust according to a specified zero tolerance level to manage sparsity.
-#'
-#' @title Predict Signature and Pattern Vectors
-#' @description Uses neural network outputs to predict the state signatures and patterns
-#' in a complex system. Adjusts for sparsity using zero tolerance.
 #' @param E Integer, the embedding dimension of the system, indicating the length of the
 #' signature vector minus one.
 #' @param projNNy A list containing two elements: `Signatures`, a matrix where each column

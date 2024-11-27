@@ -1,6 +1,5 @@
-#' Create Signature Space from Embedded Matrix
-#'
-#' This function computes the signature space of a matrix obtained from a time series' state space by calculating the successive differences of each embedded vector. The signature space reveals changes between successive points in the time series, capturing dynamics that are crucial for understanding complex system behaviors.
+#' @title Create Signature Space
+#' @description This function computes the signature space of a matrix obtained from a time series' state space by calculating the successive differences of each embedded vector. The signature space reveals changes between successive points in the time series, capturing dynamics that are crucial for understanding complex system behaviors.
 #'
 #' @param M Matrix, the embedded state space matrix where each row is a point in the reconstructed state space of the time series.
 #' @param E Integer, the embedding dimension used to create the matrix M.

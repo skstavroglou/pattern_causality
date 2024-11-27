@@ -1,25 +1,20 @@
-#' Climate index
-#'
-#' This is a time series of climate index.
-#'
+#' @title Climate Index
+#' @description This is a time series of climate index.
 #'
 #' @examples
 #' head(climate_indices)
 "climate_indices"
 
-#' Dow Jones stock price
-#'
-#' It includes 29 time series of stock series in Dow Jones.
+#' @title Dow Jones Stock Price
+#' @description It includes 29 time series of stock series in Dow Jones.
 #'
 #'
 #' @examples
 #' head(DJS)
 "DJS"
 
-#' A data from Illapel
-#'
-#' Raw rodent and rainfall data from the study site at Las Chinchillas National Reserve near the city of Illapel, Coquimbo Region of Chil.
-#'
+#' @title A data from Illapel
+#' @description Raw rodent and rainfall data from the study site at Las Chinchillas National Reserve near the city of Illapel, Coquimbo Region of Chil.
 #'
 #' @examples
 #' head(AUCO)

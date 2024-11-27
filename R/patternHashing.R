@@ -1,7 +1,4 @@
-# ========================#
-# = FOUNDATION | LAYER 0 =#
-# ========================#
-#' @title Pattern Hashing Function
+#' @title Hash Pattern Values
 #' @description This function hashes all possible patterns generated from a dataset to facilitate analysis
 #' of their distribution and frequency, supporting risk assessment in decision-making processes related
 #' to the causality and dynamics of complex systems.

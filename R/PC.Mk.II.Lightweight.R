@@ -1,4 +1,4 @@
-#' @title Pattern Causality Lightweight Function
+#' @title Calculate Lightweight Pattern Causality
 #' @description This function implements the Pattern Causality Model Mk. II for lightweight analysis of causal interactions between two time series using pattern and signature spaces. It assesses causality through reconstructed state spaces and hashed pattern analysis.
 #' @param X A numeric vector representing the first time series.
 #' @param Y A numeric vector representing the second time series.
@@ -100,5 +100,12 @@ pcLightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {
   negaCausPercent <- mean(ifelse(causality$noCausality[real_loop] != 1, causality$Negative[real_loop], NA), na.rm = T)
   darkCausPercent <- mean(ifelse(causality$noCausality[real_loop] != 1, causality$Dark[real_loop], NA), na.rm = T)
   # return(list(causality,totalCausPercent,posiCausPercent,negaCausPercent,darkCausPercent))
-  return(data.frame(total = totalCausPercent, positive = posiCausPercent, negative = negaCausPercent, dark = darkCausPercent))
+  result <- pc_fit(
+    total = totalCausPercent,
+    positive = posiCausPercent,
+    negative = negaCausPercent,
+    dark = darkCausPercent
+  )
+  
+  return(result)
 }

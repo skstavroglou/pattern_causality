@@ -2,7 +2,7 @@
 % Please edit documentation in R/PC.Mk.II.Full.Details.R
 \name{pcFullDetails}
 \alias{pcFullDetails}
-\title{Pattern Causality Mark II: Full Details}
+\title{Get Full Pattern Causality Details}
 \usage{
 pcFullDetails(X, Y, E, tau, metric, h, weighted)
 }

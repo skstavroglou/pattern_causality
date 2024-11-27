@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictionY.R
 \name{predictionY}
 \alias{predictionY}
-\title{Predict Signature and Pattern Vectors}
+\title{Predict Y Values}
 \usage{
 predictionY(E, projNNy, zeroTolerance = (E + 1)/2)
 }
@@ -22,15 +22,7 @@ A dataframe with two columns: \code{predictedSignatureY} which contains the pred
 signature vector, and \code{predictedPatternY} which contains the corresponding pattern vector.
 }
 \description{
-Uses neural network outputs to predict the state signatures and patterns
-in a complex system. Adjusts for sparsity using zero tolerance.
-}
-\details{
-Predict the signatures and patterns for a complex system
-
-This function predicts the signature and pattern vectors for a given state based on
-projections and weights derived from neural network outputs within a complex system.
-The predictions adjust according to a specified zero tolerance level to manage sparsity.
+This function predicts the signature and pattern vectors for a given state based on projections and weights derived from neural network outputs within a complex system. The predictions adjust according to a specified zero tolerance level to manage sparsity.
 }
 \examples{
 set.seed(123)

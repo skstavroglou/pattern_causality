@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataBank.R
 \name{dataBank}
 \alias{dataBank}
-\title{Data Bank Initialization Function}
+\title{Create Data Bank}
 \usage{
 dataBank(type, dimensions)
 }

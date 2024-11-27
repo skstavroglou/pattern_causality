@@ -2,7 +2,7 @@
 % Please edit documentation in R/patternHashing.R
 \name{patternHashing}
 \alias{patternHashing}
-\title{Pattern Hashing Function}
+\title{Hash Pattern Values}
 \usage{
 patternHashing(E)
 }

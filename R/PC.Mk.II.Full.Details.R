@@ -1,4 +1,4 @@
-#' @title Pattern Causality Mark II: Full Details
+#' @title Get Full Pattern Causality Details
 #' @description Implements an advanced pattern causality algorithm to explore the causal relationships between two time series datasets. This function reconstructs state spaces, calculates distances, and evaluates causality using predefined metrics and pattern analysis. The methodology supports complex system analysis where traditional linear methods fall short.
 #' @param X Numeric vector, the first time series data.
 #' @param Y Numeric vector, the second time series data.

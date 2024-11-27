@@ -1,4 +1,4 @@
-#' @title Calculate and Summarize Pattern Causality Effects
+#' @title Calculate Pattern Causality Effect
 #' 
 #' @description
 #' The `pcEffect` function processes a pattern causality matrix to compute and summarize the effects of positive, negative, and dark causality. It aggregates these causality measures to determine the total received and exerted influence for each item in the matrix, along with the difference between them.

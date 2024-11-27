@@ -2,7 +2,7 @@
 % Please edit documentation in R/pcEffect.R
 \name{pcEffect}
 \alias{pcEffect}
-\title{Calculate and Summarize Pattern Causality Effects}
+\title{Calculate Pattern Causality Effect}
 \usage{
 pcEffect(pcmatrix)
 }

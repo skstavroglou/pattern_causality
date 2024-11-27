@@ -1,4 +1,4 @@
-#' @title Optimal Parameters Search for Causality Analysis
+#' @title Search for Optimal Parameters
 #' @description Searches for the optimal embedding dimension (E) and time delay (tau) to maximize the accuracy of causality predictions in a dataset. It evaluates each combination of E and tau for their ability to predict different types of causality: total, positive, negative, and dark.
 #' @param Emax The maximum embedding dimension to test.
 #' @param tauMax The maximum time delay to test.

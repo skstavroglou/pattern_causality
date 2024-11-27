@@ -3,7 +3,7 @@
 \docType{data}
 \name{climate_indices}
 \alias{climate_indices}
-\title{Climate index}
+\title{Climate Index}
 \format{
 An object of class \code{data.frame} with 535 rows and 5 columns.
 }

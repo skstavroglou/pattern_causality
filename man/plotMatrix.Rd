@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotMatrix.R
 \name{plotMatrix}
 \alias{plotMatrix}
-\title{Visualize Pattern Causality Matrix}
+\title{Plot Causality Matrix}
 \usage{
 plotMatrix(pcmatrix, status, method)
 }

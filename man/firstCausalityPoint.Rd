@@ -2,7 +2,7 @@
 % Please edit documentation in R/firstCausalityPoint.R
 \name{firstCausalityPoint}
 \alias{firstCausalityPoint}
-\title{First Causality Point Function}
+\title{Find First Causality Point}
 \usage{
 firstCausalityPoint(E, tau, h, X)
 }

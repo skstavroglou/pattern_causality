@@ -2,7 +2,7 @@
 % Please edit documentation in R/signatureSpace.R
 \name{signatureSpace}
 \alias{signatureSpace}
-\title{Create Signature Space from Embedded Matrix}
+\title{Create Signature Space}
 \usage{
 signatureSpace(M, E)
 }

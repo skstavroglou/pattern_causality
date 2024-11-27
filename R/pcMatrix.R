@@ -1,4 +1,4 @@
-#' @title Pattern Causality Matrix Analysis
+#' @title Create Pattern Causality Matrix
 #' @description This function performs dynamic network analysis to detect causal interactions between multiple time series within a dataset. It uses the Pattern Causality Model Mk. II to evaluate positive, negative, and dark causality relationships by analyzing the reconstructed state spaces of the time series. The function iterates through each time series in the dataset, comparing them to identify potential causal links.
 #' @param dataset A data frame where each column represents a time series to be analyzed for causal relationships.
 #' @param E An integer specifying the embedding dimension for reconstructing the state space of the time series.

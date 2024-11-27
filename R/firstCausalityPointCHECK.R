@@ -1,4 +1,4 @@
-#' @title First Causality Point Check Function
+#' @title Check First Causality Point
 #' @description Checks if the time series data length is sufficient to perform causality analysis based on
 #' the provided embedding dimension, time delay, and prediction horizon. This function returns a Boolean
 #' indicating the feasibility of conducting the analysis.

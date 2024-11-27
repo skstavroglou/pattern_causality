@@ -2,7 +2,7 @@
 % Please edit documentation in R/pcCV.R
 \name{pcCrossValidation}
 \alias{pcCrossValidation}
-\title{Pattern Causality Cross-Validation}
+\title{Perform Pattern Causality Cross Validation}
 \usage{
 pcCrossValidation(X, Y, E, tau, metric, h, weighted, numberset)
 }

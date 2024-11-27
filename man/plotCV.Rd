@@ -2,7 +2,7 @@
 % Please edit documentation in R/pcCV.R
 \name{plotCV}
 \alias{plotCV}
-\title{Plot Cross-Validation Results for Pattern Causality}
+\title{Plot Cross Validation Results}
 \usage{
 plotCV(pcCV, fr = FALSE)
 }

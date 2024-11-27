@@ -1,4 +1,4 @@
-#' @title Visualize Pattern Causality Matrix
+#' @title Plot Causality Matrix
 #' 
 #' @description
 #' The `plotMatrix` function generates a visual representation of a pattern causality matrix using different methods. It allows users to visualize the positive, negative, or dark causality effects in a specified matrix, providing insight into the relationships between items.

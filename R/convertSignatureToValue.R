@@ -1,6 +1,5 @@
-#' Convert Signature to Predicted Values
-#'
-#' This function calculates predicted values of a series based on its previous value and predicted signature changes. It starts with an initial value from a historical series and sequentially adds predicted signature changes to generate a sequence of predicted values.
+#' @title Convert Signature to Value
+#' @description This function calculates predicted values of a series based on its previous value and predicted signature changes. It starts with an initial value from a historical series and sequentially adds predicted signature changes to generate a sequence of predicted values.
 #'
 #' @param E Integer, the length of the series for which predictions are needed.
 #' @param tau Integer, the time delay used in the system dynamics (not used in this function but typically relevant in the broader context of time series prediction).

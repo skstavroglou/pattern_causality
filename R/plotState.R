@@ -1,4 +1,4 @@
-#' @title 3D State Space Plot for Phase Space Reconstruction
+#' @title Plot State Space
 #' 
 #' @description
 #' The `plotState` function generates a 3D plot of the reconstructed state space for time series data with an embedding dimension of 3. It uses the `scatter3D_fancy` function to create a detailed 3D scatter plot, which helps visualize the dynamics of the system in three dimensions.

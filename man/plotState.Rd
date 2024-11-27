@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotState.R
 \name{plotState}
 \alias{plotState}
-\title{3D State Space Plot for Phase Space Reconstruction}
+\title{Plot State Space}
 \usage{
 plotState(statedata, ..., style = 2)
 }

@@ -1,4 +1,4 @@
-#' @title Data Bank Initialization Function
+#' @title Create Data Bank
 #' @description Initializes various data structures for storing and managing data within a complex systems analysis framework.
 #
 #' @param type A character string specifying the type of data structure to initialize: "array", "vector", "matrix", or

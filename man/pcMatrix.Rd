@@ -2,7 +2,7 @@
 % Please edit documentation in R/pcMatrix.R
 \name{pcMatrix}
 \alias{pcMatrix}
-\title{Pattern Causality Matrix Analysis}
+\title{Create Pattern Causality Matrix}
 \usage{
 pcMatrix(dataset, E, tau, metric, h, weighted)
 }

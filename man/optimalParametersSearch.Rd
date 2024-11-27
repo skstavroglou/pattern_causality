@@ -2,7 +2,7 @@
 % Please edit documentation in R/optimalParametersSearch.R
 \name{optimalParametersSearch}
 \alias{optimalParametersSearch}
-\title{Optimal Parameters Search for Causality Analysis}
+\title{Search for Optimal Parameters}
 \usage{
 optimalParametersSearch(Emax, tauMax, metric, dataset)
 }

@@ -1,10 +1,5 @@
-#' Fill Pattern Causality Matrix with Causality Strengths
+#' @title Fill Pattern Causality Matrix
 #'
-#' This function calculates and fills the causality strengths between predicted and real patterns and signatures
-#' for a complex system analysis. It evaluates the accuracy of predictions and computes the strength of causal
-#' relationships based on norm vectors and optionally weights these strengths using the error function (erf).
-#'
-#' @title Calculate and Record Causality Strengths
 #' @description Computes the causality strengths based on the comparison between predicted and real patterns
 #' and signatures in a system's dynamic model. It applies a normalization function to measure the intensity of
 #' causal influences and uses an error function for weighting if required.

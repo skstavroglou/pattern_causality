@@ -2,7 +2,7 @@
 % Please edit documentation in R/PC.Mk.II.Lightweight.R
 \name{pcLightweight}
 \alias{pcLightweight}
-\title{Pattern Causality Lightweight Function}
+\title{Calculate Lightweight Pattern Causality}
 \usage{
 pcLightweight(X, Y, E, tau, metric, h, weighted, tpb = TRUE)
 }

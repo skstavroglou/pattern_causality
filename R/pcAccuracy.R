@@ -1,4 +1,4 @@
-#' @title PC Accuracy Evaluation Function
+#' @title Calculate Pattern Causality Accuracy
 #' @description This function evaluates the causality prediction accuracy across multiple time series within a dataset using the PC Mk. II Light method. It checks the feasibility of causality analysis between all pairs, computes different types of causality (total, positive, negative, dark), and aggregates these results.
 #' @param dataset A matrix or data frame where each column represents a time series.
 #' @param E The embedding dimension used for state space reconstruction.

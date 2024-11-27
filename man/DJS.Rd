@@ -3,7 +3,7 @@
 \docType{data}
 \name{DJS}
 \alias{DJS}
-\title{Dow Jones stock price}
+\title{Dow Jones Stock Price}
 \format{
 An object of class \code{data.frame} with 4510 rows and 30 columns.
 }

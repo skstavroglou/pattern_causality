@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotEffect.R
 \name{plotEffect}
 \alias{plotEffect}
-\title{Visualize Pattern Causality Effects}
+\title{Plot Causality Effects}
 \usage{
 plotEffect(effects, status, addlabel = TRUE)
 }
