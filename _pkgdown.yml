@@ -11,3 +11,11 @@ template:
 
   development:
     mode: auto
+
+authors:
+  Stavros Stavroglou:
+    href: https://www.stavroglou.com
+  Athanasios Pantelous:
+    href: https://research.monash.edu/en/persons/athanasios-pantelous
+  Hui Wang:
+    href: https://huiw.org

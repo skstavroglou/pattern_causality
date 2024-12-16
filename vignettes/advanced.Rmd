@@ -18,8 +18,6 @@ vignette: >
 
 In this vignette, we delve into the advanced capabilities of the `patterncausality` package, focusing on how to use custom functions to tailor the analysis to your specific needs. We'll explore how to define your own distance metrics and state space reconstruction methods, allowing for greater flexibility and control over the causality analysis.
 
-## Why Custom Functions?
-
 The `patterncausality` package provides a robust framework for analyzing causal relationships, but sometimes, the default settings might not be ideal for your specific data or research question. Custom functions allow you to:
 
 1.  **Incorporate domain-specific knowledge:** If you have a unique way of measuring distances or reconstructing state spaces that is relevant to your field, you can implement it directly.
@@ -30,7 +28,7 @@ The `patterncausality` package provides a robust framework for analyzing causal 
 
 Let's start by creating a custom distance metric. In this example, we'll implement an adaptive distance metric that switches between Euclidean and Manhattan distances based on the data's standard deviation. This can be useful when dealing with data that has varying scales or distributions.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 adaptive_distance <- function(x) {
   if(!is.matrix(x)) x <- as.matrix(x)
   # Ensure no NA values
@@ -58,7 +56,7 @@ This function first checks if the input is a matrix, handles NA values by replac
 
 Next, let's define a custom state space reconstruction method. Here, we'll implement a denoised state space reconstruction using a median filter to reduce noise in the time series before constructing the state space.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 denoised_state_space <- function(x, E, tau) {
   # Use median filtering for denoising
   n <- length(x)
