@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a large dataset</a></li>
+<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a Large Dataset</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Pattern Causality between two series</a></li>
   </ul>
 </li>
@@ -76,9 +76,17 @@ Stavroglou, Athanasios Pantelous, Hui Wang</h4>
 
     
     
-<p>Pattern Causality gives us a method to measure the causality in the
-complex system, it has its own ability to catch the hidden pattern in
-many kinds of series, so that it is statistically sufficient.</p>
+<p>Pattern Causality is a novel approach for detecting and analyzing
+causal relationships in complex systems. This method excels at:</p>
+<ol style="list-style-type: decimal">
+<li>Identifying hidden patterns in time series data</li>
+<li>Quantifying different types of causality (positive, negative, and
+dark)</li>
+<li>Providing robust statistical analysis of causal relationships</li>
+</ol>
+<p>The algorithm is particularly effective for: - Financial market
+analysis - Climate system interactions - Medical diagnosis - Complex
+system dynamics</p>
 <div class="section level2">
 <h2 id="pc-in-financial-market">PC in financial market<a class="anchor" aria-label="anchor" href="#pc-in-financial-market"></a>
 </h2>
@@ -147,40 +155,33 @@ import data from the <strong>yahooo</strong> api.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
-<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, tpb<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       total  positive  negative      dark</span></span>
-<span><span class="co">#&gt; 1 0.2776053 0.3933764 0.1567044 0.4499192</span></span></code></pre></div>
+<span><span class="co">#&gt; Pattern Causality Analysis Results:</span></span>
+<span><span class="co">#&gt; Total: 0.2755</span></span>
+<span><span class="co">#&gt; Positive: 0.3997</span></span>
+<span><span class="co">#&gt; Negative: 0.1521</span></span>
+<span><span class="co">#&gt; Dark: 0.4482</span></span></code></pre></div>
 <p>Lastly we can also visualize this result.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">name</span>, y <span class="op">=</span> <span class="va">val</span>, fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, alpha <span class="op">=</span> <span class="fl">.6</span>, width <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html" class="external-link">scale_fill_grey</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> <span class="co"># start and end define the range of grays</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Status"</span>, y <span class="op">=</span> <span class="st">"Strength"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span>, base_family <span class="op">=</span> <span class="st">"Times New Roman"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>, axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_total.html">plot_total</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="patterncausality_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_components.html">plot_components</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
+<p><img src="patterncausality_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="full-details">Full details<a class="anchor" aria-label="anchor" href="#full-details"></a>
 </h3>
 <p>The details could be found with following code.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
-<span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">detail</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Access the causality components</span></span>
+<span><span class="va">causality_real</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_real</span></span>
+<span><span class="va">causality_pred</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_pred</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">causality_pred</span><span class="op">)</span></span></code></pre></div>
 <p>So far, the whole process of this algorithm has finished.</p>
 </div>
 </div>
