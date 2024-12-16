@@ -78,12 +78,19 @@ Stavroglou, Athanasios Pantelous, Hui Wang</h4>
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>As it’s hard to understand the pattern causality algorithm based on
 chaos theory, some researchers always wonder if this algorithm is able
 to capture the dynamic causality between series.</p>
 <p>In this vignette, we will demonstrate how to use the
 <code>patterncausality</code> package to analyze the dynamic causality
 between two series.</p>
+</div>
+<div class="section level2">
+<h2 id="loading-the-package-and-data">Loading the Package and Data<a class="anchor" aria-label="anchor" href="#loading-the-package-and-data"></a>
+</h2>
 <p>First of all, we need to load the package and the dataset as
 usual.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -93,6 +100,10 @@ usual.</p>
 analysis. We can easily get the pattern causality result by
 <code>pcLightweight</code> function to give a quick view, generally
 speaking, this result is obtained by the whole time points.</p>
+</div>
+<div class="section level2">
+<h2 id="quick-view-of-pattern-causality">Quick View of Pattern Causality<a class="anchor" aria-label="anchor" href="#quick-view-of-pattern-causality"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
@@ -100,7 +111,11 @@ speaking, this result is obtained by the whole time points.</p>
 <p>The parameter <code>weighted</code> decides if we need to calculate
 the causality strength by erf function, we can show this kind of
 strength here in each time point.</p>
-<p>To get teh causality strength in each time point, we need the
+</div>
+<div class="section level2">
+<h2 id="detailed-causality-analysis">Detailed Causality Analysis<a class="anchor" aria-label="anchor" href="#detailed-causality-analysis"></a>
+</h2>
+<p>To get the causality strength in each time point, we need the
 recorded function <code>pcFullDetails</code> to give causality strength
 details.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -119,6 +134,10 @@ saved in the <code>result</code> object, then we can plot the causality
 strength series from this, as we said in the previous work, the each
 time point if and only if the causality is one of the three types, so
 the each time point just has one causality.</p>
+</div>
+<div class="section level2">
+<h2 id="plotting-causality-strength">Plotting Causality Strength<a class="anchor" aria-label="anchor" href="#plotting-causality-strength"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_causality.html">plot_causality</a></span><span class="op">(</span><span class="va">result</span>, type<span class="op">=</span><span class="st">"total"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="dynamic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -130,6 +149,10 @@ the each time point just has one causality.</p>
 to observe the dynamic causality, since each time point just has one
 causality, so we use the linear interpolation to connect the points of
 each causality.</p>
+</div>
+<div class="section level2">
+<h2 id="raw-causality-strength-analysis">Raw Causality Strength Analysis<a class="anchor" aria-label="anchor" href="#raw-causality-strength-analysis"></a>
+</h2>
 <p>However, sometimes we also want to choose
 <code>weighted = FALSE</code> to get the raw causality strength series,
 we can estimate the causality again by the <code>pcFullDetails</code>
@@ -148,6 +171,10 @@ function.</p>
 <p>Obviously, the number of total causality points is the same, then we
 also provide the plot function for this situation to find more details
 about the dynamic causality.</p>
+</div>
+<div class="section level2">
+<h2 id="plotting-raw-causality-strength">Plotting Raw Causality Strength<a class="anchor" aria-label="anchor" href="#plotting-raw-causality-strength"></a>
+</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_causality.html">plot_causality</a></span><span class="op">(</span><span class="va">result</span>, type<span class="op">=</span><span class="st">"total"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="dynamic_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
@@ -155,10 +182,12 @@ about the dynamic causality.</p>
 why the figure is the bar plot, we can find the causality type in each
 time point and we can also obverse different causality in different time
 points.</p>
-<p>There two kinds of functions extended the pattern causality to the
+<p>These two kinds of functions extended the pattern causality to the
 dynamic analysis, we can find more information from the time field and
 the features in different time points and different causalities.</p>
-  </main>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
