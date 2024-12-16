@@ -1,55 +1,48 @@
-# _pkgdown.yml
-
-url: "https://www.stavroglou.com/pattern_causality"
+url: https://www.stavroglou.com/pattern_causality/
 
 template:
   bootstrap: 5
-  # package: tidytemplate
-
-navbar:
-  structure:
-    left:
-      - text: "Home"
-        href: index.html
-      - text: "Articles"
-        href: articles/
-      - text: "Reference"
-        href: reference/
-    right:
-      - text: "GitHub"
-        href: "https://github.com"
-
-reference:
-  - title: "Core Functions"
-    desc: "Functions for pattern causality analysis"
-    contents:
-      - starts_with("pc")
-  - title: "Utility Functions"
-    desc: "Helper functions for data processing and visualization"
-    contents:
-      - starts_with("plot")
-      - starts_with("optimal")
-      - starts_with("pcCross")
-      - starts_with("pcEffect")
-
-articles:
-  - title: "Introduction"
-    desc: "An overview of pattern causality"
-    contents:
-      - "patterncausality.html"
-  - title: "Time Series Analysis"
-    desc: "Causality analysis between two series"
-    contents:
-      - "series.html"
-  - title: "Advanced Analysis"
-    desc: "Custom functions for tailored analysis"
-    contents:
-      - "advanced.html"
-  - title: "Dynamic Analysis"
-    desc: "Pattern causality in time points"
-    contents:
-      - "dynamic.html"
-  - title: "Multivariate Analysis"
-    desc: "System-wide interactions"
-    contents:
-      - "matrix.html"
+  #package: tidytemplate
+  
+  navbar:
+    structure:
+      left: [ "index.html", "articles", "reference" ]
+      right: [ "github.com" ]
+  
+  development:
+    mode: auto
+  
+  reference:
+    - title: "Core Functions"
+      desc: "Functions for pattern causality analysis"
+      contents:
+        - starts_with("pc")
+    - title: "Utility Functions"
+      desc: "Helper functions for data processing and visualization"
+      contents:
+        - starts_with("plot")
+        - starts_with("optimal")
+        - starts_with("pcCross")
+        - starts_with("pcEffect")
+  
+  articles:
+    - title: "Introduction"
+      desc: "An overview of pattern causality"
+      contents:
+        - "patterncausality.html"
+    - title: "Time Series Analysis"
+      desc: "Causality analysis between two series"
+      contents:
+        - "series.html"
+    - title: "Advanced Analysis"
+      desc: "Custom functions for tailored analysis"
+      contents:
+        - "advanced.html"
+    - title: "Dynamic Analysis"
+      desc: "Pattern causality in time points"
+      contents:
+        - "dynamic.html"
+    - title: "Multivariate Analysis"
+      desc: "System-wide interactions"
+      contents:
+        - "matrix.html"
