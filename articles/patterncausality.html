@@ -14,17 +14,15 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring Pattern Causality: An Intuitive Guide">
 </head>
 <body>
-    <a href="#container" class="visually-hidden-focusable">Skip to content</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-none" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
@@ -60,7 +58,7 @@
 
 
   </div>
-</nav><div class="container template-article" id="container">
+</nav><div class="container template-article">
 
 
 
@@ -118,48 +116,41 @@ You can also import data using the <strong>yahooo</strong> API.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         Date     X3M American.Express    Apple  Boeing Caterpillar</span></span>
-<span><span class="co">#&gt; 1 2000-01-03 47.1875         45.88031 3.997768 40.1875    24.31250</span></span>
-<span><span class="co">#&gt; 2 2000-01-04 45.3125         44.14794 3.660714 40.1250    24.00000</span></span>
-<span><span class="co">#&gt; 3 2000-01-05 46.6250         42.96264 3.714286 42.6250    24.56250</span></span>
-<span><span class="co">#&gt; 4 2000-01-06 50.3750         43.83794 3.392857 43.0625    25.81250</span></span>
-<span><span class="co">#&gt; 5 2000-01-07 51.3750         44.47618 3.553571 44.3125    26.65625</span></span>
-<span><span class="co">#&gt; 6 2000-01-10 51.1250         45.09618 3.491071 43.6875    25.78125</span></span>
-<span><span class="co">#&gt;    Chevron Cisco.Systems Coca.Cola DowDuPont ExxonMobil General.Electric</span></span>
-<span><span class="co">#&gt; 1 41.81250      54.03125  28.18750  44.20833   39.15625         50.00000</span></span>
-<span><span class="co">#&gt; 2 41.81250      51.00000  28.21875  43.00000   38.40625         48.00000</span></span>
-<span><span class="co">#&gt; 3 42.56250      50.84375  28.46875  44.39583   40.50000         47.91667</span></span>
-<span><span class="co">#&gt; 4 44.37500      50.00000  28.50000  45.64583   42.59375         48.55727</span></span>
-<span><span class="co">#&gt; 5 45.15625      52.93750  30.37500  46.66667   42.46875         50.43750</span></span>
-<span><span class="co">#&gt; 6 43.93750      54.90625  29.40625  45.47917   41.87500         50.41667</span></span>
-<span><span class="co">#&gt;   Goldman.Sachs      IBM    Intel Johnson...Johnson JPMorgan.Chase</span></span>
-<span><span class="co">#&gt; 1       88.3125 116.0000 43.50000          46.09375       48.58333</span></span>
-<span><span class="co">#&gt; 2       82.7500 112.0625 41.46875          44.40625       47.25000</span></span>
-<span><span class="co">#&gt; 3       78.8750 116.0000 41.81250          44.87500       46.95833</span></span>
-<span><span class="co">#&gt; 4       82.2500 114.0000 39.37500          46.28125       47.62500</span></span>
-<span><span class="co">#&gt; 5       82.5625 113.5000 41.00000          48.25000       48.50000</span></span>
-<span><span class="co">#&gt; 6       84.3750 118.0000 42.87500          47.03125       47.66667</span></span>
-<span><span class="co">#&gt;   McDonald.s   Merck Microsoft     Nike  Pfizer Procter...Gamble</span></span>
-<span><span class="co">#&gt; 1    39.6250 67.6250  58.28125 6.015625 31.8750         53.59375</span></span>
-<span><span class="co">#&gt; 2    38.8125 65.2500  56.31250 5.687500 30.6875         52.56250</span></span>
-<span><span class="co">#&gt; 3    39.4375 67.8125  56.90625 6.015625 31.1875         51.56250</span></span>
-<span><span class="co">#&gt; 4    38.8750 68.3750  55.00000 5.984375 32.3125         53.93750</span></span>
-<span><span class="co">#&gt; 5    39.8750 74.9375  55.71875 5.984375 34.5000         58.25000</span></span>
-<span><span class="co">#&gt; 6    40.0625 72.7500  56.12500 6.085938 34.4375         57.96875</span></span>
-<span><span class="co">#&gt;   The.Home.Depot Travelers United.Technologies UnitedHealth.Group</span></span>
-<span><span class="co">#&gt; 1        65.1875   33.0000            31.25000           6.718750</span></span>
-<span><span class="co">#&gt; 2        61.7500   32.5625            29.96875           6.632813</span></span>
-<span><span class="co">#&gt; 3        63.0000   32.3125            29.37500           6.617188</span></span>
-<span><span class="co">#&gt; 4        60.0000   32.9375            30.78125           6.859375</span></span>
-<span><span class="co">#&gt; 5        63.5000   34.2500            32.00000           7.664063</span></span>
-<span><span class="co">#&gt; 6        63.1875   33.6250            32.31250           7.531250</span></span>
-<span><span class="co">#&gt;    Verizon Walmart Walt.Disney</span></span>
-<span><span class="co">#&gt; 1 53.90316 66.8125    29.46252</span></span>
-<span><span class="co">#&gt; 2 52.16072 64.3125    31.18836</span></span>
-<span><span class="co">#&gt; 3 53.90316 63.0000    32.48274</span></span>
-<span><span class="co">#&gt; 4 53.28487 63.6875    31.18836</span></span>
-<span><span class="co">#&gt; 5 52.89142 68.5000    30.69527</span></span>
-<span><span class="co">#&gt; 6 52.61038 67.2500    35.37968</span></span></code></pre></div>
+<span><span class="co">#&gt;         Date     X3M American.Express    Apple  Boeing Caterpillar  Chevron</span></span>
+<span><span class="co">#&gt; 1 2000-01-03 47.1875         45.88031 3.997768 40.1875    24.31250 41.81250</span></span>
+<span><span class="co">#&gt; 2 2000-01-04 45.3125         44.14794 3.660714 40.1250    24.00000 41.81250</span></span>
+<span><span class="co">#&gt; 3 2000-01-05 46.6250         42.96264 3.714286 42.6250    24.56250 42.56250</span></span>
+<span><span class="co">#&gt; 4 2000-01-06 50.3750         43.83794 3.392857 43.0625    25.81250 44.37500</span></span>
+<span><span class="co">#&gt; 5 2000-01-07 51.3750         44.47618 3.553571 44.3125    26.65625 45.15625</span></span>
+<span><span class="co">#&gt; 6 2000-01-10 51.1250         45.09618 3.491071 43.6875    25.78125 43.93750</span></span>
+<span><span class="co">#&gt;   Cisco.Systems Coca.Cola DowDuPont ExxonMobil General.Electric Goldman.Sachs</span></span>
+<span><span class="co">#&gt; 1      54.03125  28.18750  44.20833   39.15625         50.00000       88.3125</span></span>
+<span><span class="co">#&gt; 2      51.00000  28.21875  43.00000   38.40625         48.00000       82.7500</span></span>
+<span><span class="co">#&gt; 3      50.84375  28.46875  44.39583   40.50000         47.91667       78.8750</span></span>
+<span><span class="co">#&gt; 4      50.00000  28.50000  45.64583   42.59375         48.55727       82.2500</span></span>
+<span><span class="co">#&gt; 5      52.93750  30.37500  46.66667   42.46875         50.43750       82.5625</span></span>
+<span><span class="co">#&gt; 6      54.90625  29.40625  45.47917   41.87500         50.41667       84.3750</span></span>
+<span><span class="co">#&gt;        IBM    Intel Johnson...Johnson JPMorgan.Chase McDonald.s   Merck</span></span>
+<span><span class="co">#&gt; 1 116.0000 43.50000          46.09375       48.58333    39.6250 67.6250</span></span>
+<span><span class="co">#&gt; 2 112.0625 41.46875          44.40625       47.25000    38.8125 65.2500</span></span>
+<span><span class="co">#&gt; 3 116.0000 41.81250          44.87500       46.95833    39.4375 67.8125</span></span>
+<span><span class="co">#&gt; 4 114.0000 39.37500          46.28125       47.62500    38.8750 68.3750</span></span>
+<span><span class="co">#&gt; 5 113.5000 41.00000          48.25000       48.50000    39.8750 74.9375</span></span>
+<span><span class="co">#&gt; 6 118.0000 42.87500          47.03125       47.66667    40.0625 72.7500</span></span>
+<span><span class="co">#&gt;   Microsoft     Nike  Pfizer Procter...Gamble The.Home.Depot Travelers</span></span>
+<span><span class="co">#&gt; 1  58.28125 6.015625 31.8750         53.59375        65.1875   33.0000</span></span>
+<span><span class="co">#&gt; 2  56.31250 5.687500 30.6875         52.56250        61.7500   32.5625</span></span>
+<span><span class="co">#&gt; 3  56.90625 6.015625 31.1875         51.56250        63.0000   32.3125</span></span>
+<span><span class="co">#&gt; 4  55.00000 5.984375 32.3125         53.93750        60.0000   32.9375</span></span>
+<span><span class="co">#&gt; 5  55.71875 5.984375 34.5000         58.25000        63.5000   34.2500</span></span>
+<span><span class="co">#&gt; 6  56.12500 6.085938 34.4375         57.96875        63.1875   33.6250</span></span>
+<span><span class="co">#&gt;   United.Technologies UnitedHealth.Group  Verizon Walmart Walt.Disney</span></span>
+<span><span class="co">#&gt; 1            31.25000           6.718750 53.90316 66.8125    29.46252</span></span>
+<span><span class="co">#&gt; 2            29.96875           6.632813 52.16072 64.3125    31.18836</span></span>
+<span><span class="co">#&gt; 3            29.37500           6.617188 53.90316 63.0000    32.48274</span></span>
+<span><span class="co">#&gt; 4            30.78125           6.859375 53.28487 63.6875    31.18836</span></span>
+<span><span class="co">#&gt; 5            32.00000           7.664063 52.89142 68.5000    30.69527</span></span>
+<span><span class="co">#&gt; 6            32.31250           7.531250 52.61038 67.2500    35.37968</span></span></code></pre></div>
 <p>The <code>data(DJS)</code> function loads the Dow Jones stocks
 dataset, which includes daily stock prices for several companies,
 including Apple and Microsoft. The <code>head(DJS)</code> function
@@ -243,9 +234,7 @@ understand pattern causality!</p>
 
 
 
-   </div>
-  <footer><div class="container">
-  <div class="pkgdown-footer-left">
+    <footer><div class="pkgdown-footer-left">
   <p>Developed by Stavros Stavroglou, Athanasios Pantelous, Hui Wang.</p>
 </div>
 
@@ -253,6 +242,12 @@ understand pattern causality!</p>
   <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
-  </div></footer>
-</body>
+    </footer>
+</div>
+
+
+
+
+
+  </body>
 </html>
