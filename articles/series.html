@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Pattern Causality between two series • patterncausality</title>
+<title>Unveiling Causal Relationships in Time Series Data • patterncausality</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Pattern Causality between two series">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Unveiling Causal Relationships in Time Series Data">
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -42,8 +42,10 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a Large Dataset</a></li>
-    <li><a class="dropdown-item" href="../articles/series.html">Pattern Causality between two series</a></li>
+<li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix.html">Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,7 +67,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Pattern Causality between two series</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Unveiling Causal Relationships in Time Series Data</h1>
                         <h4 data-toc-skip class="author">Stavros
 Stavroglou, Athanasios Pantelous, Hui Wang</h4>
             
@@ -76,26 +78,49 @@ Stavroglou, Athanasios Pantelous, Hui Wang</h4>
 
     
     
-<p>This vignette demonstrates advanced analysis techniques for examining
-causality between two time series. We’ll explore:</p>
+<p>This vignette demonstrates advanced techniques for examining causal
+relationships between time series using the
+<code>patterncausality</code> package. We will focus on three key
+aspects:</p>
 <ol style="list-style-type: decimal">
-<li>Cross-validation methods to assess robustness</li>
-<li>Parameter optimization for better results</li>
-<li>Visualization of causality relationships</li>
+<li>
+<strong>Cross-validation methods:</strong> To rigorously assess the
+robustness of our findings, ensuring they are not mere artifacts of the
+data.</li>
+<li>
+<strong>Parameter optimization:</strong> To fine-tune our analysis
+for the most accurate and reliable results.</li>
+<li>
+<strong>Visualization of causality relationships:</strong> To
+provide clear and intuitive insights into the causal connections between
+time series.</li>
 </ol>
-<p>The cross-validation approach helps ensure: - Reliability of results
-- Robustness across different sample sizes - Stability of causality
-patterns</p>
+<p>Through cross-validation, we aim to understand:</p>
+<ul>
+<li>
+<strong>Reliability of results:</strong> How dependable are our
+conclusions?</li>
+<li>
+<strong>Robustness across different sample sizes:</strong> Do our
+findings hold true regardless of the amount of data used?</li>
+<li>
+<strong>Stability of causality patterns:</strong> Are the identified
+causal relationships consistent over time and across different data
+subsets?</li>
+</ul>
 <div class="section level2">
-<h2 id="cross-validation">Cross validation<a class="anchor" aria-label="anchor" href="#cross-validation"></a>
+<h2 id="cross-validation-ensuring-the-reliability-of-causal-inference">Cross-Validation: Ensuring the Reliability of Causal Inference<a class="anchor" aria-label="anchor" href="#cross-validation-ensuring-the-reliability-of-causal-inference"></a>
 </h2>
-<p>As an example, we could import climate from
-<code>patterncausality</code> package.</p>
+<p>To demonstrate the application of cross-validation, we will begin by
+importing a climate dataset from the <code>patterncausality</code>
+package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate_indices</span><span class="op">)</span></span></code></pre></div>
-<p>Then we consider a method of cross-validation to see the robustness
-of pattern causality.</p>
+<p>Now, let’s apply cross-validation to evaluate the robustness of
+pattern causality. We will use the Pacific North American (PNA) and
+North Atlantic Oscillation (NAO) climate indices as our example time
+series.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">PNA</span></span>
@@ -117,14 +142,59 @@ of pattern causality.</p>
 <span><span class="co">#&gt; [3,] 0.2635379 0.2739726 0.3424658 0.3835616</span></span>
 <span><span class="co">#&gt; [4,] 0.2732095 0.2912621 0.2330097 0.4757282</span></span>
 <span><span class="co">#&gt; [5,] 0.2683438 0.2812500 0.2500000 0.4687500</span></span></code></pre></div>
-<p>In order to make the results better observed, we provide the
-<code>plotCV</code> function to give a line chart of the result.</p>
+<p>To better visualize the results, we will use the <code>plot</code>
+function to generate a line chart.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <p><img src="series_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>We can find that the causality keep the same position when the sample
-number is large enough, this method indeed captures hidden patterns and
-causal connections in sequences.</p>
+<p>As you can see from the plot, the location of the causality tends to
+stabilize as the sample size increases. This indicates that our method
+is effective at capturing the underlying patterns and causal connections
+within the time series.</p>
+<p>In this tutorial, you’ve learned how to use cross-validation to
+assess the reliability of time series causality and how to use
+visualization tools to better understand the results. We hope these
+methods will help you delve deeper into the fascinating world of time
+series data!</p>
+</div>
+<div class="section level2">
+<h2 id="cross-validation-convergence-of-pattern-causality">Cross-Validation: Convergence of Pattern Causality<a class="anchor" aria-label="anchor" href="#cross-validation-convergence-of-pattern-causality"></a>
+</h2>
+<p>Now, let’s examine the cross-validation process when the
+<code>random</code> parameter is set to <code>FALSE</code>. This
+approach uses a systematic sampling method rather than random
+sampling.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">PNA</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">NAO</span></span>
+<span><span class="va">result_non_random</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcCrossValidation.html">pcCrossValidation</a></span><span class="op">(</span></span>
+<span>  X <span class="op">=</span> <span class="va">X</span>,</span>
+<span>  Y <span class="op">=</span> <span class="va">Y</span>,</span>
+<span>  numberset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span>, <span class="fl">400</span>, <span class="fl">500</span><span class="op">)</span>,</span>
+<span>  E <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  tau <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  random <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result_non_random</span><span class="op">$</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          total  positive  negative      dark</span></span>
+<span><span class="co">#&gt; [1,] 0.2207792 0.2941176 0.1764706 0.5294118</span></span>
+<span><span class="co">#&gt; [2,] 0.2824859 0.2400000 0.3200000 0.4400000</span></span>
+<span><span class="co">#&gt; [3,] 0.2671480 0.2972973 0.3108108 0.3918919</span></span>
+<span><span class="co">#&gt; [4,] 0.2758621 0.2692308 0.2596154 0.4711538</span></span>
+<span><span class="co">#&gt; [5,] 0.2725367 0.3000000 0.2307692 0.4692308</span></span></code></pre></div>
+<p>We can also visualize the results of the non-random
+cross-validation:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result_non_random</span><span class="op">)</span></span></code></pre></div>
+<p><img src="series_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>By comparing the results of the random and non-random
+cross-validation, you can gain a deeper understanding of how different
+sampling methods affect the stability and reliability of the causality
+analysis.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

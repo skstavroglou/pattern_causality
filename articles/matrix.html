@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Pattern Causality in a Large Dataset • patterncausality</title>
+<title>Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions • patterncausality</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Pattern Causality in a Large Dataset">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions">
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -42,8 +42,10 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a Large Dataset</a></li>
-    <li><a class="dropdown-item" href="../articles/series.html">Pattern Causality between two series</a></li>
+<li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix.html">Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,7 +67,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Pattern Causality in a Large Dataset</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</h1>
                         <h4 data-toc-skip class="author">Stavros
 Stavroglou, Athanasios Pantelous, Hui Wang</h4>
             
@@ -76,28 +78,64 @@ Stavroglou, Athanasios Pantelous, Hui Wang</h4>
 
     
     
-<p>This vignette demonstrates the analysis of pattern causality in
-large-scale systems with multiple interconnected time series. Key
-aspects covered include:</p>
+<p>This vignette provides a comprehensive demonstration of multivariate
+pattern causality analysis, a powerful technique for investigating
+complex interactions within large-scale systems. This approach is
+particularly useful when dealing with multiple interconnected time
+series, allowing us to move beyond pairwise analysis and understand
+system-wide dynamics. The key aspects of this analysis include:</p>
 <ol style="list-style-type: decimal">
-<li>Matrix-based causality analysis</li>
-<li>System-wide pattern detection</li>
-<li>Visualization of complex causal networks</li>
-<li>Effect analysis across the entire system</li>
+<li>
+<strong>Matrix-based causality assessment:</strong> Quantifying
+causal relationships between all pairs of time series in the system,
+represented in a matrix format.</li>
+<li>
+<strong>System-wide pattern identification:</strong> Identifying
+recurring patterns of behavior across the entire system, revealing
+underlying dynamics.</li>
+<li>
+<strong>Visualization of complex causal relationships:</strong>
+Using graphical representations to make intricate causal networks more
+understandable.</li>
+<li>
+<strong>Analysis of effects across the entire system:</strong>
+Measuring the overall impact of causality within the system, providing
+insights into the collective behavior.</li>
 </ol>
-<p>The matrix approach is particularly useful for: - Financial market
-networks - Economic systems - Social networks - Complex ecological
-systems</p>
+<p>The matrix-based approach is particularly well-suited for the study
+of:</p>
+<ul>
+<li>
+<strong>Financial market networks:</strong> Analyzing the
+interconnectedness of stock prices and other financial instruments.</li>
+<li>
+<strong>Economic systems:</strong> Understanding the relationships
+between various economic indicators and their impact on the overall
+economy.</li>
+<li>
+<strong>Social networks:</strong> Investigating the spread of
+information and influence within social structures.</li>
+<li>
+<strong>Complex ecological systems:</strong> Studying the
+interactions between different species and environmental factors.</li>
+</ul>
 <div class="section level2">
 <h2 id="pattern-causality-matrix">Pattern Causality Matrix<a class="anchor" aria-label="anchor" href="#pattern-causality-matrix"></a>
 </h2>
-<p>We’ll use the DJS dataset which contains 29 stock price series - a
-sufficiently large dataset for our analysis.</p>
+<p>In this vignette, we will utilize the DJS dataset, which comprises 29
+stock price series. This dataset provides a sufficiently large and
+complex system to demonstrate the capabilities of our multivariate
+pattern causality analysis.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
 <span><span class="co">#head(DJS)</span></span></code></pre></div>
-<p>First, let’s find optimal parameters for our analysis:</p>
+<p>Before estimating the causality matrix, it is crucial to determine
+the optimal parameters for our analysis. These parameters, including the
+embedding dimension (<code>E</code>) and time delay (<code>tau</code>),
+significantly influence the accuracy and reliability of the results. We
+use the <code>optimalParametersSearch</code> function to identify these
+optimal values:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
 <span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span></span>
@@ -108,8 +146,11 @@ sufficiently large dataset for our analysis.</p>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></code></pre></div>
-<p>Now we can estimate the pattern causality using the optimal
-parameters:</p>
+<p>With the optimal parameters identified, we can now estimate the
+pattern causality matrix using the <code>pcMatrix</code> function. This
+function calculates the causality between all pairs of time series in
+the dataset, resulting in a matrix representation of the system’s causal
+structure.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcMatrix.html">pcMatrix</a></span><span class="op">(</span></span>
 <span>  dataset <span class="op">=</span> <span class="va">dataset</span>, </span>
@@ -119,7 +160,10 @@ parameters:</p>
 <span>  h <span class="op">=</span> <span class="fl">1</span>,           <span class="co"># Prediction horizon</span></span>
 <span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>  <span class="co"># Unweighted analysis</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Then we could see the three matrixs after calculating.</p>
+<p>The resulting analysis yields three matrices, each representing a
+different aspect of causality: positive, negative, and dark causality.
+These matrices can be accessed through the <code>pc_matrix</code>
+object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Pattern Causality Matrix Analysis:</span></span>
@@ -170,35 +214,39 @@ parameters:</p>
 <span><span class="co">#&gt; Boeing             0.5034014</span></span>
 <span><span class="co">#&gt; Caterpillar               NA</span></span>
 <span><span class="co">#&gt; ...</span></span></code></pre></div>
-<p>Then we can visualize the result by <code>plotMatrix</code>
-function.</p>
+<p>The <code>plot</code> function for object <code>pc_matrix</code>
+provides a powerful tool for visualizing these complex matrices. By
+plotting each causality type separately, we can gain a deeper
+understanding of the system’s dynamics.</p>
 <ul>
-<li>positive status</li>
+<li>Positive causality status</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"positive"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="matrix_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <ul>
-<li>negative status</li>
+<li>Negative causality status</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"negative"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="matrix_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 <ul>
-<li>dark status</li>
+<li>Dark causality status</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"dark"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="matrix_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
-<p>We could see that there is a obvious positive connection in this
-system.</p>
+<p>The visualization reveals a clear positive connection within the
+system, indicating a tendency for stocks to influence each other
+positively.</p>
 </div>
 <div class="section level2">
-<h2 id="pattern-causality-effect">Pattern causality effect<a class="anchor" aria-label="anchor" href="#pattern-causality-effect"></a>
+<h2 id="pattern-causality-effect">Pattern Causality Effect<a class="anchor" aria-label="anchor" href="#pattern-causality-effect"></a>
 </h2>
-<p>After we get the matrix, we can find the total effect in the system,
-we provide the function <code>pcEffect</code> to achieve this
-target.</p>
+<p>Following the matrix calculation, we can quantify the total effect
+within the system using the <code>pcEffect</code> function. This
+function aggregates the causality measures to provide a system-wide
+perspective on the overall impact of pattern causality.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">effects</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcEffect.html">pcEffect</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">effects</span><span class="op">)</span></span>
@@ -300,10 +348,66 @@ target.</p>
 <span><span class="co">#&gt; Verizon              1424.83 1446.06 -21.22</span></span>
 <span><span class="co">#&gt; Walmart              1437.07 1445.44  -8.37</span></span>
 <span><span class="co">#&gt; Walt.Disney          1463.81 1460.01   3.80</span></span></code></pre></div>
-<p>Then we could observe the total effect in pattern causality.</p>
+<p>The total effect of pattern causality can be observed, providing a
+measure of the overall strength of causal interactions within the
+system.</p>
+<ul>
+<li>Positive causality status</li>
+</ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">effects</span>, status<span class="op">=</span><span class="st">"negative"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">effects</span>, status<span class="op">=</span><span class="st">"positive"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="matrix_files/figure-html/unnamed-chunk-10-1.png" width="768"></p>
+<ul>
+<li>Negative causality status</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">effects</span>, status<span class="op">=</span><span class="st">"negative"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="matrix_files/figure-html/unnamed-chunk-11-1.png" width="768"></p>
+<ul>
+<li>Dark causality status</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">effects</span>, status<span class="op">=</span><span class="st">"dark"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="matrix_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
+</div>
+<div class="section level2">
+<h2 id="cross-matrix-analysis">Cross Matrix analysis<a class="anchor" aria-label="anchor" href="#cross-matrix-analysis"></a>
+</h2>
+<p>Sometimes, we also need to face the problem that X has multiple
+series, and Y also has multiple series, we want to know the causality
+between each series in X and each series in Y, to save the computation
+time, we can use the <code>pcCrossMatrix</code> function to get the
+causality matrix from each series in X to Y.</p>
+<p>This time we construct the datasets for X and Y in stock dataset.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">[</span>, <span class="fl">11</span><span class="op">:</span><span class="fl">29</span><span class="op">]</span></span></code></pre></div>
+<p>Then we can estimate the causality matrix from each series in X to Y
+and give the new matrix from X to Y.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result_cross</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcCrossMatrix.html">pcCrossMatrix</a></span><span class="op">(</span></span>
+<span>  X <span class="op">=</span> <span class="va">X</span>,</span>
+<span>  Y <span class="op">=</span> <span class="va">Y</span>,</span>
+<span>  E <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  tau <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The new matrix will be saved in the <code>result_cross</code> object,
+we can also plot the matrix by the <code>plot</code> function.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result_cross</span>, <span class="st">"positive"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="matrix_files/figure-html/unnamed-chunk-16-1.png" width="768"></p>
+<p>This will show the causality matrix from each series in X to Y and
+the color of the matrix represents the causality strength in the whole
+period.</p>
+<p>We provide the multiple types of multi-series pattern causality
+analysis here and it would be useful to face many different situatiuons
+for the matrix analysis and network analysis.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

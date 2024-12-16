@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Introduction to patterncausality • patterncausality</title>
+<title>Exploring Pattern Causality: An Intuitive Guide • patterncausality</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to patterncausality">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring Pattern Causality: An Intuitive Guide">
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -42,8 +42,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/matrix.html">Pattern Causality in a Large Dataset</a></li>
-    <li><a class="dropdown-item" href="../articles/series.html">Pattern Causality between two series</a></li>
+<li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix.html">Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,7 +67,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Introduction to patterncausality</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Exploring Pattern Causality: An Intuitive Guide</h1>
                         <h4 data-toc-skip class="author">Stavros
 Stavroglou, Athanasios Pantelous, Hui Wang</h4>
             
@@ -76,22 +78,42 @@ Stavroglou, Athanasios Pantelous, Hui Wang</h4>
 
     
     
-<p>Pattern Causality is a novel approach for detecting and analyzing
-causal relationships in complex systems. This method excels at:</p>
+<p><strong>Pattern Causality</strong> is a novel approach for detecting
+and analyzing causal relationships within complex systems. It is
+particularly effective at:</p>
 <ol style="list-style-type: decimal">
-<li>Identifying hidden patterns in time series data</li>
-<li>Quantifying different types of causality (positive, negative, and
-dark)</li>
-<li>Providing robust statistical analysis of causal relationships</li>
+<li>
+<strong>Identifying hidden patterns in time series data:</strong>
+Uncovering underlying regularities in seemingly random data.</li>
+<li>
+<strong>Quantifying different types of causality:</strong>
+Distinguishing between positive, negative, and “dark” causal influences,
+which are often difficult to observe directly.</li>
+<li>
+<strong>Providing robust statistical analysis:</strong> Ensuring the
+reliability of causal inferences through rigorous statistical
+methods.</li>
 </ol>
-<p>The algorithm is particularly effective for: - Financial market
-analysis - Climate system interactions - Medical diagnosis - Complex
-system dynamics</p>
+<p>This algorithm is especially useful in the following domains:</p>
+<ul>
+<li>
+<strong>Financial market analysis:</strong> Understanding the
+interdependencies between different assets.</li>
+<li>
+<strong>Climate system interactions:</strong> Revealing the complex
+relationships between various factors in climate change.</li>
+<li>
+<strong>Medical diagnosis:</strong> Assisting in the analysis of
+disease progression patterns to identify potential causes.</li>
+<li>
+<strong>Complex system dynamics:</strong> Studying the interactions
+between components in various complex systems.</li>
+</ul>
 <div class="section level2">
-<h2 id="pc-in-financial-market">PC in financial market<a class="anchor" aria-label="anchor" href="#pc-in-financial-market"></a>
+<h2 id="application-in-financial-markets">Application in Financial Markets<a class="anchor" aria-label="anchor" href="#application-in-financial-markets"></a>
 </h2>
-<p>First of all, we can import the data of AAPL and MSFT, also we can
-import data from the <strong>yahooo</strong> api.</p>
+<p>First, we import stock data for Apple (AAPL) and Microsoft (MSFT).
+You can also import data using the <strong>yahooo</strong> API.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/skstavroglou/pattern_causality/" class="external-link">patterncausality</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DJS</span><span class="op">)</span></span>
@@ -138,20 +160,30 @@ import data from the <strong>yahooo</strong> api.</p>
 <span><span class="co">#&gt; 4 53.28487 63.6875    31.18836</span></span>
 <span><span class="co">#&gt; 5 52.89142 68.5000    30.69527</span></span>
 <span><span class="co">#&gt; 6 52.61038 67.2500    35.37968</span></span></code></pre></div>
-<p>We can visualize this stock price.</p>
+<p>The <code>data(DJS)</code> function loads the Dow Jones stocks
+dataset, which includes daily stock prices for several companies,
+including Apple and Microsoft. The <code>head(DJS)</code> function
+displays the first few rows of the dataset.</p>
+<p>Next, we visualize the stock prices to observe their trends more
+intuitively.</p>
 <p><img src="patterncausality_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="section level3">
-<h3 id="search-the-parameters">Search the parameters<a class="anchor" aria-label="anchor" href="#search-the-parameters"></a>
+<h3 id="parameter-optimization">Parameter Optimization<a class="anchor" aria-label="anchor" href="#parameter-optimization"></a>
 </h3>
-<p>Then search the best parameters for the PC.</p>
+<p>To achieve the best results with pattern causality analysis, it’s
+important to find the optimal parameters. The following code
+demonstrates how to search for these parameters using the
+<code>optimalParametersSearch</code> function (note that this code is
+not evaluated by default due to the time it may take).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="calculate-the-causality">Calculate the causality<a class="anchor" aria-label="anchor" href="#calculate-the-causality"></a>
+<h3 id="calculating-causality">Calculating Causality<a class="anchor" aria-label="anchor" href="#calculating-causality"></a>
 </h3>
-<p>After that, calculate the causality of each status.</p>
+<p>After determining the parameters, we can calculate the causality
+between the two series.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
@@ -162,18 +194,35 @@ import data from the <strong>yahooo</strong> api.</p>
 <span><span class="co">#&gt; Positive: 0.3997</span></span>
 <span><span class="co">#&gt; Negative: 0.1521</span></span>
 <span><span class="co">#&gt; Dark: 0.4482</span></span></code></pre></div>
-<p>Lastly we can also visualize this result.</p>
+<p>The <code>pcLightweight</code> function performs a lightweight
+pattern causality analysis. - <code>X</code>: The first time series
+(Apple stock prices). - <code>Y</code>: The second time series
+(Microsoft stock prices). - <code>E</code>: The embedding dimension. -
+<code>tau</code>: The time delay. - <code>metric</code>: The distance
+metric to use. - <code>h</code>: The prediction horizon. -
+<code>weighted</code>: A boolean indicating whether to use weighted
+causality.</p>
+<p>The <code>print(pc)</code> function displays the results of the
+causality analysis, including the total, positive, negative, and dark
+causality percentages.</p>
+<p>Finally, we can visualize the results to better understand the causal
+relationships using the <code>plot_total</code> and
+<code>plot_components</code> functions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_total.html">plot_total</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="patterncausality_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_components.html">plot_components</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="patterncausality_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p>The <code>plot_total</code> function visualizes the total causality,
+and <code>plot_components</code> visualizes the different components of
+causality (positive, negative, and dark).</p>
 </div>
 <div class="section level3">
-<h3 id="full-details">Full details<a class="anchor" aria-label="anchor" href="#full-details"></a>
+<h3 id="detailed-analysis">Detailed Analysis<a class="anchor" aria-label="anchor" href="#detailed-analysis"></a>
 </h3>
-<p>The details could be found with following code.</p>
+<p>For more detailed causality information, use the
+<code>pcFullDetails</code> function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Apple</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">DJS</span><span class="op">$</span><span class="va">Microsoft</span></span>
@@ -182,7 +231,10 @@ import data from the <strong>yahooo</strong> api.</p>
 <span><span class="va">causality_real</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_real</span></span>
 <span><span class="va">causality_pred</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_pred</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">causality_pred</span><span class="op">)</span></span></code></pre></div>
-<p>So far, the whole process of this algorithm has finished.</p>
+<p>This completes the entire process of the pattern causality
+algorithm.</p>
+<p>We hope this clearer and more intuitive explanation helps you better
+understand pattern causality!</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

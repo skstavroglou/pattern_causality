@@ -45,8 +45,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/matrix.html">Pattern Causality in a Large Dataset</a></li>
-    <li><a class="dropdown-item" href="articles/series.html">Pattern Causality between two series</a></li>
+<li><a class="dropdown-item" href="articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
+    <li><a class="dropdown-item" href="articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
+    <li><a class="dropdown-item" href="articles/matrix.html">Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -243,7 +245,7 @@
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_predict</span></span>
 <span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_real</span></span></code></pre></div>
-<p>Then the causality strength series will be saved in <code>predict_status</code> and <code>real_status</code>, if we want to plot the causality strength series, we can use the <code>plot</code> function for the <code>pc_full_details</code> class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.</p>
+<p>Then the causality strength series will be saved in <code>predict_status</code> and <code>real_status</code>, if we want to plot the causality strength series, we can use the <code>plot_causality</code> function for the <code>pc_full_details</code> class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.</p>
 </div>
 <div class="section level3">
 <h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
