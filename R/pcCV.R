@@ -1,94 +1,146 @@
-#' @title Perform Pattern Causality Cross Validation
+#' Perform Pattern Causality Cross-Validation Analysis
 #' 
-#' @description
-#' The `pcCrossValidation` function performs cross-validation on time series data to evaluate the robustness of pattern causality measures. It repeatedly samples subsets of the data, applies the pattern causality algorithm, and aggregates the results to provide a comprehensive assessment of the causality metrics.
-#' 
-#' @param X A numeric vector representing the first time series.
-#' @param Y A numeric vector representing the second time series.
-#' @param E An integer specifying the embedding dimension for the state space reconstruction.
-#' @param tau An integer specifying the time delay for the state space reconstruction.
-#' @param metric A character string specifying the distance metric used in the causality computation (e.g., "euclidean").
-#' @param h An integer specifying the prediction horizon.
-#' @param weighted A logical value indicating whether to apply weighted causality measures.
-#' @param numberset A numeric vector specifying the sample sizes for the cross-validation procedure.
-#' 
-#' @return
-#' A data frame containing the aggregated causality metrics across different sample sizes. The data frame includes the positive, negative, and dark causality percentages.
-#' 
-#' @export
+#' @title Pattern Causality Cross-Validation Analysis
+#' @description Evaluates the robustness of pattern causality measures through 
+#' repeated sampling analysis. This function performs cross-validation by analyzing 
+#' multiple subsets of the data to assess the stability of causality relationships.
+#'
+#' @details
+#' The function implements these key steps:
+#' \itemize{
+#'   \item Validates input parameters and data
+#'   \item Performs stratified sampling of time series data
+#'   \item Computes pattern causality measures for each sample
+#'   \item Aggregates results across all samples
+#' }
+#'
+#' @section Related Packages:
+#' \itemize{
+#'   \item \pkg{nonlinearTseries}: Provides nonlinear time series analysis tools
+#'   \item \pkg{tseriesChaos}: Offers chaos theory analysis methods
+#'   \item \pkg{rEDM}: Implements empirical dynamic modeling techniques
+#' }
+#'
+#' @param X Numeric vector; first time series
+#' @param Y Numeric vector; second time series
+#' @param E Integer; embedding dimension for state space reconstruction (E > 1)
+#' @param tau Integer; time delay for state space reconstruction (tau > 0)
+#' @param metric Character; distance metric, one of "euclidean", "manhattan", "maximum"
+#' @param h Integer; prediction horizon (h > 0)
+#' @param weighted Logical; whether to use weighted causality calculation
+#' @param distance_fn Optional custom distance function for computing distances
+#' @param state_space_fn Optional custom function for state space reconstruction
+#' @param numberset Numeric vector; sample sizes for cross-validation
+#' @param random Logical; if TRUE, randomly sample data points; if FALSE, take sequential samples from start (default: TRUE)
+#' @param verbose Logical; whether to display progress information (default: FALSE)
+#'
+#' @return An object of class "pc_cv" containing:
+#' \itemize{
+#'   \item samples: Vector of sample sizes used
+#'   \item results: Matrix of causality measures for each sample
+#'   \item summary: Summary statistics across all samples
+#'   \item parameters: List of input parameters
+#' }
+#'
 #' @examples
 #' \donttest{
-#' data(DJS)
-#' X <- DJS$X3M
-#' Y <- DJS$American.Express
-#' numberset <- c(1000,2000,3000,4000)
-#' result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
+#' data(climate_indices)
+#' X <- climate_indices$AO
+#' Y <- climate_indices$AAO
+#' numberset <- c(100, 200, 300)
+#' result <- pcCrossValidation(X, Y, E = 3, tau = 1, 
+#'                            metric = "euclidean", h = 2,
+#'                            weighted = TRUE, numberset = numberset)
 #' print(result)
+#' plot(result)
 #' }
-
-pcCrossValidation <- function(X, Y, E, tau, metric, h, weighted, numberset){
-  if(!is.atomic(numberset)){
-    stop("Please enter the vector of the sample number.")
+#'
+#' @seealso 
+#' \code{\link{pcLightweight}} for basic causality analysis
+#' \code{\link{pcFullDetails}} for detailed analysis
+#'
+#' @export
+pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,  
+                             distance_fn = NULL,
+                             state_space_fn = NULL,
+                             numberset, random = TRUE, verbose = FALSE) {
+  
+  # Additional validation for numberset and random
+  if(!is.logical(random)) {
+    stop("random must be logical", call. = FALSE)
   }
-  if(max(numberset) <= length(X)){
-    numbers <- sort(numberset)
-    positive <- dataBank("vector",length(numberset))
-    negative <- dataBank("vector",length(numberset))
-    dark <- dataBank("vector",length(numberset))
-    pb <- utils::txtProgressBar(min = 1, max = length(numbers), style = 3, char="#")
-    for(i in 1:length(numbers)){
-      samplex <- sample(X, numbers[i])
-      sampley <- sample(Y,numbers[i])
-      positive[i] <- pcLightweight(samplex, sampley, E, tau, metric, h, weighted,tpb=FALSE)$positive
-      negative[i] <- pcLightweight(samplex, sampley, E, tau, metric, h, weighted,tpb=FALSE)$negative
-      dark[i] <- pcLightweight(samplex, sampley, E, tau, metric, h, weighted,tpb=FALSE)$dark
-      together <- data.frame(positive, negative, dark)
-      rownames(together) <- numbers
-      utils::setTxtProgressBar(pb, i)
+  if(!is.numeric(numberset) || any(numberset <= 0)) {
+    stop("numberset must contain positive numeric values", call. = FALSE)
+  }
+  if(max(numberset) > length(X)) {
+    stop("Sample sizes cannot exceed time series length", call. = FALSE)
+  }
+  
+  # Validate core inputs
+  validate_inputs(X, Y, E, tau, metric, h, weighted, distance_fn)
+  
+  # Initialize results matrix
+  numbers <- sort(numberset)
+  results <- matrix(NA_real_, nrow = length(numbers), ncol = 4)
+  colnames(results) <- c("total", "positive", "negative", "dark")
+  
+  if(verbose) {
+    cat("Performing cross-validation analysis...\n")
+  }
+  
+  # Main analysis loop
+  for(i in seq_along(numbers)) {
+    if(random) {
+      idx <- sample(1:(length(X) - numbers[i] + 1), 1)
+      samplex <- X[idx:(idx + numbers[i] - 1)]
+      sampley <- Y[idx:(idx + numbers[i] - 1)]
+    } else {
+      samplex <- X[1:numbers[i]]
+      sampley <- Y[1:numbers[i]]
+    }
+    
+    pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
+                             metric = metric,
+                             distance_fn = distance_fn,
+                             state_space_fn = state_space_fn,
+                             verbose = FALSE)
+    
+    results[i, ] <- c(pc_result$total,
+                     pc_result$positive,
+                     pc_result$negative,
+                     pc_result$dark)
+    
+    if(verbose) {
+      report_progress(i, length(numbers), "Cross-validation analysis", verbose)
     }
   }
-  else{
-    stop("The sample number is larger than the dataset.")
+  
+  if(verbose) {
+    cat("\nComputing summary statistics...\n")
   }
-  return(together)
+  
+  # Create summary statistics
+  summary_stats <- apply(results, 2, function(x) {
+    c(mean = mean(x, na.rm = TRUE),
+      sd = stats::sd(x, na.rm = TRUE),
+      min = min(x, na.rm = TRUE),
+      max = max(x, na.rm = TRUE))
+  })
+  
+  # Return pc_cv object
+  result <- pc_cv(
+    samples = numbers,
+    results = results,
+    summary = summary_stats,
+    parameters = list(
+      E = E,
+      tau = tau,
+      metric = metric,
+      h = h,
+      weighted = weighted,
+      random = random
+    )
+  )
+  
+  return(result)
 }
-
-
-#' @title Plot Cross Validation Results
-#' 
-#' @description
-#' The `plotCV` function generates a plot to visualize the results of cross-validation for pattern causality. It displays the positive, negative, and dark causality strengths across different sample sizes, providing a clear graphical representation of the cross-validation outcomes.
-#' 
-#' @param pcCV A data frame containing the cross-validation results from the `pcCrossValidation` function. The data frame should include columns for positive, negative, and dark causality strengths, along with the corresponding sample sizes.
-#' @param fr A bool value for the plot frame
-#' 
-#' @return
-#' A plot visualizing the positive, negative, and dark causality strengths across different sample sizes. The plot includes points and lines for each causality type, along with a legend for easy interpretation.
-#' 
-#' @importFrom graphics points lines legend
-#' @export
-#' @examples
-#' \donttest{
-#' data(DJS)
-#' X <- DJS$X3M
-#' Y <- DJS$American.Express
-#' numberset <- c(1000,2000,3000,4000)
-#' result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
-#' plotCV(result,FALSE)
-#' }
-plotCV <- function(pcCV,fr=FALSE){
-  pcCV$number <- rownames(pcCV)
-  plot(pcCV$number, pcCV$positive, type = "b", pch = 19,xlab="L",ylab="Causality Strength", 
-       col = "#5BA3CF", frame = fr, ylim=c(0,1))
-  lines(pcCV$number, pcCV$negative, pch = 19, col = "#F6583E", type = "b")
-  lines(pcCV$number, pcCV$dark, pch = 19, col = "#6A51A3", type = "b")
-  legend("topright",0.98,c("positive", "negative","dark"),col=c("#5BA3CF","#F6583E","#6A51A3"),pch=19,lty=1, bty = "n")
-  # plot(pcCV$number, pcCV$positive,pch=15,col="DarkTurquoise",ylim=c(0,1),xlab="L",ylab="Causality Strength")
-  # points(pcCV$number, pcCV$negative,pch=16,col="DeepPink",cex=1)
-  # points(pcCV$number, pcCV$dark,pch=17,col="RosyBrown",cex=1)
-  # lines(pcCV$number, pcCV$positive,col="DarkTurquoise",lty=1)
-  # lines(pcCV$number, pcCV$negative,col="DeepPink",lty=2)
-  # lines(pcCV$number, pcCV$dark,col="RosyBrown",lty=3)
-  # legend("topright",0.98,c("positive", "negative","dark"),col=c("DarkTurquoise","DeepPink","RosyBrown"),text.col=c("DarkTurquoise","DeepPink","RosyBrown"),pch=c(15,16,17),lty=c(1,2,3))
-}
-

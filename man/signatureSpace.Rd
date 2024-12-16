@@ -2,27 +2,33 @@
 % Please edit documentation in R/signatureSpace.R
 \name{signatureSpace}
 \alias{signatureSpace}
-\title{Create Signature Space}
+\title{Calculate Signature Space Matrix from State Space}
 \usage{
-signatureSpace(M, E)
+signatureSpace(M)
 }
 \arguments{
-\item{M}{Matrix, the embedded state space matrix where each row is a point in the reconstructed state space of the time series.}
-
-\item{E}{Integer, the embedding dimension used to create the matrix M.}
+\item{M}{A state space matrix where each row represents a point in state space}
 }
 \value{
-Matrix where each row represents the vector of differences between successive elements of the corresponding row in matrix M. The orientation of the matrix may vary depending on the embedding dimension.
+A signature space matrix where each row contains the differences between
+successive elements of the corresponding state space row
 }
 \description{
-This function computes the signature space of a matrix obtained from a time series' state space by calculating the successive differences of each embedded vector. The signature space reveals changes between successive points in the time series, capturing dynamics that are crucial for understanding complex system behaviors.
+Calculates the signature space matrix from a state space matrix by
+computing differences between successive elements in each row. This transformation
+helps capture the dynamic patterns in the time series data.
 }
-\examples{
-data(climate_indices)
-ts <- climate_indices$AO
-E <- 3
-tau <- 1
-stateSpaceMatrix <- stateSpace(ts, E, tau)
-signatureMatrix <- signatureSpace(stateSpaceMatrix, E)
-print(signatureMatrix)
+\details{
+Calculate Signature Space Matrix
+
+The function performs the following steps:
+\enumerate{
+\item Validates input matrix dimensions
+\item For each row, computes differences between successive elements
+\item Returns the transformed matrix maintaining the same number of rows
+}
+
+Similar functionality can be found in the 'nonlinearTseries' package's
+embedding functions, but this implementation is specifically tailored for
+pattern causality analysis.
 }

@@ -7,13 +7,14 @@
 \method{summary}{pc_fit}(object, ...)
 }
 \arguments{
-\item{object}{A pc_fit object}
+\item{object}{A \code{pc_fit} object.}
 
-\item{...}{Additional arguments passed to summary}
+\item{...}{Additional arguments passed to the \code{summary} function.}
 }
 \value{
-Invisibly returns the input object
+Invisibly returns the input object.
 }
 \description{
-Summarize Pattern Causality Results
+Provides a summary of the pattern causality analysis results from a \code{pc_fit} object.
+This function displays a table of causality strengths for total, positive, negative, and dark components.
 }

@@ -2,34 +2,65 @@
 % Please edit documentation in R/natureOfCausality.R
 \name{natureOfCausality}
 \alias{natureOfCausality}
-\title{Determine Nature of Causality}
+\title{Nature of Causality Analysis}
 \usage{
-natureOfCausality(PC, dur, hashedpatterns, X)
+natureOfCausality(PC, dur, hashedpatterns, X, weighted = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{PC}{A three-dimensional array where each slice along the third dimension represents a pattern causality matrix at a specific time point, encoding the strength and type of causality between pairs of variables.}
+\item{PC}{Three-dimensional array; pattern causality matrices}
 
-\item{dur}{A numeric vector indicating the time points (slices of the PC matrix) to analyze for causality.}
+\item{dur}{Numeric vector; time points to analyze}
 
-\item{hashedpatterns}{A numeric vector of hashed or indexed pattern identifiers that correspond to variables in the system, used for interpreting matrix dimensions in causality checks.}
+\item{hashedpatterns}{Numeric vector; pattern identifiers}
 
-\item{X}{An auxiliary numeric vector used to determine the length of the output vectors for causality results, typically aligning with the number of time points or variables.}
+\item{X}{Numeric vector; reference for output length}
+
+\item{weighted}{Logical; if TRUE, uses weighted causality strength}
+
+\item{verbose}{Logical; if TRUE, prints computation details}
 }
 \value{
-A data frame with four columns: 'noCausality', 'Positive', 'Negative', and 'Dark', each containing binary indicators (1 for presence, 0 for absence) that correspond to the presence of each causality type at each time point analyzed.
+A pc_nature object containing:
+\itemize{
+\item no_causality: Vector of no causality strengths
+\item positive: Vector of positive causality strengths
+\item negative: Vector of negative causality strengths
+\item dark: Vector of dark causality strengths
+}
 }
 \description{
-This function analyzes a three-dimensional pattern causality matrix to classify the nature of causality (positive, negative, dark, or no causality) between pairs of variables across specified time points. It is designed to interpret the dynamics within complex systems by examining the causal relationships encoded in the matrix.
+Analyzes pattern causality matrices to classify the nature of
+causality between variables. This function provides core functionality for
+pattern causality analysis and can be used both independently and as part of
+larger analysis workflows.
+}
+\details{
+Nature of Causality Analysis
+
+This function analyzes the structure of pattern causality matrices
+to determine four types of causality:
+\itemize{
+\item No Causality: When no significant relationship is detected
+\item Positive Causality: When patterns show positive influence
+\item Negative Causality: When patterns show negative influence
+\item Dark Causality: When patterns show complex or indirect influence
+}
 }
 \examples{
-# Generate a sample 3D causality matrix with random data
-set.seed(123) # For reproducibility
-PC <- array(runif(300), dim = c(10, 10, 3)) # 10x10 matrix over 3 time points
-dur <- 1:3 # Time points to analyze
-hashedpatterns <- seq(1, 10) # Simulated hashed pattern identifiers
-X <- rep(0, 3) # Auxiliary vector for output length
+\donttest{
+# Generate example data
+PC <- array(runif(27), dim = c(3,3,3))
+dur <- 1:3
+hashedpatterns <- 1:3
+X <- rnorm(10)
 
-# Run the natureOfCausality function
-results <- natureOfCausality(PC, dur, hashedpatterns, X)
-print(results)
+# Analyze causality nature
+result <- natureOfCausality(PC, dur, hashedpatterns, X)
+print(result)
+}
+}
+\seealso{
+\code{\link{pcLightweight}} for basic causality analysis
+\code{\link{pcFullDetails}} for detailed analysis
+\code{\link{pcMatrix}} for causality matrix computation
 }

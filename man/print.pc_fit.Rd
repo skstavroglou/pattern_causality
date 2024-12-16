@@ -7,13 +7,14 @@
 \method{print}{pc_fit}(x, ...)
 }
 \arguments{
-\item{x}{A pc_fit object}
+\item{x}{A \code{pc_fit} object.}
 
-\item{...}{Additional arguments passed to print}
+\item{...}{Additional arguments passed to the \code{print} function.}
 }
 \value{
-Invisibly returns the input object
+Invisibly returns the input object.
 }
 \description{
-Print Pattern Causality Results
+Prints the pattern causality analysis results from a \code{pc_fit} object.
+This function displays the total, positive, negative, and dark causality strengths.
 }

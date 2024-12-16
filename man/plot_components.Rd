@@ -2,15 +2,27 @@
 % Please edit documentation in R/classes.R
 \name{plot_components}
 \alias{plot_components}
-\title{Plot Causality Components}
+\title{Plot Pattern Causality Components}
 \usage{
 plot_components(x, ...)
 }
 \arguments{
-\item{x}{An object}
+\item{x}{An object containing pattern causality results, typically a \code{pc_fit} object.}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to the underlying plotting functions.}
+}
+\value{
+NULL invisibly.
 }
 \description{
-Plot Causality Components
+Visualizes the positive, negative, and dark causality components as a barplot.
+This function takes a \code{pc_fit} object and generates a barplot showing the
+strength of each causality component.
+}
+\examples{
+data(climate_indices)
+X <- climate_indices$AO
+Y <- climate_indices$AAO
+pc_result <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
+plot_components(pc_result)
 }

@@ -13,11 +13,25 @@ status](https://www.r-pkg.org/badges/version/patterncausality)](https://cran.r-p
 
 ## Overview
 
-The goal of patterncausality is to measure the causality in the complex
-system. The core of this algorithm is measure the strength of each
-causality status like positive, negative, and dark in the view of
-complex system, this method could be used for many different fields like
-financial market, ecosystem, medical diagnosis and so on.
+The patterncausality package implements a novel approach for detecting and analyzing causal relationships in complex systems. Key features include:
+
+### Core Capabilities
+- Pattern-based causality detection
+- State space reconstruction
+- Multi-dimensional causality analysis
+- Robust cross-validation methods
+
+### Applications
+- Financial market analysis
+- Climate system interactions
+- Medical diagnosis
+- Ecological system dynamics
+
+### Key Advantages
+- Detects nonlinear causal relationships
+- Quantifies causality strength
+- Identifies hidden patterns
+- Handles noisy data effectively
 
 This algorithm has a lot of advantages.
 
@@ -96,9 +110,9 @@ print(pc)
 #> 1 0.2841121 0.326087 0.2318841 0.442029
 ```
 
-Then the percentage of each status will be showed below.
+The percentages of each causality status will be displayed below.
 
-If we wonder the status in each time point, we can run the code.
+To examine the causality status at each time point, we can run the following code:
 
 ```r
 X <- climate_indices$AO
@@ -193,7 +207,7 @@ Monash Business School and is the author and maintainer of the
 ## Test environments
 * local R installation, R 4.1.0
 * ubuntu 20.04 (on GitHub Actions), R 4.1.0
-* win-builder (devel)
+* win-builder (devel and release)
 
 ## R CMD check results
 0 errors | 0 warnings | 0 notes

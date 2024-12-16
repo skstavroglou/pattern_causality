@@ -3,17 +3,34 @@
 \docType{data}
 \name{climate_indices}
 \alias{climate_indices}
-\title{Climate Index}
+\title{Climate Indices Dataset}
 \format{
-An object of class \code{data.frame} with 535 rows and 5 columns.
+A data frame with 100 rows and 5 columns:
+\describe{
+\item{Date}{Date; Date of the measurement}
+\item{AO}{Numeric; Arctic Oscillation index}
+\item{AAO}{Numeric; Antarctic Oscillation index}
+\item{NAO}{Numeric; North Atlantic Oscillation index}
+\item{PNA}{Numeric; Pacific/North American index}
+}
+}
+\source{
+\url{https://www.cpc.ncep.noaa.gov/}
 }
 \usage{
 climate_indices
 }
 \description{
-This is a time series of climate index.
+A comprehensive time series dataset containing various climate indices
+used for pattern causality analysis. This dataset includes multiple climate
+indicators measured over time.
+}
+\details{
+Climate Indices Dataset
 }
 \examples{
+data(climate_indices)
 head(climate_indices)
+summary(climate_indices)
 }
 \keyword{datasets}

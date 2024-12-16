@@ -2,27 +2,53 @@
 % Please edit documentation in R/stateSpace.R
 \name{stateSpace}
 \alias{stateSpace}
-\title{Create State Space}
+\title{State Space Reconstruction}
 \usage{
-stateSpace(ts, E, tau)
+stateSpace(ts, E, tau, verbose = FALSE)
 }
 \arguments{
-\item{ts}{Numeric vector, the original time series data from which the state space is to be reconstructed.}
+\item{ts}{Numeric vector; time series data}
 
-\item{E}{Integer, the embedding dimension, which determines the number of delayed copies of the time series to include in each row of the matrix.}
+\item{E}{Integer; embedding dimension (E > 1)}
 
-\item{tau}{Integer, the time delay between each copy in the embedding, indicating the spacing in time steps between elements in each embedded vector.}
+\item{tau}{Integer; time delay (tau > 0)}
+
+\item{verbose}{Logical; whether to display progress information}
 }
 \value{
-A matrix where each row corresponds to an embedded vector, representing a point in the reconstructed state space of the time series. Rows with insufficient data (due to the delay embedding reaching beyond the end of the time series) contain NA values.
+An object of class "pc_state" containing:
+\itemize{
+\item matrix: The reconstructed state space matrix
+\item parameters: List of reconstruction parameters
+\item original: Original time series data
+}
 }
 \description{
-This function reconstructs the state space of a given time series by creating a delay embedding matrix. Each row in the matrix represents a point in the reconstructed state space, with embeddings based on specified lag (tau) and dimension (E). This approach is essential for analyzing the dynamics of complex systems, as it reveals underlying structures and patterns that are not immediately apparent in the raw time series data.
+Reconstructs the state space of a time series using delay embedding,
+creating a matrix where each row represents a point in the reconstructed space.
 }
+\details{
+State Space Reconstruction Analysis
+
+The function implements Takens' embedding theorem to reconstruct state space:
+\itemize{
+\item Creates delay vectors using specified embedding dimension (E)
+\item Applies time delay (tau) between consecutive elements
+\item Handles boundary conditions and missing values
+}
+}
+\section{Related Packages}{
+
+\itemize{
+\item \pkg{nonlinearTseries}: Nonlinear time series analysis
+\item \pkg{tseriesChaos}: Chaos theory analysis tools
+\item \pkg{fractal}: Fractal analysis methods
+}
+}
+
 \examples{
-ts <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-E <- 3
-tau <- 1
-stateSpaceMatrix <- stateSpace(ts, E, tau)
-print(stateSpaceMatrix)
+ts <- c(1:100)
+result <- stateSpace(ts, E = 3, tau = 2)
+plot(result)
+
 }

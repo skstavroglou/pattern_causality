@@ -1,42 +1,52 @@
-#' @title Hash Pattern Values
-#' @description This function hashes all possible patterns generated from a dataset to facilitate analysis
-#' of their distribution and frequency, supporting risk assessment in decision-making processes related
-#' to the causality and dynamics of complex systems.
-#'
-#' @param E The embedding dimension which influences the complexity and variety of patterns generated.
-#' This parameter adjusts the granularity with which the system's dynamics are analyzed and interpreted.
-#'
-#' @return hashedpatterns Returns a vector of hashed values representing each pattern or `NA` if the
-#' pattern generation was not possible, typically due to insufficient or overly simplified input.
-#'
-#' @examples
-#' # Assume E is set to 3, which is suitable for generating moderately complex patterns.
-#' hashed_result <- patternHashing(3)
-#' print(hashed_result)
-#' @export
-# = Appointing Unique Identifiers to Symbolic Patterns
-patternHashing <- function(E) {
-  a <- possiblePatterns(E)
-  if (!anyNA(a)) {
-    hashedpatterns <- apply(a, 1, hashing)
-  } else {
-    hashedpatterns <- NA
-  }
-  return(hashedpatterns)
+#' @keywords internal
+pc_pattern <- function(patterns, hashes) {
+  structure(
+    list(
+      patterns = patterns,
+      hashes = hashes
+    ),
+    class = "pc_pattern"
+  )
 }
-# === Prerequisites
-possiblePatterns <- function(E) {
-  if (E <= 1) {
-    p <- NA
-  } else {
-    p <- as.matrix(expand.grid(rep(list(1:3), E - 1)))
+
+#' Generate Pattern Hashes for Pattern Causality Analysis
+#' 
+#' @title Generate Pattern Hashes for Pattern Causality Analysis
+#' @description Internal function that generates and hashes patterns for the pattern
+#' causality algorithm. This function is a core component of the pattern causality
+#' analysis framework.
+#'
+#' @param E Integer; embedding dimension determining pattern complexity
+#' @param verbose Logical; if TRUE, prints computation progress
+#' @return A pc_pattern object containing:
+#' \itemize{
+#'   \item patterns: Matrix of possible patterns
+#'   \item hashes: Vector of corresponding hash values
+#' }
+#' @keywords internal
+#' @noRd
+patternHashing <- function(E, verbose = FALSE) {
+  # Input validation
+  if(!is.numeric(E) || E <= 1 || E != round(E)) {
+    stop("E must be an integer greater than 1", call. = FALSE)
   }
-  return(p)
-}
-hashing <- function(vec) {
-  hash <- 0
-  for (i in 1:length(vec)) {
-    hash <- hash + vec[i] * factorial(i + 2)
+  
+  if(verbose) {
+    cat("Generating patterns for embedding dimension", E, "\n")
   }
-  return(hash)
+  
+  # Generate possible patterns
+  patterns <- as.matrix(expand.grid(rep(list(1:3), E - 1)))
+  
+  if(verbose) {
+    cat("Computing hash values for", nrow(patterns), "patterns\n")
+  }
+  
+  # Compute hash values
+  hashes <- apply(patterns, 1, function(vec) {
+    sum(vec * factorial(seq_along(vec) + 2))
+  })
+  
+  # Create and return pc_pattern object
+  pc_pattern(patterns = patterns, hashes = hashes)
 }

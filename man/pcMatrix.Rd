@@ -2,34 +2,63 @@
 % Please edit documentation in R/pcMatrix.R
 \name{pcMatrix}
 \alias{pcMatrix}
-\title{Create Pattern Causality Matrix}
+\title{Pattern Causality Matrix Analysis}
 \usage{
-pcMatrix(dataset, E, tau, metric, h, weighted)
+pcMatrix(
+  dataset,
+  E,
+  tau,
+  metric = "euclidean",
+  h,
+  weighted = TRUE,
+  distance_fn = NULL,
+  state_space_fn = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{dataset}{A data frame where each column represents a time series to be analyzed for causal relationships.}
+\item{dataset}{Matrix or data frame of time series}
 
-\item{E}{An integer specifying the embedding dimension for reconstructing the state space of the time series.}
+\item{E}{Integer; embedding dimension}
 
-\item{tau}{An integer representing the time delay used in reconstructing the time series in the embedded space.}
+\item{tau}{Integer; time delay}
 
-\item{metric}{A character string specifying the distance metric to be used in the analysis (e.g., 'euclidean').}
+\item{metric}{Character; distance metric ("euclidean", "manhattan", "maximum")}
 
-\item{h}{An integer indicating the prediction horizon, i.e., the number of steps ahead for which predictions are made.}
+\item{h}{Integer; prediction horizon}
 
-\item{weighted}{A logical value indicating whether the analysis should apply a weighted approach when calculating causality strength.}
+\item{weighted}{Logical; whether to use weighted causality}
+
+\item{distance_fn}{Optional custom distance function}
+
+\item{state_space_fn}{Optional custom state space reconstruction function}
+
+\item{verbose}{Logical; whether to print progress}
 }
 \value{
-A list containing three matrices (\code{positive}, \code{negative}, \code{dark}) that represent the detected causal relationships between the time series in the dataset. Each matrix provides the strength of positive, negative, and dark causality, respectively.
+A pc_matrix object containing causality matrices
 }
 \description{
-This function performs dynamic network analysis to detect causal interactions between multiple time series within a dataset. It uses the Pattern Causality Model Mk. II to evaluate positive, negative, and dark causality relationships by analyzing the reconstructed state spaces of the time series. The function iterates through each time series in the dataset, comparing them to identify potential causal links.
+Analyzes pattern causality relationships between multiple time series
+by computing pairwise causality measures and organizing them into matrices.
 }
-\examples{
-\donttest{
-data(climate_indices)
-dataset <- climate_indices[,-1] # remove the date column
-result <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
-print(result)
+\details{
+Compute Pattern Causality Matrix Analysis
+
+The function performs these key steps:
+\itemize{
+\item Validates input data and parameters
+\item Computes pairwise causality measures
+\item Organizes results into causality matrices
+\item Provides summary statistics for each causality type
 }
 }
+\section{Related Packages}{
+
+\itemize{
+\item \pkg{vars}: Vector autoregression analysis
+\item \pkg{tseries}: Time series analysis tools
+\item \pkg{forecast}: Time series forecasting methods
+}
+}
+

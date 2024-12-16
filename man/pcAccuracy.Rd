@@ -4,32 +4,68 @@
 \alias{pcAccuracy}
 \title{Calculate Pattern Causality Accuracy}
 \usage{
-pcAccuracy(dataset, E, tau, metric, h, weighted)
+pcAccuracy(
+  dataset,
+  E,
+  tau,
+  metric = "euclidean",
+  h,
+  weighted,
+  distance_fn = NULL,
+  state_space_fn = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{dataset}{A matrix or data frame where each column represents a time series.}
+\item{dataset}{A matrix or data frame where each column represents a time series}
 
-\item{E}{The embedding dimension used for state space reconstruction.}
+\item{E}{Integer; embedding dimension for state space reconstruction (E > 1)}
 
-\item{tau}{The time delay used in state space reconstruction.}
+\item{tau}{Integer; time delay for state space reconstruction (tau > 0)}
 
-\item{metric}{A character string specifying the distance metric to be used (e.g., 'euclidean', 'maximum').}
+\item{metric}{Character; distance metric to use, one of "euclidean", "manhattan", or "maximum"}
 
-\item{h}{Prediction horizon, indicating how far ahead in the time series the predictions are aimed.}
+\item{h}{Integer; prediction horizon, indicating forecast distance (h >= 0)}
 
-\item{weighted}{A logical indicating whether to use a weighted approach in calculating the causality strengths.}
+\item{weighted}{Logical; whether to use weighted approach in calculating causality strengths}
+
+\item{distance_fn}{Optional custom distance function for computing distances (default: NULL)}
+
+\item{state_space_fn}{Optional custom function for state space reconstruction (default: NULL)}
+
+\item{verbose}{Logical; whether to display progress information (default: FALSE)}
 }
 \value{
-A data frame with the embedding parameters and average values of total, positive, negative, and dark causality across all time series pairs in the dataset.
+An object of class "pc_accuracy" containing:
+\itemize{
+\item parameters: List of input parameters (E, tau, metric, h, weighted)
+\item total: Mean total causality across all pairs
+\item positive: Mean positive causality across all pairs
+\item negative: Mean negative causality across all pairs
+\item dark: Mean dark causality across all pairs
+\item matrices: Raw causality matrices for each type
+}
 }
 \description{
-This function evaluates the causality prediction accuracy across multiple time series within a dataset using the PC Mk. II Light method. It checks the feasibility of causality analysis between all pairs, computes different types of causality (total, positive, negative, dark), and aggregates these results.
+Evaluates the causality prediction accuracy across multiple time series
+within a dataset using the PC Mk. II Light method. This function analyzes pairwise
+causality relationships and computes different types of causality measures.
+}
+\details{
+Calculate Pattern Causality Accuracy
 }
 \examples{
 \donttest{
 data(climate_indices)
 data <- climate_indices[, -1]
-results <- pcAccuracy(data, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
+results <- pcAccuracy(dataset = data, E = 3, tau = 1, 
+                     metric = "euclidean", h = 1, 
+                     weighted = TRUE, verbose = TRUE)
 print(results)
 }
+
+}
+\seealso{
+\code{\link{pcMatrix}} for analyzing individual causality matrices
+\code{\link{pcLightweight}} for pairwise causality analysis
 }

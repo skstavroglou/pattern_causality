@@ -16,7 +16,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-Pattern Causality gives us a method to measure the causality in the complex system, it has its own ability to catch the hidden pattern in many kinds of series, so that it is statistically sufficient.
+Pattern Causality is a novel approach for detecting and analyzing causal relationships in complex systems. This method excels at:
+
+1. Identifying hidden patterns in time series data
+2. Quantifying different types of causality (positive, negative, and dark)
+3. Providing robust statistical analysis of causal relationships
+
+The algorithm is particularly effective for:
+- Financial market analysis
+- Climate system interactions
+- Medical diagnosis
+- Complex system dynamics
 
 
 ## PC in financial market
@@ -73,28 +83,15 @@ After that, calculate the causality of each status.
 ```{r}
 X <- DJS$Apple
 Y <- DJS$Microsoft
-pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE, tpb=FALSE)
+pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
 print(pc)
 ```
 
 Lastly we can also visualize this result.
 
 ```{r}
-library(ggplot2)
-df <- data.frame(
-  name = stringr::str_to_title(c(colnames(pc))),
-  val = as.vector(unlist(pc))
-)
-
-ggplot(df, aes(x = name, y = val, fill = name)) +
-  geom_bar(stat = "identity", alpha = .6, width = .4) +
-  scale_fill_grey(start = 0, end = 0.8) + # start and end define the range of grays
-  labs(x = "Status", y = "Strength") +
-  theme_bw(base_size = 12, base_family = "Times New Roman") +
-  theme(
-    legend.position = "none", axis.text = element_text(size = rel(0.8)),
-    strip.text = element_text(size = rel(0.8))
-  )
+plot_total(pc)
+plot_components(pc)
 ```
 
 ### Full details
@@ -105,9 +102,10 @@ The details could be found with following code.
 X <- DJS$Apple
 Y <- DJS$Microsoft
 detail <- pcFullDetails(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted = TRUE)
-predict_status <- detail$spectrumOfCausalityPredicted
-real_status <- detail$spectrumOfCausalityReal
-names(detail)
+# Access the causality components
+causality_real <- detail$causality_real
+causality_pred <- detail$causality_pred
+print(causality_pred)
 ```
 
 So far, the whole process of this algorithm has finished.

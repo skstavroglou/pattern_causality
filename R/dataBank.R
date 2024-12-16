@@ -1,59 +1,83 @@
-#' @title Create Data Bank
-#' @description Initializes various data structures for storing and managing data within a complex systems analysis framework.
-#
-#' @param type A character string specifying the type of data structure to initialize: "array", "vector", "matrix", or
-#' "neighborhood memories". Each structure serves different requirements for data storage and processing in the model.
-#' @param dimensions An integer vector specifying the dimensions of the data structure. The interpretation of dimensions
-#' varies based on the type:
-#' - For "array", it defines the dimensions of the array.
-#' - For "vector", only the first element (length) is used.
-#' - For "matrix", the first two elements specify the number of rows and columns.
-#' - For "neighborhood memories", the first two elements define the number of rows and columns,
-#'   the third element specifies the number of nearest neighbors, and the fourth element details the number
-#'   of signature components per neighbor.
+#' Initialize Data Storage Structure
+#' 
+#' @description
+#' Internal function that creates and initializes various data structures for storing 
+#' and managing data within the pattern causality analysis framework.
 #'
-#' @return db Returns the initialized data structure, filled with NA values. Depending on the 'type', the structure
-#' can be an array, vector, matrix, or a specialized data frame designed for neighborhood memories which incorporates
-#' extensive details about interactions within defined neighborhoods.
+#' @param type Character string specifying the data structure type:
+#'   \itemize{
+#'     \item "array" - Multi-dimensional array
+#'     \item "vector" - One-dimensional vector
+#'     \item "matrix" - Two-dimensional matrix
+#'     \item "neighborhood memories" - Specialized data frame for neighborhood analysis
+#'   }
+#' @param dimensions Integer vector specifying dimensions
+#' @param verbose Logical; if TRUE, prints information about the created structure
 #'
-#' @examples
-#' # Initialize a matrix with 3 rows and 5 columns.
-#' matrix_db <- dataBank("matrix", c(3, 5))
-#' print(matrix_db)
+#' @return An initialized data structure filled with NA_real_
 #'
-#' # Initialize a neighborhood memory structure correctly with sufficient column names.
-#' dimensions_nm <- c(4, 40, 3, 5)
-#' nm_db <- dataBank("neighborhood memories", dimensions_nm)
-#' print(nm_db)
-
-#' @export
-# = Initializing Data Structures
-dataBank <- function(type, dimensions) {
-  if (type == "array") {
-    db <- array(NA, dim = dimensions)
-  } else if (type == "vector") {
-    db <- vector(mode = "double", length = dimensions[1])
-    db <- rep(NA, length(db))
-  } else if (type == "matrix") {
-    db <- matrix(data = NA, nrow = dimensions[1], ncol = dimensions[2])
-  } else if (type == "neighborhood memories") {
-    if (dimensions[2] != 1 + 4 * dimensions[3] + (dimensions[4] - 1) * dimensions[3] + dimensions[4] * dimensions[3]) {
-      stop("The dimensions 2 is wrong!")
-    } else {
-      db <- as.data.frame(matrix(data = NA, nrow = dimensions[1], ncol = dimensions[2]))
-      colnames(db) <- c(
-        "i", rep("nn-times", dimensions[3]), rep("nn-dists", dimensions[3]),
-        rep("nn-weights", dimensions[3]), rep("nn-patt", dimensions[3]),
-        paste(rep(paste("Sig-Comp.", 1:(dimensions[4] - 1)), dimensions[3]),
-          rep(1:dimensions[3], each = dimensions[4] - 1),
-          sep = " of NN"
-        ),
-        paste(rep(paste("Coord.", 1:dimensions[4]), dimensions[3]),
-          rep(1:dimensions[3], each = dimensions[4]),
-          sep = " of NN"
-        )
-      )
-    }
+#' @keywords internal
+#' @noRd
+dataBank <- function(type, dimensions, verbose = FALSE) {
+  # Input validation
+  if(!is.character(type) || length(type) != 1) {
+    stop("'type' must be a single character string", call. = FALSE)
   }
+  
+  if(!is.numeric(dimensions) || any(dimensions <= 0) || any(dimensions != round(dimensions))) {
+    stop("'dimensions' must be a vector of positive integers", call. = FALSE)
+  }
+  
+  # Create appropriate structure based on type
+  db <- switch(type,
+    "array" = {
+      if(verbose) cat("Creating array with dimensions:", paste(dimensions, collapse = "x"), "\n")
+      array(NA_real_, dim = dimensions)
+    },
+    "vector" = {
+      if(verbose) cat("Creating vector of length:", dimensions[1], "\n")
+      rep(NA_real_, dimensions[1])
+    },
+    "matrix" = {
+      if(verbose) cat("Creating matrix with dimensions:", paste(dimensions[1:2], collapse = "x"), "\n")
+      matrix(NA_real_, nrow = dimensions[1], ncol = dimensions[2])
+    },
+    "neighborhood memories" = {
+      # Validate dimensions for neighborhood memories
+      expected_cols <- 1 + 4 * dimensions[3] + (dimensions[4] - 1) * dimensions[3] + 
+                      dimensions[4] * dimensions[3]
+      if(dimensions[2] != expected_cols) {
+        stop(sprintf("Invalid column dimension. Expected %d columns.", expected_cols),
+             call. = FALSE)
+      }
+      
+      if(verbose) {
+        cat("Creating neighborhood memories structure:\n")
+        cat("Rows:", dimensions[1], "\n")
+        cat("Columns:", dimensions[2], "\n")
+        cat("Neighbors:", dimensions[3], "\n")
+        cat("Components:", dimensions[4], "\n")
+      }
+      
+      # Create and name columns
+      db <- as.data.frame(matrix(NA_real_, nrow = dimensions[1], ncol = dimensions[2]))
+      colnames(db) <- c(
+        "i",
+        rep("nn-times", dimensions[3]),
+        rep("nn-dists", dimensions[3]),
+        rep("nn-weights", dimensions[3]),
+        rep("nn-patt", dimensions[3]),
+        paste(rep(paste("Sig-Comp.", 1:(dimensions[4] - 1)), dimensions[3]),
+              rep(1:dimensions[3], each = dimensions[4] - 1),
+              sep = " of NN"),
+        paste(rep(paste("Coord.", 1:dimensions[4]), dimensions[3]),
+              rep(1:dimensions[3], each = dimensions[4]),
+              sep = " of NN")
+      )
+      db
+    },
+    stop("Invalid type specified", call. = FALSE)
+  )
+  
   return(db)
 }

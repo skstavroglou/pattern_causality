@@ -1,129 +1,143 @@
-#' @title Determine Nature of Causality
+#' Nature of Causality Analysis
+#' 
+#' @title Nature of Causality Analysis
+#' @description Analyzes pattern causality matrices to classify the nature of 
+#' causality between variables. This function provides core functionality for 
+#' pattern causality analysis and can be used both independently and as part of 
+#' larger analysis workflows.
 #'
-#' @description This function analyzes a three-dimensional pattern causality matrix to classify the nature of causality (positive, negative, dark, or no causality) between pairs of variables across specified time points. It is designed to interpret the dynamics within complex systems by examining the causal relationships encoded in the matrix.
+#' @details This function analyzes the structure of pattern causality matrices
+#' to determine four types of causality:
+#' \itemize{
+#'   \item No Causality: When no significant relationship is detected
+#'   \item Positive Causality: When patterns show positive influence
+#'   \item Negative Causality: When patterns show negative influence
+#'   \item Dark Causality: When patterns show complex or indirect influence
+#' }
 #'
-#' @param PC A three-dimensional array where each slice along the third dimension represents a pattern causality matrix at a specific time point, encoding the strength and type of causality between pairs of variables.
-#' @param dur A numeric vector indicating the time points (slices of the PC matrix) to analyze for causality.
-#' @param hashedpatterns A numeric vector of hashed or indexed pattern identifiers that correspond to variables in the system, used for interpreting matrix dimensions in causality checks.
-#' @param X An auxiliary numeric vector used to determine the length of the output vectors for causality results, typically aligning with the number of time points or variables.
+#' @param PC Three-dimensional array; pattern causality matrices
+#' @param dur Numeric vector; time points to analyze
+#' @param hashedpatterns Numeric vector; pattern identifiers
+#' @param X Numeric vector; reference for output length
+#' @param weighted Logical; if TRUE, uses weighted causality strength
+#' @param verbose Logical; if TRUE, prints computation details
 #'
-#' @return A data frame with four columns: 'noCausality', 'Positive', 'Negative', and 'Dark', each containing binary indicators (1 for presence, 0 for absence) that correspond to the presence of each causality type at each time point analyzed.
+#' @return A pc_nature object containing:
+#' \itemize{
+#'   \item no_causality: Vector of no causality strengths
+#'   \item positive: Vector of positive causality strengths  
+#'   \item negative: Vector of negative causality strengths
+#'   \item dark: Vector of dark causality strengths
+#' }
+#' 
+#' @seealso 
+#' \code{\link{pcLightweight}} for basic causality analysis
+#' \code{\link{pcFullDetails}} for detailed analysis
+#' \code{\link{pcMatrix}} for causality matrix computation
+#'
 #' @export
 #'
 #' @examples
-#' # Generate a sample 3D causality matrix with random data
-#' set.seed(123) # For reproducibility
-#' PC <- array(runif(300), dim = c(10, 10, 3)) # 10x10 matrix over 3 time points
-#' dur <- 1:3 # Time points to analyze
-#' hashedpatterns <- seq(1, 10) # Simulated hashed pattern identifiers
-#' X <- rep(0, 3) # Auxiliary vector for output length
-#'
-#' # Run the natureOfCausality function
-#' results <- natureOfCausality(PC, dur, hashedpatterns, X)
-#' print(results)
-natureOfCausality <- function(PC, dur, hashedpatterns, X) {
-  positiveCausality <- vector(mode = "double", length = length(X))
-  negativeCausality <- vector(mode = "double", length = length(X))
-  darkCausality <- vector(mode = "double", length = length(X))
-  noCausality <- vector(mode = "double", length = length(X))
-  # positiveCausality <- rep(NA, len)
-  # negativeCausality <- rep(NA, len)
-  # darkCausality <- rep(NA, len)
-  # noCausality <- rep(NA, len)
-  for (i in dur) {
-    cell <- which(!is.na(PC[, , i]), arr.ind = TRUE)
-    # print(paste("FOR",i))
-    if (!is.na(PC[cell[1], cell[2], i])) {
-      # print("Inside IF 1")
-      if (!is.nan(PC[cell[1], cell[2], i])) {
-        # print("Inside IF 2")
-        # if (PC[cell[1],cell[2],i]!=0) {
-        if (!is.na(cell[1])) {
-          # print("Inside IF 3")
-          if (!is.na(cell[2])) {
-            # print("Inside IF 4")
-            # ======================#
-            # = POSITIVE CAUSALITY =#
-            # ======================#
-            if (cell[1] == cell[2]) {
-              if (cell[1] != mean(1:length(hashedpatterns))) {
-                ### NO CAUSALITY CHECK
-                if (PC[cell[1], cell[2], i] == 0) {
-                  noCausality[i] <- 1
-                  positiveCausality[i] <- 0
-                } else {
-                  positiveCausality[i] <- 1
-                  noCausality[i] <- 0
-                }
-                negativeCausality[i] <- 0
-                darkCausality[i] <- 0
-              } else { # STO KENTRO TOY PC MATRIX
-                ### NO CAUSALITY CHECK
-                if (PC[cell[1], cell[2], i] == 0) {
-                  noCausality[i] <- 1
-                  darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
-                } else {
-                  noCausality[i] <- 0
-                  darkCausality[i] <- 1 # PC[cell[1],cell[2],i]
-                }
-                negativeCausality[i] <- 0
-                positiveCausality[i] <- 0
-              }
-            }
-            # ======================#
-            # = NEGATIVE CAUSALITY =#
-            # ======================#
-            else if ((cell[1] + cell[2]) == (length(hashedpatterns) + 1)) {
-              if (cell[1] != mean(1:length(hashedpatterns))) {
-                ### NO CAUSALITY CHECK
-                if (PC[cell[1], cell[2], i] == 0) {
-                  noCausality[i] <- 1
-                  negativeCausality[i] <- 0 # PC[cell[1],cell[2],i]
-                } else {
-                  noCausality[i] <- 0
-                  negativeCausality[i] <- 1 # PC[cell[1],cell[2],i]
-                }
-                positiveCausality[i] <- 0
-                darkCausality[i] <- 0
-              } else {
-                ### NO CAUSALITY CHECK
-                if (PC[cell[1], cell[2], i] == 0) {
-                  noCausality[i] <- 1
-                  darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
-                } else {
-                  noCausality[i] <- 0
-                  darkCausality[i] <- 1 # PC[cell[1],cell[2],i]
-                }
-                negativeCausality[i] <- 0
-                positiveCausality[i] <- 0
-              }
-            }
-            # ==================#
-            # = DARK CAUSALITY =#
-            # ==================#
-            else {
-              ### NO CAUSALITY CHECK
-              if (PC[cell[1], cell[2], i] == 0) {
-                noCausality[i] <- 1
-                darkCausality[i] <- 0 # PC[cell[1],cell[2],i]
-              } else {
-                noCausality[i] <- 0
-                darkCausality[i] <- 1 # PC[cell[1],cell[2],i]
-              }
-              negativeCausality[i] <- 0
-              positiveCausality[i] <- 0
-            }
-          }
-        }
-        # }
-      }
+#' \donttest{
+#' # Generate example data
+#' PC <- array(runif(27), dim = c(3,3,3))
+#' dur <- 1:3
+#' hashedpatterns <- 1:3
+#' X <- rnorm(10)
+#' 
+#' # Analyze causality nature
+#' result <- natureOfCausality(PC, dur, hashedpatterns, X)
+#' print(result)
+#' }
+natureOfCausality <- function(PC, dur, hashedpatterns, X, weighted = TRUE, 
+                             verbose = FALSE) {
+  # Input validation
+  if(!is.array(PC) || length(dim(PC)) != 3) {
+    stop("PC must be a 3-dimensional array", call. = FALSE)
+  }
+  
+  if(!is.numeric(dur) || !is.numeric(hashedpatterns) || !is.numeric(X)) {
+    stop("dur, hashedpatterns, and X must be numeric vectors", call. = FALSE)
+  }
+  
+  if(!is.logical(weighted)) {
+    stop("weighted must be TRUE or FALSE", call. = FALSE)
+  }
+  
+  # Initialize vectors with NA_real_
+  results <- list(
+    no_causality = rep(NA_real_, length(X)),
+    positive = rep(NA_real_, length(X)),
+    negative = rep(NA_real_, length(X)),
+    dark = rep(NA_real_, length(X))
+  )
+  
+  if(verbose) {
+    cat("Analyzing causality nature for", length(dur), "time points\n")
+  }
+  
+  for(i in seq_along(dur)) {
+    t <- dur[i]
+    cell <- which(!is.na(PC[, , t]), arr.ind = TRUE)
+    
+    if(length(cell) > 0 && !anyNA(PC[cell[1], cell[2], t])) {
+      strength <- PC[cell[1], cell[2], t]
+      mid_point <- mean(1:length(hashedpatterns))
+      
+      # Determine causality type
+      is_diagonal <- cell[1] == cell[2]
+      is_antidiagonal <- (cell[1] + cell[2]) == (length(hashedpatterns) + 1)
+      is_center <- cell[1] == mid_point
+      
+      # Set causality values
+      results <- determine_causality(results, t, strength, is_diagonal, 
+                                   is_antidiagonal, is_center, weighted)
+    }
+    
+    if(verbose) {
+      report_progress(i, length(dur), "Analyzing causality patterns", verbose)
     }
   }
-  NOC <- data.frame(
-    noCausality = noCausality,
-    Positive = positiveCausality,
-    Negative = negativeCausality,
-    Dark = darkCausality
+  
+  if(verbose) {
+    cat("\nCausality analysis complete\n")
+  }
+  
+  # Create and return pc_nature object
+  pc_nature(
+    no_causality = results$no_causality,
+    positive = results$positive,
+    negative = results$negative,
+    dark = results$dark
   )
-  return(NOC)
+}
+
+#' @keywords internal
+#' @noRd
+determine_causality <- function(results, t, strength, is_diagonal, is_antidiagonal, 
+                              is_center, weighted) {
+  if(strength == 0) {
+    results$no_causality[t] <- 1
+    results$positive[t] <- 0
+    results$negative[t] <- 0
+    results$dark[t] <- 0
+  } else {
+    results$no_causality[t] <- 0
+    value <- if(weighted) strength else 1
+    
+    if(is_diagonal && !is_center) {
+      results$positive[t] <- value
+      results$negative[t] <- 0
+      results$dark[t] <- 0
+    } else if(is_antidiagonal && !is_center) {
+      results$positive[t] <- 0
+      results$negative[t] <- value
+      results$dark[t] <- 0
+    } else {
+      results$positive[t] <- 0
+      results$negative[t] <- 0
+      results$dark[t] <- value
+    }
+  }
+  results
 }

@@ -7,13 +7,14 @@
 \method{plot_components}{pc_fit}(x, ...)
 }
 \arguments{
-\item{x}{A pc_fit object}
+\item{x}{A \code{pc_fit} object.}
 
-\item{...}{Additional arguments passed to plotting functions}
+\item{...}{Additional arguments passed to the underlying plotting functions.}
 }
 \value{
-A ggplot object
+NULL.
 }
 \description{
-Plot Causality Components
+Visualizes the positive, negative, and dark causality components as a barplot for a \code{pc_fit} object.
+This function generates a barplot showing the strength of each causality component.
 }

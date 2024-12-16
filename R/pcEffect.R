@@ -1,46 +1,112 @@
-#' @title Calculate Pattern Causality Effect
+#' Calculate Pattern Causality Effect Analysis
 #' 
-#' @description
-#' The `pcEffect` function processes a pattern causality matrix to compute and summarize the effects of positive, negative, and dark causality. It aggregates these causality measures to determine the total received and exerted influence for each item in the matrix, along with the difference between them.
-#' 
-#' @param pcmatrix A list containing three matrices (`positive`, `negative`, and `dark`) which represent the respective causality types for different items, as well as an `items` vector indicating the names of the items.
-#' 
-#' @return
-#' A list containing three data frames (`positive`, `negative`, and `dark`), each summarizing the causality effects. Each data frame includes columns for the received, exerted, and the difference (`Diff`) of causality for each item.
-#' 
-#' @export
+#' @title Pattern Causality Effect Analysis
+#' @description Analyzes pattern causality matrices to compute and summarize the 
+#' directional effects of different causality types (positive, negative, dark) 
+#' between system components.
+#'
+#' @details
+#' The function performs these key steps:
+#' \itemize{
+#'   \item Processes raw causality matrices
+#'   \item Computes received and exerted influence for each component
+#'   \item Calculates net causality effect (difference between received and exerted)
+#'   \item Normalizes results to percentage scale
+#' }
+#'
+#' @section Related Packages:
+#' \itemize{
+#'   \item \pkg{vars}: Vector autoregression for multivariate time series
+#'   \item \pkg{lmtest}: Testing linear regression models
+#'   \item \pkg{causality}: Causality testing and modeling
+#' }
+#'
+#' @param pcmatrix An object of class "pc_matrix" containing causality matrices
+#' @param verbose Logical; whether to display computation progress (default: FALSE)
+#'
+#' @return An object of class "pc_effect" containing:
+#' \itemize{
+#'   \item positive: Data frame of positive causality effects
+#'   \item negative: Data frame of negative causality effects
+#'   \item dark: Data frame of dark causality effects
+#'   \item items: Vector of component names
+#'   \item summary: Summary statistics for each causality type
+#' }
+#'
 #' @examples
 #' \donttest{
 #' data(climate_indices)
-#' dataset <- climate_indices[,-1]
-#' pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
+#' dataset <- climate_indices[, -1]
+#' pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, 
+#'                     metric = "euclidean", h = 1, 
+#'                     weighted = TRUE)
 #' effects <- pcEffect(pcmatrix)
 #' print(effects)
+#' plot(effects)
 #' }
-pcEffect <- function(pcmatrix){
-  pdata <- pcmatrix$positive
-  ndata <- pcmatrix$negative
-  ddata <- pcmatrix$dark
-  pdata[is.na(pdata)] <- 0
-  pdata <- pdata*100
-  ndata[is.na(ndata)] <- 0
-  ndata <- ndata*100
-  ddata[is.na(ddata)] <- 0
-  ddata <- ddata*100
-  psume <- apply(pdata,1,sum)
-  psumr <- apply(pdata,2,sum)
-  pd <- data.frame(psume,psumr,psume-psumr,row.names = pcmatrix$items)
-  colnames(pd) <- c("received","exerted","Diff")
-  nsume <- apply(ndata,1,sum)
-  nsumr <- apply(ndata,2,sum)
-  nd <- data.frame(nsume,nsumr,nsume-nsumr,row.names = pcmatrix$items)
-  colnames(nd) <- c("received","exerted","Diff")
-  dsume <- apply(ddata,1,sum)
-  dsumr <- apply(ddata,2,sum)
-  dd <- data.frame(dsume,dsumr,dsume-dsumr,row.names = pcmatrix$items)
-  colnames(dd) <- c("received","exerted","Diff")
-  return(list(positive=pd,
-              negative=nd,
-              dark=dd,
-              items=pcmatrix$items))
+#'
+#' @seealso 
+#' \code{\link{pcMatrix}} for generating causality matrices
+#' \code{\link{plot.pc_effect}} for visualizing causality effects
+#'
+#' @export
+pcEffect <- function(pcmatrix, verbose = FALSE) {
+  # Validate input
+  if (!inherits(pcmatrix, "pc_matrix")) {
+    stop("Input must be a pc_matrix object", call. = FALSE)
+  }
+  
+  # Check if the matrix is square
+  if (!isTRUE(pcmatrix$is_square)) {
+    stop("Input pc_matrix object must have a square matrix. Use pcMatrix function instead of pcCrossMatrix.", call. = FALSE)
+  }
+  
+  if (verbose) {
+    cat("Processing causality matrices...\n")
+  }
+  
+  # Initialize matrices with NA_real_
+  matrices <- list(
+    positive = replace(pcmatrix$positive, is.na(pcmatrix$positive), 0) * 100,
+    negative = replace(pcmatrix$negative, is.na(pcmatrix$negative), 0) * 100,
+    dark = replace(pcmatrix$dark, is.na(pcmatrix$dark), 0) * 100
+  )
+  
+  # Compute effects
+  effects <- lapply(matrices, function(m) {
+    data.frame(
+      received = rowSums(m),
+      exerted = colSums(m),
+      Diff = rowSums(m) - colSums(m),
+      row.names = pcmatrix$items
+    )
+  })
+  
+  # Compute summary statistics
+  summary_stats <- lapply(effects, function(df) {
+    apply(df, 2, function(x) c(
+      mean = mean(x, na.rm = TRUE),
+      sd = stats::sd(x, na.rm = TRUE),
+      min = min(x, na.rm = TRUE),
+      max = max(x, na.rm = TRUE)
+    ))
+  })
+  
+  if (verbose) {
+    cat("Computing summary statistics...\n")
+  }
+  
+  # Create and return pc_effect object
+  result <- structure(
+    list(
+      positive = effects$positive,
+      negative = effects$negative,
+      dark = effects$dark,
+      items = pcmatrix$items,
+      summary = summary_stats
+    ),
+    class = "pc_effect"
+  )
+  
+  return(result)
 }

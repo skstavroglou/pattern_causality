@@ -7,13 +7,14 @@
 \method{plot}{pc_fit}(x, ...)
 }
 \arguments{
-\item{x}{A pc_fit object}
+\item{x}{A \code{pc_fit} object.}
 
-\item{...}{Additional arguments passed to plotting functions}
+\item{...}{Additional arguments passed to the underlying plotting functions.}
 }
 \value{
-A list of two ggplot objects
+NULL invisibly.
 }
 \description{
-Plot Pattern Causality Results
+Generates a combined plot of total causality and causality components for a \code{pc_fit} object.
+This function combines the visualizations from \code{plot_total} and \code{plot_components} into a single plot.
 }

@@ -1,110 +1,99 @@
-#' @title Calculate Lightweight Pattern Causality
-#' @description This function implements the Pattern Causality Model Mk. II for lightweight analysis of causal interactions between two time series using pattern and signature spaces. It assesses causality through reconstructed state spaces and hashed pattern analysis.
-#' @param X A numeric vector representing the first time series.
-#' @param Y A numeric vector representing the second time series.
-#' @param E The embedding dimension, which influences the number of dimensions in which the time series is reconstructed for analysis.
-#' @param tau The time delay used in reconstructing the time series in the embedded space.
-#' @param metric A character string indicating the distance metric to be used (e.g., 'euclidean', 'maximum').
-#' @param h The prediction horizon, representing the number of steps ahead for which predictions are needed.
-#' @param weighted A logical indicating whether to use a weighted approach in the causality strength calculations.
-#' @param tpb A bool parameter to show progress bar.
-
-#' @return A data frame with columns for total, positive, negative, and dark causality percentages across evaluated time points, giving insights into the nature of causality between the time series.
-#' @export
+#' Calculate Pattern Causality Using Lightweight Algorithm
+#' 
+#' @title Calculate Pattern Causality Using Lightweight Algorithm
+#' @description Implements a computationally efficient version of the Pattern Causality 
+#' Model Mk. II for analyzing causal interactions between two time series. This function 
+#' uses pattern and signature spaces to assess causality through reconstructed state spaces 
+#' and hashed pattern analysis.
+#'
+#' @param X A numeric vector representing the first time series
+#' @param Y A numeric vector representing the second time series
+#' @param E Integer; embedding dimension for state space reconstruction (E > 1)
+#' @param tau Integer; time delay for state space reconstruction (tau > 0)
+#' @param metric Character string specifying the distance metric; one of "euclidean", 
+#'        "manhattan", or "maximum"
+#' @param h Integer; prediction horizon for future projections (h >= 0)
+#' @param weighted Logical; whether to use weighted causality strength calculations
+#' @param distance_fn Custom distance function for state space reconstruction
+#' @param state_space_fn Custom function for state space transformation
+#' @param verbose Logical; whether to display progress information (default: FALSE)
+#'
+#' @return An object of class "pc_fit" containing:
+#'   \itemize{
+#'     \item total: Total causality strength (0-1)
+#'     \item positive: Proportion of positive causality (0-1)
+#'     \item negative: Proportion of negative causality (0-1)
+#'     \item dark: Proportion of dark causality (0-1)
+#'   }
+#'
+#' @details
+#' The function implements these key steps:
+#' \itemize{
+#'   \item State space reconstruction using embedding parameters
+#'   \item Pattern and signature space transformation
+#'   \item Nearest neighbor analysis in reconstructed spaces
+#'   \item Causality strength calculation using prediction accuracy
+#'   \item Classification of causality types (positive/negative/dark)
+#' }
+#'
+#' @seealso 
+#' \code{\link{pcFullDetails}} for detailed analysis
+#' \code{\link{pcMatrix}} for analyzing multiple time series
+#'
 #' @examples
 #' data(climate_indices)
 #' X <- climate_indices$AO
 #' Y <- climate_indices$AAO
-#' result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+#' result <- pcLightweight(X, Y, E = 3, tau = 1, 
+#'                        metric = "euclidean", h = 2, 
+#'                        weighted = TRUE, verbose = FALSE)
 #' print(result)
-pcLightweight <- function(X, Y, E, tau, metric, h, weighted, tpb=TRUE) {
-  ###################################
-  ### STEP 0: PREPARATORY ACTIONS ###
-  ###################################
-  NNSPAN <- E + 1 # Former NN | Reserves a minimum number of nearest neighbors
-  CCSPAN <- (E - 1) * tau # This will remove the common coordinate NNs
-  hashedpatterns <- patternHashing(E)
-  #####################################
-  ### STEP 1: THE SHADOW ATTRACTORS ###
-  #####################################
-  # = [A] =# State Space
-  Mx <- stateSpace(X, E, tau)
-  My <- stateSpace(Y, E, tau)
-  # = [B] =# Signature Space
-  SMx <- signatureSpace(Mx, E)
-  SMy <- signatureSpace(My, E)
-  # = [C] =# Pattern Space
-  PSMx <- patternSpace(SMx, E)
-  PSMy <- patternSpace(SMy, E)
-  # = [D] =# Distance Matrix | First row corresponds to t=1
-  Dx <- distanceMatrix(Mx, metric)
-  Dy <- distanceMatrix(My, metric)
-  # = Check whether time series length is sufficient
-  FCP <- firstCausalityPoint(E, tau, h, X)
-  # = Calculate the main loop duration of the algorithm
-  al_loop_dur <- FCP:(length(X) - (E - 1) * tau - h)
-  # = Calculate the loop duration for out of sample forecasts
-  out_of_sample_loop_dur <- ((length(X) - (E - 1) * tau - h) + 1):nrow(Mx)
-  # = KEEPING THE PC MATRICES | Causality is considered only from FCP onwards
-  predictedPCMatrix <- dataBank(type = "array", dimensions = c(3^(E - 1), 3^(E - 1), length(Y)))
-  if(tpb==TRUE){pb <- utils::txtProgressBar(min = 0, max = length(al_loop_dur), style = 3, char="#")}
-  #pb <- tkProgressBar(title = "Deploying PC Mk. II", min = 0,
-  #                    max = length(al_loop_dur), width = 500)
-  real_loop <- NA
-  for (i in al_loop_dur) {
-    if (!anyNA(c(Mx[i, ], My[i + h, ]))) {
-      ###################################################################
-      ### STEP 2: The Nearest Neighbours and their Future projections ###
-      ###################################################################
-      NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
-      if (!anyNA(NNx$dists)) {
-        if (!anyNA(Dy[i, NNx$times + h])) {
-          if (any(is.na(real_loop))) {
-            real_loop <- i
-          } else {
-            real_loop <- c(real_loop, i)
-          }
-          projNNy <- projectedNNsInfo(My, Dy, SMy, PSMy, NNx$times, i, h)
-          #######################################################################
-          ### STEP 3: The affected variable's predicted pattern h steps ahead ###
-          #######################################################################
-          predictedSignatureY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedSignatureY
-          predictedPatternY <- predictionY(E, projNNy, zeroTolerance = E - 1)$predictedPatternY[1]
-          #############################################
-          ### STEP 4: The causal variable's pattern ###
-          #############################################
-          #################### signatureX <- signaE(E,SignX,i)
-          signatureX <- SMx[i, ]
-          patternX <- PSMx[i, ]
-          ####################################################
-          ### STEP 5: The affected variable's real pattern ###
-          ####################################################
-          ####### realSignatureY <- signaE(E,SignY,(i+h))
-          realSignatureY <- SMy[(i + h), ]
-          realPatternY <- PSMy[i + h]
-          ##########################################################################
-          ### STEP 6: The nature and intensity of causality at every time step t ###
-          ##########################################################################
-          pc <- fillPCMatrix(weighted, predictedPatternY, realPatternY, predictedSignatureY, realSignatureY, patternX, signatureX)
-          # print(pc)
-          predictedPCMatrix[which(hashedpatterns == patternX), which(hashedpatterns == predictedPatternY), i] <- pc$predicted
-        }
-      }
-    }
-    #setTkProgressBar(pb, i, label=paste( i/al_loop_dur[length(al_loop_dur)], 0),"% PC Mk. II In-Sample Assignment Completion")
-    if(tpb==TRUE){utils::setTxtProgressBar(pb, i)}
+#' summary(result)
+#' plot(result)
+#'
+#' @export
+pcLightweight <- function(X, Y, E, tau, h, weighted, 
+                         metric = "euclidean",
+                         distance_fn = NULL,
+                         state_space_fn = NULL,
+                         verbose = FALSE) {
+  # Input validation
+  validate_inputs(X, Y, E, tau, metric, h, weighted, distance_fn)
+  
+  # Initialize components
+  components <- initialize_components(E, tau)
+  
+  # Compute state and pattern spaces
+  spaces <- compute_spaces(X, Y, E, tau, metric,
+                         distance_fn = distance_fn,
+                         state_space_fn = state_space_fn,
+                         verbose = verbose)
+  
+  # Check causality feasibility
+  causality_check <- check_causality_points(E, tau, h, X, verbose)
+  if(!causality_check$feasible) {
+    stop("Insufficient data length for analysis", call. = FALSE)
   }
-  causality <- natureOfCausality(predictedPCMatrix, real_loop, hashedpatterns, X)
-  totalCausPercent <- 1 - mean(causality$noCausality, na.rm = T)
-  posiCausPercent <- mean(ifelse(causality$noCausality[real_loop] != 1, causality$Positive[real_loop], NA), na.rm = T)
-  negaCausPercent <- mean(ifelse(causality$noCausality[real_loop] != 1, causality$Negative[real_loop], NA), na.rm = T)
-  darkCausPercent <- mean(ifelse(causality$noCausality[real_loop] != 1, causality$Dark[real_loop], NA), na.rm = T)
-  # return(list(causality,totalCausPercent,posiCausPercent,negaCausPercent,darkCausPercent))
-  result <- pc_fit(
-    total = totalCausPercent,
-    positive = posiCausPercent,
-    negative = negaCausPercent,
-    dark = darkCausPercent
+  
+  # Initialize analysis matrices
+  matrices <- initialize_matrices(X, Y, E, causality_check$FCP, verbose)
+  
+  # Main analysis loop
+  results <- analyze_causality(spaces, matrices, components, 
+                             causality_check, h, weighted, verbose)
+  
+  # Compute final causality measures
+  measures <- compute_causality_measures(results, weighted)
+  
+  # Create and return pc_fit object 
+  result <- structure(
+    list(
+      total = measures$total,
+      positive = measures$positive,
+      negative = measures$negative,
+      dark = measures$dark
+    ),
+    class = "pc_fit"
   )
   
   return(result)

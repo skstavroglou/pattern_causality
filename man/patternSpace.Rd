@@ -2,23 +2,37 @@
 % Please edit documentation in R/patternSpace.R
 \name{patternSpace}
 \alias{patternSpace}
-\title{Create Pattern Space}
+\title{Transform Signature Matrix into Pattern Space Matrix}
 \usage{
-patternSpace(SM, E)
+patternSpace(SM)
 }
 \arguments{
-\item{SM}{Matrix, the signature matrix where each row represents the differences between successive elements in the original time series data.}
-
-\item{E}{Integer, the number of dimensions in the signature matrix which influences the output size of the pattern space matrix.}
+\item{SM}{Numeric matrix; signature matrix where each row represents differences between
+successive elements in the original time series data.  Must contain only numeric values.}
 }
 \value{
-Matrix, where each row contains hashed pattern identifiers derived from the categorical changes in the signature matrix, facilitating pattern recognition and analysis in complex systems.
+A numeric matrix where each row contains hashed pattern identifiers derived
+from categorical changes in the signature matrix. Returns a matrix with NA values if any row contains NA values.
 }
 \description{
-This function transforms a signature matrix into a pattern space matrix. Each row in the signature matrix is processed to reflect categorical changes (increase, decrease, no change) in the sequence values, which are then hashed to create unique pattern identifiers for further analysis. This transformation is crucial for identifying and categorizing patterns in complex systems, facilitating the exploration of underlying causal structures.
+Transforms a signature matrix into a pattern space matrix by processing
+each row to reflect categorical changes (increase, decrease, no change) in sequence
+values. These changes are then hashed to create unique pattern identifiers.
+}
+\details{
+Transform Signature Matrix into Pattern Space Matrix
+
+The function performs these key steps:
+\itemize{
+\item Converts numerical differences into categorical changes (1: decrease, 2: no change, 3: increase)
+\item Applies a hashing function (detailed below) to generate unique identifiers for each pattern
+\item Handles missing values by returning NA for rows containing NA values.
+}
 }
 \examples{
-signatureMatrix <- matrix(c(1, -1, 0, 2, -2, 0, 1, -1, 0), nrow = 3, byrow = TRUE)
-patternSpaceMatrix <- patternSpace(signatureMatrix, 3)
+signatureMatrix <- matrix(c(1, -1, 0, 2, -2, 0, 1, -1, 0), 
+                         nrow = 3, byrow = TRUE)
+patternSpaceMatrix <- patternSpace(signatureMatrix)
 print(patternSpaceMatrix)
+
 }

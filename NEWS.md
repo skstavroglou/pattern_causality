@@ -1,12 +1,17 @@
+# patterncausality 0.2.0
+
+* Added statebins as required dependency
+* Improved visualization with rounded rectangle tiles
+* Enhanced package stability
+
 # patterncausality 0.1.3
 
-* Added cross validation function for pattern causality
-* Improved documentation and vignettes
-* Fixed bugs in parameter optimization
-* Added new plotting functions
+* Added verbose parameter to control information output
+* Improved computational efficiency
+* Fixed NA handling with NA_real_
+* Added S3 methods for better object orientation
+* Enhanced documentation and examples
 
 # patterncausality 0.1.2
 
 * Initial CRAN release
-* Implemented core pattern causality algorithm
-* Added basic visualization tools

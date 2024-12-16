@@ -1,55 +1,83 @@
-#' @title Predict Y Values
-#' @description This function predicts the signature and pattern vectors for a given state based on projections and weights derived from neural network outputs within a complex system. The predictions adjust according to a specified zero tolerance level to manage sparsity.
+#' Predict Signature and Pattern Vectors
+#' 
+#' @title Signature and Pattern Vector Prediction
+#' @description Predicts signature and pattern vectors for a given state based on 
+#' neural network projections and weights. Implements adaptive sparsity handling 
+#' through zero tolerance thresholds.
 #'
-#' @param E Integer, the embedding dimension of the system, indicating the length of the
-#' signature vector minus one.
-#' @param projNNy A list containing two elements: `Signatures`, a matrix where each column
-#' represents a component in the signature vector across different observations, and
-#' `Weights`, a numeric vector representing the weights associated with each observation.
-#' @param zeroTolerance A numeric value used to determine the sparsity threshold in the
-#' signature matrix. Default is set to (E+1)/2.
-#' @return A dataframe with two columns: `predictedSignatureY` which contains the predicted
-#' signature vector, and `predictedPatternY` which contains the corresponding pattern vector.
-#' @examples
-#' set.seed(123)
-#' E <- 3
-#' tau <- 1
-#' Mx <- matrix(rnorm(300), nrow = 100)
-#' My <- matrix(rnorm(300), nrow = 100)
-#' Dx <- distanceMatrix(Mx, "minkowski")
-#' Dy <- distanceMatrix(My, "minkowski")
-#' SMx <- signatureSpace(Mx, E)
-#' SMy <- signatureSpace(My, E)
-#' PSMx <- patternSpace(SMx, E)
-#' PSMy <- patternSpace(SMy, E)
-#' CCSPAN <- (E - 1) * tau
-#' NNSPAN <- E + 1
-#' i <- 15
-#' h <- 2
-#' NNx <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
-#' timesX <- NNx$times
-#' projNNy <- projectedNNsInfo(My, Dy, SMy, PSMy, timesX, i, h)
-#' predicted <- predictionY(E, projNNy)
-#' print(predicted)
-#' @export
-predictionY <- function(E, projNNy, zeroTolerance = (E + 1) / 2) {
+#' @details
+#' The function implements these prediction steps:
+#' \itemize{
+#'   \item Weighted signature prediction using neural network outputs
+#'   \item Sparsity handling through zero tolerance thresholds
+#'   \item Pattern vector computation from predicted signatures
+#' }
+#'
+#' @section Related Packages:
+#' \itemize{
+#'   \item \pkg{forecast}: Time series prediction methods
+#'   \item \pkg{keras}: Neural network implementations
+#'   \item \pkg{nnet}: Neural network tools
+#' }
+#'
+#' @param projectedNN A list containing:
+#'   \itemize{
+#'     \item Signatures: Matrix of signature components
+#'     \item Weights: Vector of observation weights
+#'   }
+#' @param zeroTolerance Numeric; sparsity threshold (default: E-1)
+#'
+#' @return An object of class "pc_prediction" containing:
+#' \itemize{
+#'   \item signature: Predicted signature vector
+#'   \item pattern: Corresponding pattern vector
+#'   \item parameters: List of prediction parameters
+#' }
+#'
+#' @keywords internal
+#' @noRd
+predictionY <- function(projectedNN, zeroTolerance = NULL) {
+  # Extract embedding dimension
+  E <- ncol(projectedNN$signatures) + 1
+  
+  # Set default zero tolerance
+  if(is.null(zeroTolerance)) {
+    zeroTolerance <- E - 1
+  }
+  
+  # Compute predicted signature
   if (E >= 3) {
-    predictedSignatureY <- rep(0, E - 1)
-    for (part in 1:length(predictedSignatureY)) {
-      predictedSignatureY[part] <- ifelse(length(which(projNNy$Signatures[, part] == 0)) > zeroTolerance,
-        0,
-        sum(projNNy$Signatures[, part] * projNNy$Weights)
-      )
+    predictedSignatureY <- rep(NA_real_, E - 1)
+    for (part in seq_len(E - 1)) {
+      zero_count <- sum(projectedNN$signatures[, part] == 0)
+      predictedSignatureY[part] <- if(zero_count > zeroTolerance) {
+        0
+      } else {
+        sum(projectedNN$signatures[, part] * projectedNN$weights)
+      }
     }
   } else {
-    predictedSignatureY <- ifelse(length(which(projNNy$Signatures == 0)) > zeroTolerance,
-      0,
-      sum(projNNy$Signatures * projNNy$Weights)
-    )
+    zero_count <- sum(projectedNN$signatures == 0)
+    predictedSignatureY <- if(zero_count > zeroTolerance) {
+      0
+    } else {
+      sum(projectedNN$signatures * projectedNN$weights)
+    }
   }
+  
+  # Compute pattern vector
   predictedPatternY <- patternVectorDifference(predictedSignatureY)
-  return(data.frame(
-    predictedSignatureY = predictedSignatureY,
-    predictedPatternY = predictedPatternY
-  ))
+  
+  # Create and return pc_prediction object
+  structure(
+    list(
+      signature = predictedSignatureY,
+      pattern = predictedPatternY,
+      parameters = list(
+        E = E,
+        zeroTolerance = zeroTolerance
+      )
+    ),
+    class = "pc_prediction"
+  )
 }

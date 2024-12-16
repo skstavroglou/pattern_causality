@@ -1,33 +1,56 @@
-#' @title Create Signature Space
-#' @description This function computes the signature space of a matrix obtained from a time series' state space by calculating the successive differences of each embedded vector. The signature space reveals changes between successive points in the time series, capturing dynamics that are crucial for understanding complex system behaviors.
-#'
-#' @param M Matrix, the embedded state space matrix where each row is a point in the reconstructed state space of the time series.
-#' @param E Integer, the embedding dimension used to create the matrix M.
-#'
-#' @return Matrix where each row represents the vector of differences between successive elements of the corresponding row in matrix M. The orientation of the matrix may vary depending on the embedding dimension.
-#'
+#' Calculate Signature Space Matrix
+#' 
+#' @title Calculate Signature Space Matrix from State Space
+#' @description Calculates the signature space matrix from a state space matrix by 
+#' computing differences between successive elements in each row. This transformation 
+#' helps capture the dynamic patterns in the time series data.
+#' 
+#' @param M A state space matrix where each row represents a point in state space
+#' @return A signature space matrix where each row contains the differences between 
+#'   successive elements of the corresponding state space row
+#' @details The function performs the following steps:
+#'   1. Validates input matrix dimensions
+#'   2. For each row, computes differences between successive elements
+#'   3. Returns the transformed matrix maintaining the same number of rows
+#'   
+#'   Similar functionality can be found in the 'nonlinearTseries' package's 
+#'   embedding functions, but this implementation is specifically tailored for 
+#'   pattern causality analysis.
+#' 
 #' @export
-#' @examples
-#' data(climate_indices)
-#' ts <- climate_indices$AO
-#' E <- 3
-#' tau <- 1
-#' stateSpaceMatrix <- stateSpace(ts, E, tau)
-#' signatureMatrix <- signatureSpace(stateSpaceMatrix, E)
-#' print(signatureMatrix)
-signatureSpace <- function(M, E) {
-  if (E < 2) {
-    stop("Please input the correct E")
-  } else if (E == 2) {
-    SM <- as.matrix(apply(M, 1, signatureVectorDifference))
-  } else if (E >= 3) {
-    SM <- t(as.matrix(apply(M, 1, signatureVectorDifference)))
+signatureSpace <- function(M) {
+  # Input validation
+  if(!is.matrix(M)) {
+    stop("Input must be a matrix", call. = FALSE)
   }
+  
+  E <- ncol(M)
+  if(E < 2) {
+    stop("State space matrix must have at least 2 columns", call. = FALSE)
+  }
+  
+  # Compute signature space
+  if(E == 2) {
+    SM <- matrix(apply(M, 1, signatureVectorDifference), ncol = 1)
+  } else {
+    SM <- t(apply(M, 1, signatureVectorDifference))
+  }
+  
+  # Ensure numeric missing values are NA_real_
+  SM[is.na(SM)] <- NA_real_
+  
   return(SM)
 }
 
-
+#' Compute Differences Between Successive Elements
+#' 
+#' @param vec Numeric vector of state space coordinates
+#' @return Numeric vector of differences between successive elements
+#' @keywords internal
+#' @noRd
 signatureVectorDifference <- function(vec) {
-  s.vec <- (vec[-1] - vec[-length(vec)]) # Differences between successive elements
-  return(s.vec)
+  if(!is.numeric(vec)) {
+    stop("Input must be a numeric vector", call. = FALSE)
+  }
+  diff(vec)
 }

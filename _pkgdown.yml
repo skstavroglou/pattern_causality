@@ -6,3 +6,61 @@ template:
   
   development:
     mode: auto
+    
+navbar:
+  title: Pattern Causality
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Articles"
+      menu:
+        - text: "Introduction"
+          href: articles/introduction.html
+        - text: "Basic Usage"
+          href: articles/basic_usage.html
+        - text: "Advanced Usage"
+          href: articles/advanced_usage.html
+        - text: "Matrix Analysis"
+          href: articles/matrix.html
+        - text: "Cross-Validation"
+          href: articles/cross_validation.html
+    - text: "Reference"
+      href: reference/index.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/yourusername/patterncausality
+
+reference:
+  - title: "Core Functions"
+    contents:
+      - pcLightweight
+      - pcFullDetails
+      - pcMatrix
+      - pcEffect
+      - pcCrossValidation
+      - pcCrossMatrix
+      - pcAccuracy
+  - title: "State Space and Signature Space"
+    contents:
+      - stateSpace
+      - signatureSpace
+      - patternSpace
+  - title: "Distance and Prediction"
+    contents:
+      - distanceMatrix
+      - predictionY
+  - title: "Internal Functions"
+    contents:
+      - starts_with("check")
+      - starts_with("compute")
+      - starts_with("update")
+      - starts_with("past")
+      - starts_with("projected")
+      - starts_with("signature")
+      - starts_with("pattern")
+      - starts_with("norm")
+      - starts_with("fill")
+      - starts_with("report")
+      - starts_with("analyze")
+      - starts_with("optimal")
+      - starts_with("pc_")

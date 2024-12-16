@@ -2,40 +2,97 @@
 % Please edit documentation in R/pcCV.R
 \name{pcCrossValidation}
 \alias{pcCrossValidation}
-\title{Perform Pattern Causality Cross Validation}
+\title{Pattern Causality Cross-Validation Analysis}
 \usage{
-pcCrossValidation(X, Y, E, tau, metric, h, weighted, numberset)
+pcCrossValidation(
+  X,
+  Y,
+  E,
+  tau,
+  metric = "euclidean",
+  h,
+  weighted,
+  distance_fn = NULL,
+  state_space_fn = NULL,
+  numberset,
+  random = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{X}{A numeric vector representing the first time series.}
+\item{X}{Numeric vector; first time series}
 
-\item{Y}{A numeric vector representing the second time series.}
+\item{Y}{Numeric vector; second time series}
 
-\item{E}{An integer specifying the embedding dimension for the state space reconstruction.}
+\item{E}{Integer; embedding dimension for state space reconstruction (E > 1)}
 
-\item{tau}{An integer specifying the time delay for the state space reconstruction.}
+\item{tau}{Integer; time delay for state space reconstruction (tau > 0)}
 
-\item{metric}{A character string specifying the distance metric used in the causality computation (e.g., "euclidean").}
+\item{metric}{Character; distance metric, one of "euclidean", "manhattan", "maximum"}
 
-\item{h}{An integer specifying the prediction horizon.}
+\item{h}{Integer; prediction horizon (h > 0)}
 
-\item{weighted}{A logical value indicating whether to apply weighted causality measures.}
+\item{weighted}{Logical; whether to use weighted causality calculation}
 
-\item{numberset}{A numeric vector specifying the sample sizes for the cross-validation procedure.}
+\item{distance_fn}{Optional custom distance function for computing distances}
+
+\item{state_space_fn}{Optional custom function for state space reconstruction}
+
+\item{numberset}{Numeric vector; sample sizes for cross-validation}
+
+\item{random}{Logical; if TRUE, randomly sample data points; if FALSE, take sequential samples from start (default: TRUE)}
+
+\item{verbose}{Logical; whether to display progress information (default: FALSE)}
 }
 \value{
-A data frame containing the aggregated causality metrics across different sample sizes. The data frame includes the positive, negative, and dark causality percentages.
+An object of class "pc_cv" containing:
+\itemize{
+\item samples: Vector of sample sizes used
+\item results: Matrix of causality measures for each sample
+\item summary: Summary statistics across all samples
+\item parameters: List of input parameters
+}
 }
 \description{
-The \code{pcCrossValidation} function performs cross-validation on time series data to evaluate the robustness of pattern causality measures. It repeatedly samples subsets of the data, applies the pattern causality algorithm, and aggregates the results to provide a comprehensive assessment of the causality metrics.
+Evaluates the robustness of pattern causality measures through
+repeated sampling analysis. This function performs cross-validation by analyzing
+multiple subsets of the data to assess the stability of causality relationships.
 }
+\details{
+Perform Pattern Causality Cross-Validation Analysis
+
+The function implements these key steps:
+\itemize{
+\item Validates input parameters and data
+\item Performs stratified sampling of time series data
+\item Computes pattern causality measures for each sample
+\item Aggregates results across all samples
+}
+}
+\section{Related Packages}{
+
+\itemize{
+\item \pkg{nonlinearTseries}: Provides nonlinear time series analysis tools
+\item \pkg{tseriesChaos}: Offers chaos theory analysis methods
+\item \pkg{rEDM}: Implements empirical dynamic modeling techniques
+}
+}
+
 \examples{
 \donttest{
-data(DJS)
-X <- DJS$X3M
-Y <- DJS$American.Express
-numberset <- c(1000,2000,3000,4000)
-result <- pcCrossValidation(X,Y,3,2,"euclidean",1,FALSE,numberset)
+data(climate_indices)
+X <- climate_indices$AO
+Y <- climate_indices$AAO
+numberset <- c(100, 200, 300)
+result <- pcCrossValidation(X, Y, E = 3, tau = 1, 
+                           metric = "euclidean", h = 2,
+                           weighted = TRUE, numberset = numberset)
 print(result)
+plot(result)
 }
+
+}
+\seealso{
+\code{\link{pcLightweight}} for basic causality analysis
+\code{\link{pcFullDetails}} for detailed analysis
 }

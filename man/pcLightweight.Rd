@@ -2,37 +2,83 @@
 % Please edit documentation in R/PC.Mk.II.Lightweight.R
 \name{pcLightweight}
 \alias{pcLightweight}
-\title{Calculate Lightweight Pattern Causality}
+\title{Calculate Pattern Causality Using Lightweight Algorithm}
 \usage{
-pcLightweight(X, Y, E, tau, metric, h, weighted, tpb = TRUE)
+pcLightweight(
+  X,
+  Y,
+  E,
+  tau,
+  h,
+  weighted,
+  metric = "euclidean",
+  distance_fn = NULL,
+  state_space_fn = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{X}{A numeric vector representing the first time series.}
+\item{X}{A numeric vector representing the first time series}
 
-\item{Y}{A numeric vector representing the second time series.}
+\item{Y}{A numeric vector representing the second time series}
 
-\item{E}{The embedding dimension, which influences the number of dimensions in which the time series is reconstructed for analysis.}
+\item{E}{Integer; embedding dimension for state space reconstruction (E > 1)}
 
-\item{tau}{The time delay used in reconstructing the time series in the embedded space.}
+\item{tau}{Integer; time delay for state space reconstruction (tau > 0)}
 
-\item{metric}{A character string indicating the distance metric to be used (e.g., 'euclidean', 'maximum').}
+\item{h}{Integer; prediction horizon for future projections (h >= 0)}
 
-\item{h}{The prediction horizon, representing the number of steps ahead for which predictions are needed.}
+\item{weighted}{Logical; whether to use weighted causality strength calculations}
 
-\item{weighted}{A logical indicating whether to use a weighted approach in the causality strength calculations.}
+\item{metric}{Character string specifying the distance metric; one of "euclidean",
+"manhattan", or "maximum"}
 
-\item{tpb}{A bool parameter to show progress bar.}
+\item{distance_fn}{Custom distance function for state space reconstruction}
+
+\item{state_space_fn}{Custom function for state space transformation}
+
+\item{verbose}{Logical; whether to display progress information (default: FALSE)}
 }
 \value{
-A data frame with columns for total, positive, negative, and dark causality percentages across evaluated time points, giving insights into the nature of causality between the time series.
+An object of class "pc_fit" containing:
+\itemize{
+\item total: Total causality strength (0-1)
+\item positive: Proportion of positive causality (0-1)
+\item negative: Proportion of negative causality (0-1)
+\item dark: Proportion of dark causality (0-1)
+}
 }
 \description{
-This function implements the Pattern Causality Model Mk. II for lightweight analysis of causal interactions between two time series using pattern and signature spaces. It assesses causality through reconstructed state spaces and hashed pattern analysis.
+Implements a computationally efficient version of the Pattern Causality
+Model Mk. II for analyzing causal interactions between two time series. This function
+uses pattern and signature spaces to assess causality through reconstructed state spaces
+and hashed pattern analysis.
+}
+\details{
+Calculate Pattern Causality Using Lightweight Algorithm
+
+The function implements these key steps:
+\itemize{
+\item State space reconstruction using embedding parameters
+\item Pattern and signature space transformation
+\item Nearest neighbor analysis in reconstructed spaces
+\item Causality strength calculation using prediction accuracy
+\item Classification of causality types (positive/negative/dark)
+}
 }
 \examples{
 data(climate_indices)
 X <- climate_indices$AO
 Y <- climate_indices$AAO
-result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+result <- pcLightweight(X, Y, E = 3, tau = 1, 
+                       metric = "euclidean", h = 2, 
+                       weighted = TRUE, verbose = FALSE)
 print(result)
+summary(result)
+plot(result)
+
+}
+\seealso{
+\code{\link{pcFullDetails}} for detailed analysis
+\code{\link{pcMatrix}} for analyzing multiple time series
 }

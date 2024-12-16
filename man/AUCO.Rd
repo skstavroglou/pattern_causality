@@ -3,17 +3,27 @@
 \docType{data}
 \name{AUCO}
 \alias{AUCO}
-\title{A data from Illapel}
+\title{Illapel Ecological Dataset}
 \format{
-An object of class \code{data.frame} with 32 rows and 5 columns.
+A data frame with rodent and rainfall data.
+}
+\source{
+Las Chinchillas National Reserve Research Station
 }
 \usage{
 AUCO
 }
 \description{
-Raw rodent and rainfall data from the study site at Las Chinchillas National Reserve near the city of Illapel, Coquimbo Region of Chil.
+Raw rodent and rainfall data collected from the Las Chinchillas
+National Reserve near Illapel, Coquimbo Region of Chile. This dataset provides
+ecological time series for studying species interactions and environmental effects.
+}
+\details{
+Illapel Ecological Dataset
 }
 \examples{
+data(AUCO)
 head(AUCO)
+summary(AUCO)
 }
 \keyword{datasets}

@@ -2,25 +2,64 @@
 % Please edit documentation in R/pcEffect.R
 \name{pcEffect}
 \alias{pcEffect}
-\title{Calculate Pattern Causality Effect}
+\title{Pattern Causality Effect Analysis}
 \usage{
-pcEffect(pcmatrix)
+pcEffect(pcmatrix, verbose = FALSE)
 }
 \arguments{
-\item{pcmatrix}{A list containing three matrices (\code{positive}, \code{negative}, and \code{dark}) which represent the respective causality types for different items, as well as an \code{items} vector indicating the names of the items.}
+\item{pcmatrix}{An object of class "pc_matrix" containing causality matrices}
+
+\item{verbose}{Logical; whether to display computation progress (default: FALSE)}
 }
 \value{
-A list containing three data frames (\code{positive}, \code{negative}, and \code{dark}), each summarizing the causality effects. Each data frame includes columns for the received, exerted, and the difference (\code{Diff}) of causality for each item.
+An object of class "pc_effect" containing:
+\itemize{
+\item positive: Data frame of positive causality effects
+\item negative: Data frame of negative causality effects
+\item dark: Data frame of dark causality effects
+\item items: Vector of component names
+\item summary: Summary statistics for each causality type
+}
 }
 \description{
-The \code{pcEffect} function processes a pattern causality matrix to compute and summarize the effects of positive, negative, and dark causality. It aggregates these causality measures to determine the total received and exerted influence for each item in the matrix, along with the difference between them.
+Analyzes pattern causality matrices to compute and summarize the
+directional effects of different causality types (positive, negative, dark)
+between system components.
 }
+\details{
+Calculate Pattern Causality Effect Analysis
+
+The function performs these key steps:
+\itemize{
+\item Processes raw causality matrices
+\item Computes received and exerted influence for each component
+\item Calculates net causality effect (difference between received and exerted)
+\item Normalizes results to percentage scale
+}
+}
+\section{Related Packages}{
+
+\itemize{
+\item \pkg{vars}: Vector autoregression for multivariate time series
+\item \pkg{lmtest}: Testing linear regression models
+\item \pkg{causality}: Causality testing and modeling
+}
+}
+
 \examples{
 \donttest{
 data(climate_indices)
-dataset <- climate_indices[,-1]
-pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE)
+dataset <- climate_indices[, -1]
+pcmatrix <- pcMatrix(dataset, E = 3, tau = 1, 
+                    metric = "euclidean", h = 1, 
+                    weighted = TRUE)
 effects <- pcEffect(pcmatrix)
 print(effects)
+plot(effects)
 }
+
+}
+\seealso{
+\code{\link{pcMatrix}} for generating causality matrices
+\code{\link{plot.pc_effect}} for visualizing causality effects
 }

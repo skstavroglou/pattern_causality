@@ -1,45 +1,80 @@
-#' @title Get Past Nearest Neighbors Information
-#' @description This function identifies the nearest neighbors of a given point in a time series, excluding common coordinate vectors and a specified horizon from the candidate nearest neighbors. It returns detailed information about these neighbors, including their times, distances, signatures, patterns, and coordinates.
-#' @param CCSPAN Integer, the span of common coordinates to exclude from the nearest neighbor search.
-#' @param NNSPAN Integer, the number of nearest neighbors to consider for the analysis.
-#' @param Mx Matrix, the main matrix representing the state space of the system.
-#' @param Dx Numeric matrix, containing distances between points in the state space.
-#' @param SMx Matrix, containing signatures of the state space.
-#' @param PSMx Matrix, containing patterns derived from the signatures.
-#' @param i Integer, the current index in time series data for which nearest neighbors are being considered.
-#' @param h Integer, the horizon beyond which data is not considered in the nearest neighbor search.
-#' @return A list containing:
-#'   - `i`: The current index in time series data.
-#'   - `times`: The times of the nearest neighbors.
-#'   - `dists`: The distances to the nearest neighbors.
-#'   - `signatures`: The signatures of the nearest neighbors.
-#'   - `patterns`: The patterns of the nearest neighbors.
-#'   - `coordinates`: The coordinates of the nearest neighbors.
-#' @examples
-#' # Generate random data for demonstration
-#' set.seed(123)
-#' E <- 3
-#' tau <- 1
-#' Mx <- matrix(rnorm(300), nrow = 100)
-#' Dx <- distanceMatrix(Mx, "minkowski")
-#' SMx <- signatureSpace(Mx, E)
-#' PSMx <- patternSpace(SMx, E)
-#' CCSPAN <- (E - 1) * tau
-#' NNSPAN <- E + 1
-#' i <- 15
-#' h <- 2
-#' neighborsInfo <- pastNNsInfo(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h)
-#' print(neighborsInfo)
-#' @export
-pastNNsInfo <- function(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h) {
+#' Find Past Nearest Neighbors in Pattern Causality Analysis
+#' 
+#' @title Find Past Nearest Neighbors in Pattern Causality Analysis
+#' @description Identifies and analyzes nearest neighbors of a given point in a 
+#' time series, considering temporal constraints and pattern information. This 
+#' function is crucial for understanding local dynamics in the state space.
+#'
+#' @details The function implements these steps:
+#' \itemize{
+#'   \item Excludes common coordinate vectors using CCSPAN
+#'   \item Excludes future points using horizon h
+#'   \item Finds NNSPAN nearest neighbors based on distances
+#'   \item Extracts corresponding signatures, patterns, and coordinates
+#' }
+#'
+#' @param CCSPAN Integer; span of common coordinates to exclude
+#' @param NNSPAN Integer; number of nearest neighbors to find
+#' @param Mx Matrix; state space representation
+#' @param Dx Matrix; distance matrix
+#' @param SMx Matrix; signature matrix
+#' @param PSMx Matrix; pattern matrix
+#' @param i Integer; current time index
+#' @param h Integer; prediction horizon
+#' @param verbose Logical; if TRUE, prints computation details
+#'
+#' @return A pc_neighbors object containing:
+#' \itemize{
+#'   \item i: Current time index
+#'   \item times: Indices of nearest neighbors
+#'   \item dists: Distances to nearest neighbors
+#'   \item signatures: Signatures of neighbors
+#'   \item patterns: Patterns of neighbors
+#'   \item coordinates: Coordinates of neighbors
+#' }
+#' @keywords internal
+#' @noRd
+pastNNsInfo <- function(CCSPAN, NNSPAN, Mx, Dx, SMx, PSMx, i, h, verbose = FALSE) {
+  # Input validation
+  if(!is.numeric(CCSPAN) || CCSPAN < 0 || CCSPAN != round(CCSPAN)) {
+    stop("CCSPAN must be a non-negative integer", call. = FALSE)
+  }
+  
+  if(!is.numeric(NNSPAN) || NNSPAN <= 0 || NNSPAN != round(NNSPAN)) {
+    stop("NNSPAN must be a positive integer", call. = FALSE)
+  }
+  
+  if(!is.matrix(Mx) || !is.matrix(Dx) || !is.matrix(SMx)) {
+    stop("Mx, Dx, and SMx must be matrices", call. = FALSE)
+  }
+  
+  if(i <= CCSPAN + h) {
+    stop("Insufficient past data for the given parameters", call. = FALSE)
+  }
+  
+  if(verbose) {
+    cat("Finding nearest neighbors for point", i, "\n")
+  }
+  
+  # Find candidate nearest neighbors
   candidateNNs <- Dx[i, 1:(i - CCSPAN - h)]
-  times <- as.numeric(names(candidateNNs[order(candidateNNs)])[1:NNSPAN])
-  dists <- candidateNNs[order(candidateNNs)][1:NNSPAN]
-  signatures <- SMx[times, ]
-  thePast <- list(
-    "i" = i, "times" = times, "dists" = dists,
-    "signatures" = signatures, "patterns" = PSMx[times],
-    "coordinates" = Mx[times, ]
+  
+  # Sort and select nearest neighbors
+  ordered_indices <- order(candidateNNs)[1:min(NNSPAN, length(candidateNNs))]
+  times <- as.numeric(names(candidateNNs[ordered_indices]))
+  dists <- candidateNNs[ordered_indices]
+  
+  if(verbose) {
+    cat("Found", length(times), "nearest neighbors\n")
+  }
+  
+  # Create and return pc_neighbors object
+  pc_neighbors(
+    i = i,
+    times = times,
+    dists = dists,
+    signatures = SMx[times, ],
+    patterns = PSMx[times],
+    coordinates = Mx[times, ]
   )
-  return(thePast)
 }

@@ -1,26 +1,39 @@
 ---
-title: "Pattern Causality in a large dataset"
+title: "Pattern Causality in a Large Dataset"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Pattern Causality in a large dataset}
+  %\VignetteIndexEntry{Pattern Causality in a Large Dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
+```{r setup, include = FALSE}
+  knitr::opts_chunk$set(
   warning = FALSE,
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 8,
+    fig.height = 6
 )
 ```
 
-If we want to catch the hidden causality in a large and complex system, which includes a lot series, we also provide some functions to show it better.
+This vignette demonstrates the analysis of pattern causality in large-scale systems with multiple interconnected time series. Key aspects covered include:
 
-## Pattern causality matrix
+1. Matrix-based causality analysis
+2. System-wide pattern detection
+3. Visualization of complex causal networks
+4. Effect analysis across the entire system
 
-The DJS data includes 29 stock price series, which is large enough for our analysis.
+The matrix approach is particularly useful for:
+- Financial market networks
+- Economic systems
+- Social networks
+- Complex ecological systems
+
+## Pattern Causality Matrix
+
+We'll use the DJS dataset which contains 29 stock price series - a sufficiently large dataset for our analysis.
 
 ```{r message=FALSE}
 library(patterncausality)
@@ -28,20 +41,41 @@ data(DJS)
 #head(DJS)
 ```
 
-Then we could estimate the pattern causality in this dataset by `pcMatrix` function.
+First, let's find optimal parameters for our analysis:
 
 ```{r eval=FALSE}
 dataset <- DJS[,-1] # remove the date column
-result <- pcMatrix(dataset, E = 3, tau = 1, metric = "euclidean", h = 2, weighted = TRUE)
+params <- optimalParametersSearch(
+  Emax = 3, 
+  tauMax = 3, 
+  metric = "euclidean", 
+  dataset = dataset,
+  verbose = FALSE
+)
+print(params)
+```
+
+Now we can estimate the pattern causality using the optimal parameters:
+
+```{r eval=FALSE}
+result <- pcMatrix(
+  dataset = dataset, 
+  E = 3,           # Embedding dimension
+  tau = 1,         # Time delay
+  metric = "euclidean",
+  h = 1,           # Prediction horizon
+  weighted = FALSE  # Unweighted analysis
+)
 ```
 
 ```{r echo=FALSE}
-result <- readRDS("djsmatrix.rds")
+result <- readRDS("DJSm.rds")
+result$is_square <- TRUE
 ```
 
 Then we could see the three matrixs after calculating.
 ```{r}
-head(result$positive)
+print(result)
 ```
 
 Then we can visualize the result by `plotMatrix` function.
@@ -49,19 +83,19 @@ Then we can visualize the result by `plotMatrix` function.
 - positive status
 
 ```{r}
-plotMatrix(result, status = "positive", method = "circle")
+plot(result, "positive")
 ```
 
 - negative status
 
 ```{r}
-plotMatrix(result, status = "negative", method = "circle")
+plot(result, "negative")
 ```
 
 - dark status
 
 ```{r}
-plotMatrix(result, status = "dark", method = "circle")
+plot(result, "dark")
 ```
 
 We could see that there is a obvious positive connection in this system.
@@ -78,5 +112,5 @@ print(effects)
 Then we could observe the total effect in pattern causality.
 
 ```{r}
-plotEffect(effects, "negative",TRUE)
+plot(effects, status="negative")
 ```

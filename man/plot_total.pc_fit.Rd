@@ -7,13 +7,14 @@
 \method{plot_total}{pc_fit}(x, ...)
 }
 \arguments{
-\item{x}{A pc_fit object}
+\item{x}{A \code{pc_fit} object.}
 
-\item{...}{Additional arguments passed to plotting functions}
+\item{...}{Additional arguments passed to the underlying plotting functions.}
 }
 \value{
-A ggplot object
+NULL.
 }
 \description{
-Plot Total Causality
+Visualizes the total causality strength as a barplot for a \code{pc_fit} object.
+This function generates a barplot showing the total causality strength and its complement.
 }

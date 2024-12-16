@@ -3,17 +3,27 @@
 \docType{data}
 \name{DJS}
 \alias{DJS}
-\title{Dow Jones Stock Price}
+\title{Dow Jones Stock Price Dataset}
 \format{
-An object of class \code{data.frame} with 4510 rows and 30 columns.
+A data frame with daily stock prices for 29 companies.
+}
+\source{
+Yahoo Finance
 }
 \usage{
 DJS
 }
 \description{
-It includes 29 time series of stock series in Dow Jones.
+A comprehensive dataset containing daily stock prices for 29 companies
+listed in the Dow Jones Industrial Average (DJIA). The dataset includes opening,
+closing, high, and low prices for each stock.
+}
+\details{
+Dow Jones Stock Price Dataset
 }
 \examples{
+data(DJS)
 head(DJS)
+summary(DJS)
 }
 \keyword{datasets}

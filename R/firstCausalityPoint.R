@@ -1,35 +1,81 @@
-#' @title Find First Causality Point
-#' @description Calculates the earliest index in a time series from which causality analysis can begin,
-#' based on the embedding dimension, time delay, prediction horizon, and the length of the series. It ensures
-#' that there are enough data points for conducting a causality analysis without running out of data.
-#' @param E An integer representing the embedding dimension, which influences the number of dimensions
-#' in which the time series is reconstructed for analysis.
-#' @param tau An integer representing the time delay, used in reconstructing the time series in the embedded space.
-#' @param h An integer representing the prediction horizon, indicating how far ahead in the time series the predictions are aimed.
-#' @param X A numeric vector representing the time series data.
-#' @return An integer indicating the first index in the time series from which causality analysis is feasible without running out of data.
-#' If the parameters are set such that the analysis is not possible, the function will stop and provide an error message.
-#' @examples
-#' time_series <- rnorm(1000) # Generate a random time series of 1000 points
-#' embedding_dim <- 3 # Set embedding dimension
-#' time_delay <- 2 # Set time delay
-#' pred_horizon <- 1 # Set prediction horizon
+#' Calculate First Valid Causality Point
+#' 
+#' @title Calculate First Valid Causality Point
+#' @description Internal function that determines the earliest valid index for 
+#' causality analysis in a time series, considering embedding parameters and 
+#' prediction horizon. This ensures sufficient data points for reliable analysis.
 #'
-#' # Calculate the first causality point
-#' fc_point <- firstCausalityPoint(embedding_dim, time_delay, pred_horizon, time_series)
-#' print(fc_point)
-#' @export
-firstCausalityPoint <- function(E, tau, h, X) {
-  NNSPAN <- E + 1 # Former NN | Reserves a minimum number of nearest neighbors
-  CCSPAN <- (E - 1) * tau # This will remove the common coordinate NNs
-  PredSPAN <- h
-  FCP <- 1 + NNSPAN + CCSPAN + PredSPAN
-  if (NNSPAN + CCSPAN + PredSPAN >= length(X) - CCSPAN) {
-    stop("The First Point to consider for Causality does not have sufficient
-         Nearest Neighbors. Please Check parameters:
-         E, lag, p as well as the length of X and Y")
-  } else {
-    FCP <- 1 + NNSPAN + CCSPAN + PredSPAN # First Causality Point to be considered
+#' @param E Positive integer; embedding dimension
+#' @param tau Positive integer; time delay
+#' @param h Non-negative integer; prediction horizon
+#' @param X Numeric vector; time series data
+#' @param verbose Logical; if TRUE, prints computation details
+#'
+#' @return A pc_point object containing:
+#'   \itemize{
+#'     \item point: First valid index for causality analysis
+#'     \item spans: List of spans used in calculation
+#'   }
+#'
+#' @keywords internal
+#' @noRd
+firstCausalityPoint <- function(E, tau, h, X, verbose = FALSE) {
+  # Input validation
+  if(!is.numeric(E) || E <= 0 || E != round(E)) {
+    stop("E must be a positive integer", call. = FALSE)
   }
-  return(FCP)
+  
+  if(!is.numeric(tau) || tau <= 0 || tau != round(tau)) {
+    stop("tau must be a positive integer", call. = FALSE)
+  }
+  
+  if(!is.numeric(h) || h < 0 || h != round(h)) {
+    stop("h must be a non-negative integer", call. = FALSE)
+  }
+  
+  if(!is.numeric(X)) {
+    stop("X must be a numeric vector", call. = FALSE)
+  }
+  
+  # Calculate spans
+  nn_span <- E + 1  # Minimum number of nearest neighbors
+  cc_span <- (E - 1) * tau  # Remove common coordinate NNs
+  pred_span <- h
+  
+  if(verbose) {
+    cat("Computing first causality point:\n")
+    cat("Nearest neighbor span:", nn_span, "\n")
+    cat("Common coordinate span:", cc_span, "\n")
+    cat("Prediction span:", pred_span, "\n")
+  }
+  
+  # Calculate first causality point
+  fcp <- 1 + nn_span + cc_span + pred_span
+  
+  # Validate sufficient data length
+  if(nn_span + cc_span + pred_span >= length(X) - cc_span) {
+    stop(
+      sprintf(
+        paste(
+          "Insufficient data for causality analysis.",
+          "Required length: %d, Available length: %d\n",
+          "Check parameters: E=%d, tau=%d, h=%d"
+        ),
+        nn_span + 2 * cc_span + pred_span,
+        length(X),
+        E, tau, h
+      ),
+      call. = FALSE
+    )
+  }
+  
+  # Create and return pc_point object
+  pc_point(
+    point = fcp,
+    spans = list(
+      nn = nn_span,
+      cc = cc_span,
+      pred = pred_span
+    )
+  )
 }
