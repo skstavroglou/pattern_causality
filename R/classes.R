@@ -459,7 +459,8 @@ plot.pc_matrix <- function(x, status,
                       ggplot2::element_text() 
                     else 
                       ggplot2::element_blank()
-    )
+    ) +
+    ggplot2::coord_fixed(ratio = 1.1)
   
   # Add text if requested  
   if(show_text) {
@@ -769,7 +770,8 @@ plot.pc_effect <- function(x, status = "positive", add_label = TRUE,
       axis.line.x = ggplot2::element_line(),
       axis.line.y = ggplot2::element_line(),
       legend.key = ggplot2::element_blank()
-    )
+    ) +
+    ggplot2::coord_fixed(ratio = 1.1)
   
   # Add labels if requested
   if (add_label) {
