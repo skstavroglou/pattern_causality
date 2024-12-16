@@ -83,19 +83,19 @@ Then we can visualize the result by `plotMatrix` function.
 - positive status
 
 ```{r}
-plot(result, "positive", asp = 1)
+plot(result, "positive") + ggplot2::coord_fixed()
 ```
 
 - negative status
 
 ```{r}
-plot(result, "negative", asp = 1)
+plot(result, "negative") + ggplot2::coord_fixed()
 ```
 
 - dark status
 
 ```{r}
-plot(result, "dark", asp = 1)
+plot(result, "dark") + ggplot2::coord_fixed()
 ```
 
 We could see that there is a obvious positive connection in this system.
@@ -112,5 +112,5 @@ print(effects)
 Then we could observe the total effect in pattern causality.
 
 ```{r}
-plot(effects, status="negative", asp = 1)
+plot(effects, status="negative") + ggplot2::coord_fixed()
 ```
