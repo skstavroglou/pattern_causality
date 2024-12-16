@@ -32,7 +32,8 @@ jobs:
         run: |
           Rscript -e 'devtools::document()'
           Rscript -e 'roxygen2::roxygenise()'
-          Rscript -e 'devtools::build_manual(path = ".", build_args = "--no-preview")'
+          Rscript -e 'devtools::build_manual(path = ".")'
+
 
       - name: Upload documentation as artifact
         uses: actions/upload-artifact@v4
