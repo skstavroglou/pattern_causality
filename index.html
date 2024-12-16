@@ -141,110 +141,122 @@
 <span><span class="co">#&gt; 4 1979-04-01 -1.1568 0.6776 -1.71  0.09</span></span>
 <span><span class="co">#&gt; 5 1979-05-01 -0.2501 0.7237 -1.03  1.35</span></span>
 <span><span class="co">#&gt; 6 1979-06-01  0.9332 1.7000  1.60 -1.64</span></span></code></pre></div>
-<p>This dataset contains 4 time series of climate index, we could use the patterncausality in this dataset.</p>
-<p>Then we need to determine the <code>E</code> and <code>tao</code>.</p>
+<p>This dataset contains 4 famous time series of climate index, we can find the introduction of this dataset in the CRAN and R documment, we could use the <code>patterncausality</code> in this dataset to detect the hidden causality in this climate system.</p>
+<p>The climate system is a typical complex system like lorenz system, which are both originating from the climate system, it’s a good example to show how to find the hidden causality in the complex system.</p>
+<p>First of all, we need to determine the <code>E</code> and <code>tao</code>, it could be easy to complete by <code>optimalParametersSearch</code> function like this:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
 <span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="4%">
-<col width="7%">
-<col width="14%">
-<col width="26%">
-<col width="26%">
-<col width="20%">
-</colgroup>
 <thead><tr class="header">
-<th></th>
-<th></th>
+<th>E</th>
+<th>tau</th>
 <th>Total</th>
-<th>of which Positive</th>
-<th>of which Negative</th>
-<th>of which Dark</th>
+<th>Positive</th>
+<th>Negative</th>
+<th>Dark</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>E=2</td>
-<td>tau=1</td>
-<td>0.5543614</td>
-<td>0.5519477</td>
-<td>0.4474361</td>
-<td>0.0006162144</td>
+<td>2</td>
+<td>1</td>
+<td>0.5503802</td>
+<td>0.5529091</td>
+<td>0.44647239</td>
+<td>0.0006185057</td>
 </tr>
 <tr class="even">
-<td>E=2</td>
-<td>tau=2</td>
-<td>0.5727414</td>
-<td>0.5736100</td>
-<td>0.4232828</td>
-<td>0.0031071596</td>
+<td>2</td>
+<td>2</td>
+<td>0.5672403</td>
+<td>0.5722529</td>
+<td>0.42461112</td>
+<td>0.0031359329</td>
 </tr>
 <tr class="odd">
-<td>E=2</td>
-<td>tau=3</td>
-<td>0.5711838</td>
-<td>0.5469069</td>
-<td>0.4513270</td>
-<td>0.0017660870</td>
+<td>2</td>
+<td>3</td>
+<td>0.5647436</td>
+<td>0.5471488</td>
+<td>0.45106762</td>
+<td>0.0017836150</td>
 </tr>
 <tr class="even">
-<td>E=3</td>
-<td>tau=1</td>
-<td>0.3305296</td>
-<td>0.3457169</td>
-<td>0.2470929</td>
-<td>0.4071902523</td>
+<td>2</td>
+<td>4</td>
+<td>0.5538362</td>
+<td>0.5485637</td>
+<td>0.44961187</td>
+<td>0.0018243903</td>
 </tr>
 <tr class="odd">
-<td>E=3</td>
-<td>tau=2</td>
-<td>0.3500000</td>
-<td>0.4037138</td>
-<td>0.2547524</td>
-<td>0.3415338782</td>
+<td>2</td>
+<td>5</td>
+<td>0.5616083</td>
+<td>0.5433907</td>
+<td>0.45513014</td>
+<td>0.0014791531</td>
 </tr>
 <tr class="even">
-<td>E=3</td>
-<td>tau=3</td>
-<td>0.3570093</td>
-<td>0.3657638</td>
-<td>0.2690536</td>
-<td>0.3651826225</td>
+<td>3</td>
+<td>1</td>
+<td>0.3203775</td>
+<td>0.3460809</td>
+<td>0.24690959</td>
+<td>0.4070094904</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>2</td>
+<td>0.3362460</td>
+<td>0.4010403</td>
+<td>0.25410446</td>
+<td>0.3448552507</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>3</td>
+<td>0.3388998</td>
+<td>0.3657369</td>
+<td>0.26857083</td>
+<td>0.3656922393</td>
 </tr>
 </tbody>
 </table>
-<p>Of course, we can also change the distance style to calculate the distance matrix. Then according the combo that produces the highest percentages collectively, we can choose the best parameters here.</p>
+<p>Of course, we can also change the distance style to calculate the distance matrix or even custom distance function, we can find more inforation on our website. Then according the combo that produces the highest percentages collectively, we can choose the best parameters here.</p>
 <p>After the parameters are confirmed, we could calculate the pattern causality.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
-<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">2</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, tpb<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       total positive  negative     dark</span></span>
-<span><span class="co">#&gt; 1 0.2841121 0.326087 0.2318841 0.442029</span></span></code></pre></div>
+<span><span class="co">#&gt; Pattern Causality Analysis Results:</span></span>
+<span><span class="co">#&gt; Total: 0.2336</span></span>
+<span><span class="co">#&gt; Positive: 0.4471</span></span>
+<span><span class="co">#&gt; Negative: 0.1380</span></span>
+<span><span class="co">#&gt; Dark: 0.4150</span></span></code></pre></div>
 <p>The percentages of each causality status will be displayed below.</p>
-<p>To examine the causality status at each time point, we can run the following code:</p>
+<p>To examine the causality status at each time point, we can run the following code and find the causality strength at each time point by function <code>pcFullDetails</code>, the <code>causality_predict</code> is the predicted causality status at each point, the parameter <code>weighted = TRUE</code> is used to for erf function and if it’s FALSE, then it will just use the 1 or 0 to present the causality strength, however, whatever which one is used, the total causality points will be the same.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
-<span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">3</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityPredicted</span></span>
-<span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">spectrumOfCausalityReal</span></span></code></pre></div>
-<p>Then the status series will be saved in <code>predict_status</code> and <code>real_status</code>.</p>
+<span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_predict</span></span>
+<span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_real</span></span></code></pre></div>
+<p>Then the causality strength series will be saved in <code>predict_status</code> and <code>real_status</code>, if we want to plot the causality strength series, we can use the <code>plot</code> function for the <code>pc_full_details</code> class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.</p>
 </div>
 <div class="section level3">
 <h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h3>
 <p>After calculating the causality, we can get the result here.</p>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="23%">
+<col width="22%">
 <col width="16%">
 <col width="16%">
 <col width="16%">
 <col width="16%">
-<col width="12%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
 <th>Pairs</th>
