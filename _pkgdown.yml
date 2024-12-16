@@ -5,8 +5,8 @@ template:
   package: tidytemplate
   
   bslib:
-    primary: "#096B72"
-    navbar-background: "#e6f3fc"
+    primary: "#2980b9"
+    navbar-background: "#f0f8ff"
   trailing_slash_redirect: true
 
   development:

@@ -31,7 +31,7 @@ data(climate_indices)
 
 Here we choose the typical climate dataset to show the dynamic analysis. We can easily get the pattern causality result by `pcLightweight` function to give a quick view, generally speaking, this result is obtained by the whole time points.
 
-## Causality Strength Analysis with Erf Function
+## Causality Strength Analysis with ERF Function
 
 ```{r}
 X <- climate_indices$AO
