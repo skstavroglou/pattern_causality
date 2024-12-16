@@ -16,13 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
 
 As it's hard to understand the pattern causality algorithm based on chaos theory, some researchers always wonder if this algorithm is able to capture the dynamic causality between series.
 
 In this vignette, we will demonstrate how to use the `patterncausality` package to analyze the dynamic causality between two series.
 
-## Loading the Package and Data
 
 First of all, we need to load the package and the dataset as usual.
 
@@ -33,7 +31,7 @@ data(climate_indices)
 
 Here we choose the typical climate dataset to show the dynamic analysis. We can easily get the pattern causality result by `pcLightweight` function to give a quick view, generally speaking, this result is obtained by the whole time points.
 
-## Quick View of Pattern Causality
+## Causality Strength Analysis with Erf Function
 
 ```{r}
 X <- climate_indices$AO
@@ -42,8 +40,6 @@ result <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 1, weigh
 ```
 
 The parameter `weighted` decides if we need to calculate the causality strength by erf function, we can show this kind of strength here in each time point.
-
-## Detailed Causality Analysis
 
 To get the causality strength in each time point, we need the recorded function `pcFullDetails` to give causality strength details.
 
@@ -54,7 +50,6 @@ print(result)
 
 The summary of the result is shown, all the related data has been saved in the `result` object, then we can plot the causality strength series from this, as we said in the previous work, the each time point if and only if the causality is one of the three types, so the each time point just has one causality.
 
-## Plotting Causality Strength
 
 ```{r}
 plot_causality(result, type="total")
@@ -78,8 +73,6 @@ print(result)
 ```
 
 Obviously, the number of total causality points is the same, then we also provide the plot function for this situation to find more details about the dynamic causality.
-
-## Plotting Raw Causality Strength
 
 ```{r}
 plot_causality(result, type="total")
