@@ -22,7 +22,11 @@ jobs:
           use-public-rspm: true
 
       - name: Install dependencies
-        run: Rscript -e 'install.packages(c("roxygen2", "knitr", "rmarkdown", "devtools"))'
+        run: |
+          Rscript -e 'install.packages(c("roxygen2", "knitr", "rmarkdown", "devtools",
+                                         "stats", "graphics", "plot3D", "ggplot2",
+                                         "reshape2", "grid", "ggthemes", "tidyr",
+                                         "statebins", "ggrepel", "RColorBrewer", "scales"))'
 
       - name: Generate documentation
         run: |
