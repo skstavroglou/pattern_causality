@@ -1,5 +1,5 @@
 ---
-title: "Introduction to patterncausality"
+title: "Exploring Pattern Causality: An Intuitive Guide"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,22 +16,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-Pattern Causality is a novel approach for detecting and analyzing causal relationships in complex systems. This method excels at:
+**Pattern Causality** is a novel approach for detecting and analyzing causal relationships within complex systems. It is particularly effective at:
 
-1. Identifying hidden patterns in time series data
-2. Quantifying different types of causality (positive, negative, and dark)
-3. Providing robust statistical analysis of causal relationships
+1.  **Identifying hidden patterns in time series data:** Uncovering underlying regularities in seemingly random data.
+2.  **Quantifying different types of causality:** Distinguishing between positive, negative, and "dark" causal influences, which are often difficult to observe directly.
+3.  **Providing robust statistical analysis:** Ensuring the reliability of causal inferences through rigorous statistical methods.
 
-The algorithm is particularly effective for:
-- Financial market analysis
-- Climate system interactions
-- Medical diagnosis
-- Complex system dynamics
+This algorithm is especially useful in the following domains:
 
+-   **Financial market analysis:** Understanding the interdependencies between different assets.
+-   **Climate system interactions:** Revealing the complex relationships between various factors in climate change.
+-   **Medical diagnosis:** Assisting in the analysis of disease progression patterns to identify potential causes.
+-   **Complex system dynamics:** Studying the interactions between components in various complex systems.
 
-## PC in financial market
+## Application in Financial Markets
 
-First of all, we can import the data of AAPL and MSFT, also we can import data from the **yahooo** api.
+First, we import stock data for Apple (AAPL) and Microsoft (MSFT). You can also import data using the **yahooo** API.
 
 ```{r message = FALSE}
 library(patterncausality)
@@ -39,10 +39,13 @@ data(DJS)
 head(DJS)
 ```
 
-We can visualize this stock price.
+The `data(DJS)` function loads the Dow Jones stocks dataset, which includes daily stock prices for several companies, including Apple and Microsoft. The `head(DJS)` function displays the first few rows of the dataset.
+
+Next, we visualize the stock prices to observe their trends more intuitively.
 
 ```{r echo=FALSE}
 library(ggplot2)
+library(ggthemes)
 df <- data.frame(
   Date = as.Date(DJS$Date),
   Value = c(
@@ -56,29 +59,29 @@ df <- data.frame(
 )
 ggplot(df) +
   geom_line(aes(Date, Value, group = Type, colour = Type), linewidth = 0.4) +
-  theme_bw(base_size = 12, base_family = "Times New Roman") +
+  theme_few(base_size = 12) +
   xlab("Time") +
   ylab("Stock Price") +
   theme(
-    legend.position = c(0.25, 0.85), legend.box.background = element_rect(fill = NA, color = "black", linetype = 1), legend.key = element_blank(),
+    legend.position = "bottom", legend.box.background = element_rect(fill = NA, color = "black", linetype = 1), legend.key = element_blank(),
     legend.title = element_blank(), legend.background = element_blank(), axis.text = element_text(size = rel(0.8)),
     strip.text = element_text(size = rel(0.8))
   ) +
   scale_color_manual(values = c("#DC143C", "#191970"))
 ```
 
-### Search the parameters
+### Parameter Optimization
 
-Then search the best parameters for the PC.
+To achieve the best results with pattern causality analysis, it's important to find the optimal parameters. The following code demonstrates how to search for these parameters using the `optimalParametersSearch` function (note that this code is not evaluated by default due to the time it may take).
 
 ```{r eval=FALSE}
 dataset <- DJS[,-1]
 parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
 ```
 
-### Calculate the causality
+### Calculating Causality
 
-After that, calculate the causality of each status.
+After determining the parameters, we can calculate the causality between the two series.
 
 ```{r}
 X <- DJS$Apple
@@ -87,16 +90,29 @@ pc <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", h = 1, weighted 
 print(pc)
 ```
 
-Lastly we can also visualize this result.
+The `pcLightweight` function performs a lightweight pattern causality analysis.
+  - `X`: The first time series (Apple stock prices).
+  - `Y`: The second time series (Microsoft stock prices).
+  - `E`: The embedding dimension.
+  - `tau`: The time delay.
+  - `metric`: The distance metric to use.
+  - `h`: The prediction horizon.
+  - `weighted`: A boolean indicating whether to use weighted causality.
+
+The `print(pc)` function displays the results of the causality analysis, including the total, positive, negative, and dark causality percentages.
+
+Finally, we can visualize the results to better understand the causal relationships using the `plot_total` and `plot_components` functions.
 
 ```{r}
 plot_total(pc)
 plot_components(pc)
 ```
 
-### Full details
+The `plot_total` function visualizes the total causality, and `plot_components` visualizes the different components of causality (positive, negative, and dark).
 
-The details could be found with following code.
+### Detailed Analysis
+
+For more detailed causality information, use the `pcFullDetails` function.
 
 ```{r eval=FALSE}
 X <- DJS$Apple
@@ -108,5 +124,7 @@ causality_pred <- detail$causality_pred
 print(causality_pred)
 ```
 
-So far, the whole process of this algorithm has finished.
+This completes the entire process of the pattern causality algorithm.
+
+We hope this clearer and more intuitive explanation helps you better understand pattern causality!
 

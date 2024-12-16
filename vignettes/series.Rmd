@@ -1,5 +1,5 @@
 ---
-title: "Pattern Causality between two series"
+title: "Unveiling Causal Relationships in Time Series Data"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,27 +16,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette demonstrates advanced analysis techniques for examining causality between two time series. We'll explore:
+This vignette demonstrates advanced techniques for examining causal relationships between time series using the `patterncausality` package. We will focus on three key aspects:
 
-1. Cross-validation methods to assess robustness
-2. Parameter optimization for better results
-3. Visualization of causality relationships
+1.  **Cross-validation methods:** To rigorously assess the robustness of our findings, ensuring they are not mere artifacts of the data.
+2.  **Parameter optimization:** To fine-tune our analysis for the most accurate and reliable results.
+3.  **Visualization of causality relationships:** To provide clear and intuitive insights into the causal connections between time series.
 
-The cross-validation approach helps ensure:
-- Reliability of results
-- Robustness across different sample sizes
-- Stability of causality patterns
+Through cross-validation, we aim to understand:
 
-## Cross validation
+*   **Reliability of results:** How dependable are our conclusions?
+*   **Robustness across different sample sizes:** Do our findings hold true regardless of the amount of data used?
+*   **Stability of causality patterns:** Are the identified causal relationships consistent over time and across different data subsets?
 
-As an example, we could import climate from `patterncausality` package.
+## Cross-Validation: Ensuring the Reliability of Causal Inference
+
+To demonstrate the application of cross-validation, we will begin by importing a climate dataset from the `patterncausality` package.
 
 ```{r message = FALSE}
 library(patterncausality)
 data(climate_indices)
 ```
 
-Then we consider a method of cross-validation to see the robustness of pattern causality.
+Now, let's apply cross-validation to evaluate the robustness of pattern causality. We will use the Pacific North American (PNA) and North Atlantic Oscillation (NAO) climate indices as our example time series.
 
 ```{r}
 set.seed(123)
@@ -55,11 +56,43 @@ result <- pcCrossValidation(
 print(result$results)
 ```
 
-In order to make the results better observed, we provide the `plotCV` function to give a line chart of the result.
+To better visualize the results, we will use the `plot` function to generate a line chart.
 
 ```{r}
 plot(result)
 ```
 
-We can find that the causality keep the same position when the sample number is large enough, this method indeed captures hidden patterns and causal connections in sequences.
+As you can see from the plot, the location of the causality tends to stabilize as the sample size increases. This indicates that our method is effective at capturing the underlying patterns and causal connections within the time series.
+
+In this tutorial, you've learned how to use cross-validation to assess the reliability of time series causality and how to use visualization tools to better understand the results. We hope these methods will help you delve deeper into the fascinating world of time series data!
+
+## Cross-Validation: Convergence of Pattern Causality
+
+Now, let's examine the cross-validation process when the `random` parameter is set to `FALSE`. This approach uses a systematic sampling method rather than random sampling.
+
+```{r}
+set.seed(123)
+X <- climate_indices$PNA
+Y <- climate_indices$NAO
+result_non_random <- pcCrossValidation(
+  X = X,
+  Y = Y,
+  numberset = c(100, 200, 300, 400, 500),
+  E = 3,
+  tau = 2,
+  metric = "euclidean",
+  h = 1,
+  weighted = FALSE,
+  random = FALSE
+)
+print(result_non_random$results)
+```
+
+We can also visualize the results of the non-random cross-validation:
+
+```{r}
+plot(result_non_random)
+```
+
+By comparing the results of the random and non-random cross-validation, you can gain a deeper understanding of how different sampling methods affect the stability and reliability of the causality analysis.
 

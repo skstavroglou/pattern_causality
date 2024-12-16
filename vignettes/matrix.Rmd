@@ -1,9 +1,9 @@
 ---
-title: "Pattern Causality in a Large Dataset"
+title: "Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Pattern Causality in a Large Dataset}
+  %\VignetteIndexEntry{Multivariate Pattern Causality Analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,22 +18,23 @@ vignette: >
 )
 ```
 
-This vignette demonstrates the analysis of pattern causality in large-scale systems with multiple interconnected time series. Key aspects covered include:
+This vignette provides a comprehensive demonstration of multivariate pattern causality analysis, a powerful technique for investigating complex interactions within large-scale systems. This approach is particularly useful when dealing with multiple interconnected time series, allowing us to move beyond pairwise analysis and understand system-wide dynamics. The key aspects of this analysis include:
 
-1. Matrix-based causality analysis
-2. System-wide pattern detection
-3. Visualization of complex causal networks
-4. Effect analysis across the entire system
+1.  **Matrix-based causality assessment:**  Quantifying causal relationships between all pairs of time series in the system, represented in a matrix format.
+2.  **System-wide pattern identification:**  Identifying recurring patterns of behavior across the entire system, revealing underlying dynamics.
+3.  **Visualization of complex causal relationships:**  Using graphical representations to make intricate causal networks more understandable.
+4.  **Analysis of effects across the entire system:**  Measuring the overall impact of causality within the system, providing insights into the collective behavior.
 
-The matrix approach is particularly useful for:
-- Financial market networks
-- Economic systems
-- Social networks
-- Complex ecological systems
+The matrix-based approach is particularly well-suited for the study of:
+
+-   **Financial market networks:** Analyzing the interconnectedness of stock prices and other financial instruments.
+-   **Economic systems:** Understanding the relationships between various economic indicators and their impact on the overall economy.
+-   **Social networks:** Investigating the spread of information and influence within social structures.
+-   **Complex ecological systems:** Studying the interactions between different species and environmental factors.
 
 ## Pattern Causality Matrix
 
-We'll use the DJS dataset which contains 29 stock price series - a sufficiently large dataset for our analysis.
+In this vignette, we will utilize the DJS dataset, which comprises 29 stock price series. This dataset provides a sufficiently large and complex system to demonstrate the capabilities of our multivariate pattern causality analysis.
 
 ```{r message=FALSE}
 library(patterncausality)
@@ -41,7 +42,7 @@ data(DJS)
 #head(DJS)
 ```
 
-First, let's find optimal parameters for our analysis:
+Before estimating the causality matrix, it is crucial to determine the optimal parameters for our analysis. These parameters, including the embedding dimension (`E`) and time delay (`tau`), significantly influence the accuracy and reliability of the results. We use the `optimalParametersSearch` function to identify these optimal values:
 
 ```{r eval=FALSE}
 dataset <- DJS[,-1] # remove the date column
@@ -55,7 +56,7 @@ params <- optimalParametersSearch(
 print(params)
 ```
 
-Now we can estimate the pattern causality using the optimal parameters:
+With the optimal parameters identified, we can now estimate the pattern causality matrix using the `pcMatrix` function. This function calculates the causality between all pairs of time series in the dataset, resulting in a matrix representation of the system's causal structure.
 
 ```{r eval=FALSE}
 result <- pcMatrix(
@@ -73,44 +74,102 @@ result <- readRDS("DJSm.rds")
 result$is_square <- TRUE
 ```
 
-Then we could see the three matrixs after calculating.
+The resulting analysis yields three matrices, each representing a different aspect of causality: positive, negative, and dark causality. These matrices can be accessed through the `pc_matrix` object.
+
 ```{r}
 print(result)
 ```
 
-Then we can visualize the result by `plotMatrix` function.
+The `plot` function for object `pc_matrix` provides a powerful tool for visualizing these complex matrices. By plotting each causality type separately, we can gain a deeper understanding of the system's dynamics.
 
-- positive status
+-   Positive causality status
 
 ```{r}
 plot(result, "positive")
 ```
 
-- negative status
+-   Negative causality status
 
 ```{r}
 plot(result, "negative")
 ```
 
-- dark status
+-   Dark causality status
 
 ```{r}
 plot(result, "dark")
 ```
 
-We could see that there is a obvious positive connection in this system.
+The visualization reveals a clear positive connection within the system, indicating a tendency for stocks to influence each other positively.
 
-## Pattern causality effect
+## Pattern Causality Effect
 
-After we get the matrix, we can find the total effect in the system, we provide the function `pcEffect` to achieve this target.
+Following the matrix calculation, we can quantify the total effect within the system using the `pcEffect` function. This function aggregates the causality measures to provide a system-wide perspective on the overall impact of pattern causality.
 
 ```{r}
 effects <- pcEffect(result)
 print(effects)
 ```
 
-Then we could observe the total effect in pattern causality.
+The total effect of pattern causality can be observed, providing a measure of the overall strength of causal interactions within the system.
+
+-   Positive causality status
+
+```{r}
+plot(effects, status="positive")
+```
+
+-   Negative causality status
 
 ```{r}
 plot(effects, status="negative")
 ```
+
+-   Dark causality status
+
+```{r}
+plot(effects, status="dark")
+```
+
+
+## Cross Matrix analysis
+
+Sometimes, we also need to face the problem that X has multiple series, and Y also has multiple series, we want to know the causality between each series in X and each series in Y, to save the computation time, we can use the `pcCrossMatrix` function to get the causality matrix from each series in X to Y.
+
+This time we construct the datasets for X and Y in stock dataset.
+
+```{r}
+dataset <- DJS[, -1]
+
+X <- dataset[, 1:10]
+Y <- dataset[, 11:29]
+```
+
+```{r echo=FALSE}
+result_cross <- readRDS("djscross.rds")
+```
+
+Then we can estimate the causality matrix from each series in X to Y and give the new matrix from X to Y.
+
+```{r eval=FALSE}
+result_cross <- pcCrossMatrix(
+  X = X,
+  Y = Y,
+  E = 3,
+  tau = 1,
+  metric = "euclidean",
+  h = 1,
+  weighted = FALSE,
+  verbose = FALSE
+)
+```
+
+The new matrix will be saved in the `result_cross` object, we can also plot the matrix by the `plot` function.
+
+```{r}
+plot(result_cross, "positive")
+```
+
+This will show the causality matrix from each series in X to Y and the color of the matrix represents the causality strength in the whole period.
+
+We provide the multiple types of multi-series pattern causality analysis here and it would be useful to face many different situatiuons for the matrix analysis and network analysis.

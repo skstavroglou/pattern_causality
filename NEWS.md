@@ -3,6 +3,11 @@
 * Added statebins as required dependency
 * Improved visualization with rounded rectangle tiles
 * Enhanced package stability
+* Added `/document` and `/style` commands for PRs
+* Added GitHub Actions workflow for building CRAN documentation
+* Added GitHub Actions workflow for building pkgdown website
+* Updated documentation and examples
+* Fixed minor bugs and improved code efficiency
 
 # patterncausality 0.1.3
 

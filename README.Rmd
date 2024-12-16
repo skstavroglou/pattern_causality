@@ -132,7 +132,7 @@ real_status <- detail$causality_real
 ```
 
 Then the causality strength series will be saved in `predict_status` and
-`real_status`, if we want to plot the causality strength series, we can use the `plot` function for the `pc_full_details` class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.
+`real_status`, if we want to plot the causality strength series, we can use the `plot_causality` function for the `pc_full_details` class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.
 
 ### Conclusion
 

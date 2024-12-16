@@ -1,0 +1,148 @@
+---
+title: "Advanced Pattern Causality: Custom Functions for Tailored Analysis"
+author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced Pattern Causality with Custom Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+    knitr::opts_chunk$set(
+    warning = FALSE,
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+In this vignette, we delve into the advanced capabilities of the `patterncausality` package, focusing on how to use custom functions to tailor the analysis to your specific needs. We'll explore how to define your own distance metrics and state space reconstruction methods, allowing for greater flexibility and control over the causality analysis.
+
+## Why Custom Functions?
+
+The `patterncausality` package provides a robust framework for analyzing causal relationships, but sometimes, the default settings might not be ideal for your specific data or research question. Custom functions allow you to:
+
+1.  **Incorporate domain-specific knowledge:** If you have a unique way of measuring distances or reconstructing state spaces that is relevant to your field, you can implement it directly.
+2.  **Experiment with novel methods:** You can test new ideas and approaches for distance calculation or state space reconstruction.
+3.  **Handle data peculiarities:** If your data has specific characteristics (e.g., high levels of noise, non-standard distributions), you can design functions to address these issues.
+
+## Custom Distance Metric
+
+Let's start by creating a custom distance metric. In this example, we'll implement an adaptive distance metric that switches between Euclidean and Manhattan distances based on the data's standard deviation. This can be useful when dealing with data that has varying scales or distributions.
+
+```{r, include = FALSE}
+adaptive_distance <- function(x) {
+  if(!is.matrix(x)) x <- as.matrix(x)
+  # Ensure no NA values
+  if(any(is.na(x))) {
+    x[is.na(x)] <- mean(x, na.rm = TRUE)
+  }
+  # Select distance metric based on data distribution
+  if(sd(x, na.rm = TRUE) > 100) {
+    x_scaled <- scale(x)
+    d <- as.matrix(dist(x_scaled, method = "euclidean"))
+  } else {
+    d <- as.matrix(dist(x, method = "manhattan"))
+  }
+  # Ensure distance matrix is symmetric with zero diagonal
+  d[is.na(d)] <- 0
+  d <- (d + t(d))/2
+  diag(d) <- 0
+  return(d)
+}
+```
+
+This function first checks if the input is a matrix, handles NA values by replacing them with the mean, and then decides whether to use Euclidean or Manhattan distance based on the standard deviation of the input data. Finally, it ensures the distance matrix is symmetric and has a zero diagonal.
+
+## Custom State Space Reconstruction
+
+Next, let's define a custom state space reconstruction method. Here, we'll implement a denoised state space reconstruction using a median filter to reduce noise in the time series before constructing the state space.
+
+```{r, include = FALSE}
+denoised_state_space <- function(x, E, tau) {
+  # Use median filtering for denoising
+  n <- length(x)
+  x_smooth <- x
+  window <- 3
+  for(i in (window+1):(n-window)) {
+    x_smooth[i] <- median(x[(i-window):(i+window)])
+  }
+  
+  # Construct state space
+  n_out <- length(x_smooth) - (E-1)*tau
+  mat <- matrix(NA, nrow = n_out, ncol = E)
+  for(i in 1:E) {
+    mat[,i] <- x_smooth[1:n_out + (i-1)*tau]
+  }
+  
+  # Ensure no NA values
+  if(any(is.na(mat))) {
+    mat[is.na(mat)] <- mean(mat, na.rm = TRUE)
+  }
+  
+  list(matrix = mat)
+}
+```
+
+This function applies a median filter to smooth the input time series and then constructs the state space matrix. It also handles any remaining NA values by replacing them with the mean.
+
+## Applying Custom Functions
+
+Now, let's see how to use these custom functions in the `pcLightweight` function. We'll load the `climate_indices` dataset and apply our custom functions.
+
+```{r}
+library(patterncausality)
+data(climate_indices)
+
+# Example 1: Using only adaptive distance metric
+result1 <- pcLightweight(
+  X = climate_indices$AO[1:200],
+  Y = climate_indices$AAO[1:200],
+  E = 3,
+  tau = 2,
+  metric = "euclidean",
+  distance_fn = adaptive_distance,
+  h = 1,
+  weighted = TRUE
+)
+print("Result with adaptive distance:")
+print(result1)
+
+# Example 2: Using only improved state space
+result2 <- pcLightweight(
+  X = climate_indices$AO[1:200],
+  Y = climate_indices$AAO[1:200],
+  E = 3,
+  tau = 2,
+  metric = "euclidean",
+  state_space_fn = denoised_state_space,
+  h = 1,
+  weighted = TRUE
+)
+print("\nResult with denoised state space:")
+print(result2)
+```
+
+In the first example, we use the `adaptive_distance` function as the `distance_fn` argument. In the second example, we use the `denoised_state_space` function as the `state_space_fn` argument.
+
+## Comparing Results
+
+Finally, let's compare the results obtained using the custom functions.
+
+```{r}
+# Compare results
+compare_results <- data.frame(
+  Method = c("Adaptive Distance", "Denoised Space"),
+  Total = c(result1$total, result2$total),
+  Positive = c(result1$positive, result2$positive),
+  Negative = c(result1$negative, result2$negative),
+  Dark = c(result1$dark, result2$dark)
+)
+print("\nComparison of different approaches:")
+print(compare_results)
+```
+
+This table shows the total, positive, negative, and dark causality values for each method, allowing you to compare the impact of using custom functions.
+
+This vignette has demonstrated how to use custom functions to enhance the `patterncausality` analysis. By defining your own distance metrics and state space reconstruction methods, you can tailor the analysis to your specific needs and gain deeper insights into the causal relationships in your data. Remember to validate the output of your custom functions to ensure they are compatible with the `patterncausality` package.
+
