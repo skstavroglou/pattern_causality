@@ -97,7 +97,7 @@ The `pcLightweight` function performs a lightweight pattern causality analysis.
   - `tau`: The time delay.
   - `metric`: The distance metric to use.
   - `h`: The prediction horizon.
-  - `weighted`: A boolean indicating whether to use weighted causality.
+  - `weighted`: A boolean indicating whether to use erf function.
 
 The `print(pc)` function displays the results of the causality analysis, including the total, positive, negative, and dark causality percentages.
 
@@ -125,6 +125,4 @@ print(causality_pred)
 ```
 
 This completes the entire process of the pattern causality algorithm.
-
-We hope this clearer and more intuitive explanation helps you better understand pattern causality!
 

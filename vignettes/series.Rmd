@@ -64,7 +64,7 @@ plot(result)
 
 As you can see from the plot, the location of the causality tends to stabilize as the sample size increases. This indicates that our method is effective at capturing the underlying patterns and causal connections within the time series.
 
-In this tutorial, you've learned how to use cross-validation to assess the reliability of time series causality and how to use visualization tools to better understand the results. We hope these methods will help you delve deeper into the fascinating world of time series data!
+In this tutorial, you've learned how to use cross-validation to assess the reliability of time series causality and how to use visualization tools to better understand the results.
 
 ## Cross-Validation: Convergence of Pattern Causality
 

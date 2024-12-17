@@ -1,9 +1,9 @@
 ---
-title: "Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions"
+title: "Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions"
 author: "Stavros Stavroglou, Athanasios Pantelous, Hui Wang"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Multivariate Pattern Causality Analysis}
+  %\VignetteIndexEntry{Multiple Series Pattern Causality Analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
