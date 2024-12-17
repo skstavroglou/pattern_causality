@@ -383,7 +383,7 @@ summary.pc_matrix <- function(object, ...) {
 #' @param show_legend_title Logical, whether to display the legend title.
 #' @param ... Additional arguments passed to plotting functions.
 #' @return A ggplot object invisibly.
-#' @references Stavroglou et al. (2020) \doi{10.1073/pnas.1918119117}
+#' @references Stavroglou et al. (2020) \doi{10.1073/pnas.1918269117}
 #' @examples
 #' data(climate_indices)
 #' dataset <- climate_indices[, -1]

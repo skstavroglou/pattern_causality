@@ -53,5 +53,5 @@ pc_matrix_obj <- pcMatrix(dataset, E = 3, tau = 1,
 plot(pc_matrix_obj, status = "positive")
 }
 \references{
-Stavroglou et al. (2020) \doi{10.1073/pnas.1918119117}
+Stavroglou et al. (2020) \doi{10.1073/pnas.1918269117}
 }
