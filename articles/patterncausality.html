@@ -44,7 +44,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
-    <li><a class="dropdown-item" href="../articles/matrix.html">Multivariate Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix.html">Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul>
 </li>
@@ -200,8 +200,8 @@ pattern causality analysis. - <code>X</code>: The first time series
 (Microsoft stock prices). - <code>E</code>: The embedding dimension. -
 <code>tau</code>: The time delay. - <code>metric</code>: The distance
 metric to use. - <code>h</code>: The prediction horizon. -
-<code>weighted</code>: A boolean indicating whether to use weighted
-causality.</p>
+<code>weighted</code>: A boolean indicating whether to use erf
+function.</p>
 <p>The <code>print(pc)</code> function displays the results of the
 causality analysis, including the total, positive, negative, and dark
 causality percentages.</p>
@@ -233,8 +233,6 @@ causality (positive, negative, and dark).</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">causality_pred</span><span class="op">)</span></span></code></pre></div>
 <p>This completes the entire process of the pattern causality
 algorithm.</p>
-<p>We hope this clearer and more intuitive explanation helps you better
-understand pattern causality!</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
