@@ -26,6 +26,7 @@ multiple subsets of the data to assess the stability of causality relationships.
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
     <li><a class="dropdown-item" href="../articles/matrix.html">Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel Computing in Pattern Causality Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -64,7 +65,9 @@ multiple subsets of the data to assess the stability of causality relationships.
 <span>  state_space_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">numberset</span>,</span>
 <span>  random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  bootstrap <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_cores <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -73,80 +76,89 @@ multiple subsets of the data to assess the stability of causality relationships.
 
 
 <dl><dt id="arg-x">X<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Numeric vector; first time series</p></dd>
+<dd><p>Numeric vector representing the first time series.</p></dd>
 
 
 <dt id="arg-y">Y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Numeric vector; second time series</p></dd>
+<dd><p>Numeric vector representing the second time series.</p></dd>
 
 
 <dt id="arg-e">E<a class="anchor" aria-label="anchor" href="#arg-e"></a></dt>
-<dd><p>Integer; embedding dimension for state space reconstruction (E &gt; 1)</p></dd>
+<dd><p>Integer specifying the embedding dimension.</p></dd>
 
 
 <dt id="arg-tau">tau<a class="anchor" aria-label="anchor" href="#arg-tau"></a></dt>
-<dd><p>Integer; time delay for state space reconstruction (tau &gt; 0)</p></dd>
+<dd><p>Integer specifying the time delay.</p></dd>
 
 
 <dt id="arg-metric">metric<a class="anchor" aria-label="anchor" href="#arg-metric"></a></dt>
-<dd><p>Character; distance metric, one of "euclidean", "manhattan", "maximum"</p></dd>
+<dd><p>Character string specifying the distance metric to use.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>Integer; prediction horizon (h &gt; 0)</p></dd>
+<dd><p>Integer specifying the prediction horizon.</p></dd>
 
 
 <dt id="arg-weighted">weighted<a class="anchor" aria-label="anchor" href="#arg-weighted"></a></dt>
-<dd><p>Logical; whether to use weighted causality calculation</p></dd>
+<dd><p>Logical indicating whether to use weighted calculations.</p></dd>
 
 
 <dt id="arg-distance-fn">distance_fn<a class="anchor" aria-label="anchor" href="#arg-distance-fn"></a></dt>
-<dd><p>Optional custom distance function for computing distances</p></dd>
+<dd><p>Optional custom distance function.</p></dd>
 
 
 <dt id="arg-state-space-fn">state_space_fn<a class="anchor" aria-label="anchor" href="#arg-state-space-fn"></a></dt>
-<dd><p>Optional custom function for state space reconstruction</p></dd>
+<dd><p>Optional custom state space function.</p></dd>
 
 
 <dt id="arg-numberset">numberset<a class="anchor" aria-label="anchor" href="#arg-numberset"></a></dt>
-<dd><p>Numeric vector; sample sizes for cross-validation</p></dd>
+<dd><p>Numeric vector of sample sizes to analyze.</p></dd>
 
 
 <dt id="arg-random">random<a class="anchor" aria-label="anchor" href="#arg-random"></a></dt>
-<dd><p>Logical; if TRUE, randomly sample data points; if FALSE, take sequential samples from start (default: TRUE)</p></dd>
+<dd><p>Logical indicating whether to use random sampling (default: TRUE).</p></dd>
+
+
+<dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
+<dd><p>Integer specifying the number of bootstrap iterations (default: 1).</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Logical; whether to display progress information (default: FALSE)</p></dd>
+<dd><p>Logical indicating whether to display progress messages.</p></dd>
+
+
+<dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
+<dd><p>Integer specifying the number of cores to use for parallel computation (default: 1).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "pc_cv" containing:</p><ul><li><p>samples: Vector of sample sizes used</p></li>
-<li><p>results: Matrix of causality measures for each sample</p></li>
-<li><p>summary: Summary statistics across all samples</p></li>
-<li><p>parameters: List of input parameters</p></li>
+    <p>A pc_cv object containing:</p><ul><li><p>samples: Vector of sample sizes used</p></li>
+<li><p>results: Array of causality results</p></li>
+<li><p>parameters: List of analysis parameters</p></li>
+</ul><p>The results array structure depends on the bootstrap parameter:</p><ul><li><p>If bootstrap&gt;1: A three-dimensional array where first dimension represents
+sample sizes, second dimension contains statistics (mean, quantiles, median),
+and third dimension represents causality types (positive, negative, dark)</p></li>
+<li><p>If bootstrap=1: A three-dimensional array where first dimension represents
+sample sizes, second dimension contains single values, and third dimension
+represents causality types (positive, negative, dark)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Perform Pattern Causality Cross-Validation Analysis</p>
 <p>The function implements these key steps:</p><ul><li><p>Validates input parameters and data</p></li>
 <li><p>Performs stratified sampling of time series data</p></li>
+<li><p>When random=TRUE and bootstrap&gt;1, performs bootstrap sampling</p></li>
 <li><p>Computes pattern causality measures for each sample</p></li>
 <li><p>Aggregates results across all samples</p></li>
-</ul></div>
-    <div class="section level2">
-    <h2 id="related-packages">Related Packages<a class="anchor" aria-label="anchor" href="#related-packages"></a></h2>
-
-
-<ul><li><p><span class="pkg">nonlinearTseries</span>: Provides nonlinear time series analysis tools</p></li>
-<li><p><span class="pkg">tseriesChaos</span>: Offers chaos theory analysis methods</p></li>
-<li><p><span class="pkg">rEDM</span>: Implements empirical dynamic modeling techniques</p></li>
-</ul></div>
+</ul><p>When bootstrap sampling is enabled (random=TRUE and bootstrap&gt;1), the function returns
+statistics including mean, 5% quantile, 95% quantile, and median for each sample size.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="pcLightweight.html">pcLightweight</a></code> for basic causality analysis
-<code><a href="pcFullDetails.html">pcFullDetails</a></code> for detailed analysis</p></div>
+    <div class="dont-index"><p><code><a href="plot.pc_cv.html">plot.pc_cv</a></code> for visualizing cross-validation results
+<code><a href="print.pc_cv.html">print.pc_cv</a></code> for printing cross-validation results
+<code><a href="summary.pc_cv.html">summary.pc_cv</a></code> for summarizing cross-validation results</p></div>
     </div>
 
     <div class="section level2">
@@ -155,33 +167,29 @@ multiple subsets of the data to assess the stability of causality relationships.
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">climate_indices</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span></span>
 <span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span></span>
-<span class="r-in"><span><span class="va">numberset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">pcCrossValidation</span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>                           metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                           weighted <span class="op">=</span> <span class="cn">TRUE</span>, numberset <span class="op">=</span> <span class="va">numberset</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pattern Causality Cross-Validation Results</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Embedding dimension (E): 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Time delay (tau): 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Metric: euclidean </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Horizon (h): 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Weighted: TRUE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sample sizes: 100, 200, 300 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Summary Statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       total positive negative   dark</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mean 0.2585   0.2488   0.4908 0.2604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sd   0.0490   0.1361   0.1639 0.0447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min  0.2167   0.0936   0.3409 0.2291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max  0.3125   0.3475   0.6659 0.3116</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="pcCrossValidation-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Basic cross-validation</span></span></span>
+<span class="r-in"><span><span class="va">cv_result</span> <span class="op">&lt;-</span> <span class="fu">pcCrossValidation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">X</span>, <span class="va">Y</span>, </span></span>
+<span class="r-in"><span>  E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span></span>
+<span class="r-in"><span>  h <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  numberset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Cross-validation with bootstrap</span></span></span>
+<span class="r-in"><span><span class="va">cv_result_boot</span> <span class="op">&lt;-</span> <span class="fu">pcCrossValidation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">X</span>, <span class="va">Y</span>,</span></span>
+<span class="r-in"><span>  E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span></span>
+<span class="r-in"><span>  h <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  numberset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  random <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  bootstrap <span class="op">=</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

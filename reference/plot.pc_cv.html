@@ -26,6 +26,7 @@ for different sample sizes."><meta property="og:image" content="https://www.stav
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
     <li><a class="dropdown-item" href="../articles/matrix.html">Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel Computing in Pattern Causality Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -53,7 +54,7 @@ for different sample sizes.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'pc_cv'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, fr <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, fr <span class="op">=</span> <span class="cn">FALSE</span>, separate <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,6 +67,10 @@ for different sample sizes.</p>
 
 <dt id="arg-fr">fr<a class="anchor" aria-label="anchor" href="#arg-fr"></a></dt>
 <dd><p>Boolean for frame display.</p></dd>
+
+
+<dt id="arg-separate">separate<a class="anchor" aria-label="anchor" href="#arg-separate"></a></dt>
+<dd><p>Boolean for separate plots.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

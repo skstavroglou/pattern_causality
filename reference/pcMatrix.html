@@ -24,6 +24,7 @@ by computing pairwise causality measures and organizing them into matrices."><me
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
     <li><a class="dropdown-item" href="../articles/matrix.html">Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel Computing in Pattern Causality Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -58,7 +59,8 @@ by computing pairwise causality measures and organizing them into matrices.</p>
 <span>  weighted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  distance_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  state_space_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_cores <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -100,6 +102,10 @@ by computing pairwise causality measures and organizing them into matrices.</p>
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Logical; whether to print progress</p></dd>
+
+
+<dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
+<dd><p>Integer; number of cores for parallel computation</p></dd>
 
 </dl></div>
     <div class="section level2">

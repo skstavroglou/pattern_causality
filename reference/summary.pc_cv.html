@@ -26,6 +26,7 @@ results, including sample statistics, causality statistics, and convergence."><m
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/advanced.html">Advanced Pattern Causality: Custom Functions for Tailored Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/dynamic.html">Dynamic Analysis: Pattern Causality in Time Points</a></li>
     <li><a class="dropdown-item" href="../articles/matrix.html">Multiple Series Pattern Causality Analysis: Unveiling System-Wide Interactions</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel Computing in Pattern Causality Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/series.html">Unveiling Causal Relationships in Time Series Data</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -100,21 +101,23 @@ results, including sample statistics, causality statistics, and convergence.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $parameters$random</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $parameters$bootstrap</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $parameters$n_cores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sample_stats</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     100     125     150     150     175     200 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $causality_stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           total   positive  negative      dark</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mean 0.25918467 0.22490842 0.3477411 0.4273504</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sd   0.05591705 0.04047246 0.1292482 0.1696621</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min  0.19774011 0.17948718 0.2051282 0.2857143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max  0.30708661 0.25714286 0.4571429 0.6153846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $convergence</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      total   positive   negative       dark </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.05591705 0.04047246 0.12924816 0.16966206 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1465389 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary.pc_cv"</span>
