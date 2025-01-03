@@ -114,8 +114,7 @@ result_boot <- pcCrossValidation(
   h = 1,
   weighted = FALSE,
   random = TRUE,
-  bootstrap = 100,  # Perform 100 bootstrap iterations
-  n_cores = 2       # Use parallel computation
+  bootstrap = 100  # Perform 100 bootstrap iterations
 )
 ```
 
