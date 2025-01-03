@@ -259,8 +259,7 @@ measures.</p>
 <span>  h <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="fl">100</span>,  <span class="co"># Perform 100 bootstrap iterations</span></span>
-<span>  n_cores <span class="op">=</span> <span class="fl">2</span>       <span class="co"># Use parallel computation</span></span>
+<span>  bootstrap <span class="op">=</span> <span class="fl">100</span>  <span class="co"># Perform 100 bootstrap iterations</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The bootstrap analysis provides several statistical measures for each
 sample size: - Mean: Average causality measure across bootstrap samples
@@ -272,29 +271,29 @@ Median: Central tendency measure robust to outliers</p>
 <span><span class="co">#&gt; , , positive</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          mean         5%       95%    median</span></span>
-<span><span class="co">#&gt; 100 0.2932435 0.06666667 0.6155678 0.2649123</span></span>
-<span><span class="co">#&gt; 200 0.3070867 0.13894112 0.5240341 0.3050089</span></span>
-<span><span class="co">#&gt; 300 0.3081313 0.12620555 0.5003086 0.3051619</span></span>
-<span><span class="co">#&gt; 400 0.3179996 0.18472715 0.4778685 0.3039216</span></span>
-<span><span class="co">#&gt; 500 0.3047876 0.17621646 0.4211272 0.3102190</span></span>
+<span><span class="co">#&gt; 100 0.3052773 0.05924242 0.5849359 0.2857143</span></span>
+<span><span class="co">#&gt; 200 0.2935589 0.13307692 0.5120465 0.2752525</span></span>
+<span><span class="co">#&gt; 300 0.3149741 0.16566667 0.4890152 0.3153707</span></span>
+<span><span class="co">#&gt; 400 0.2775644 0.13495733 0.4466071 0.2680697</span></span>
+<span><span class="co">#&gt; 500 0.2958245 0.16400752 0.4295309 0.2964772</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; , , negative</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          mean         5%       95%    median</span></span>
-<span><span class="co">#&gt; 100 0.3145063 0.08316667 0.6169683 0.3000000</span></span>
-<span><span class="co">#&gt; 200 0.2881246 0.11320755 0.4698767 0.2745098</span></span>
-<span><span class="co">#&gt; 300 0.2883745 0.10938193 0.4600210 0.2835586</span></span>
-<span><span class="co">#&gt; 400 0.2802853 0.13721034 0.4075634 0.2914722</span></span>
-<span><span class="co">#&gt; 500 0.3024525 0.19484127 0.4511469 0.2893295</span></span>
+<span><span class="co">#&gt; 100 0.3004937 0.07692308 0.5626359 0.2886905</span></span>
+<span><span class="co">#&gt; 200 0.3068532 0.10907115 0.5131054 0.3086168</span></span>
+<span><span class="co">#&gt; 300 0.2915992 0.14277950 0.4883413 0.2774431</span></span>
+<span><span class="co">#&gt; 400 0.3238175 0.18165584 0.4521804 0.3226190</span></span>
+<span><span class="co">#&gt; 500 0.3115941 0.19348760 0.4747401 0.3079832</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; , , dark</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          mean        5%       95%    median</span></span>
-<span><span class="co">#&gt; 100 0.3922502 0.2259091 0.5559028 0.4000000</span></span>
-<span><span class="co">#&gt; 200 0.4047886 0.2854286 0.5485188 0.4047619</span></span>
-<span><span class="co">#&gt; 300 0.4034941 0.3155392 0.5000000 0.3952053</span></span>
-<span><span class="co">#&gt; 400 0.4017151 0.3185367 0.5007426 0.3980398</span></span>
-<span><span class="co">#&gt; 500 0.3927599 0.3279239 0.4730948 0.3946609</span></span></code></pre></div>
+<span><span class="co">#&gt; 100 0.3942290 0.2105263 0.5722689 0.4000000</span></span>
+<span><span class="co">#&gt; 200 0.3995879 0.2821146 0.5356906 0.3953488</span></span>
+<span><span class="co">#&gt; 300 0.3934267 0.3094797 0.4777146 0.3947140</span></span>
+<span><span class="co">#&gt; 400 0.3986181 0.3194255 0.4805484 0.3917306</span></span>
+<span><span class="co">#&gt; 500 0.3925814 0.3239467 0.4662068 0.3876275</span></span></code></pre></div>
 <p>We can visualize the bootstrap results using the plot function, which
 now shows confidence intervals:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
