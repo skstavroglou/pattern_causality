@@ -29,7 +29,7 @@ jobs:
           Rscript -e 'install.packages(c("roxygen2", "knitr", "rmarkdown", "devtools",
                                          "stats", "graphics", "plot3D", "ggplot2",
                                          "reshape2", "grid", "ggthemes", "tidyr",
-                                         "statebins", "ggrepel", "RColorBrewer", "scales"))'
+                                         "statebins", "ggrepel", "RColorBrewer", "scales", "gridExtra","parallel"))'
 
       - name: Generate documentation
         run: |
