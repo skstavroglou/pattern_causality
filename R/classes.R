@@ -91,23 +91,38 @@ summary.pc_fit <- function(object, ...) {
 #' @export
 #' @method plot_total pc_fit
 plot_total.pc_fit <- function(x, ...) {
+  type <- value <- NULL
   data <- data.frame(
-    name = c('Causality', 'Nocausality'),
-    value = c(x$total, 1 - x$total)
+    type = c('Causality', 'Nocausality'),
+    value = c(x$total, 1 - x$total),
+    stringsAsFactors = FALSE
   )
-  coul <- c("#DCDCDC", "#696969")
   
-  graphics::barplot(height = data$value,
-          names.arg = data$name,
-          col = coul,
-          border = "white",
-          ylim = c(0, 1),
-          ylab = "Strength")
+  # Set colors
+  colors <- c("#DCDCDC", "#696969")  # Light gray, Dark gray
   
-  graphics::text(x = graphics::barplot(height = data$value, plot = FALSE),
-       y = data$value,
-       label = paste0(round(data$value * 100, 1), "%"),
-       pos = 3)
+  # Create plot
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = type, y = value, fill = type)) +
+    ggplot2::geom_col() +
+    ggplot2::geom_text(ggplot2::aes(
+      label = scales::percent(value, accuracy = 0.1)),
+      vjust = -0.5
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, 1),
+      expand = ggplot2::expansion(mult = c(0, 0.1))
+    ) +
+    ggplot2::scale_fill_manual(values = colors) +
+    ggplot2::labs(y = "Strength") +
+    ggthemes::theme_few() +
+    ggplot2::theme(
+      panel.grid.major.x = ggplot2::element_blank(),
+      legend.position = "none",
+      axis.title.x = ggplot2::element_blank()
+    )
+  
+  print(p)
+  invisible(NULL)
 }
 
 #' Plot Causality Components
@@ -121,23 +136,42 @@ plot_total.pc_fit <- function(x, ...) {
 #' @export
 #' @method plot_components pc_fit
 plot_components.pc_fit <- function(x, ...) {
+  type <- value <- NULL
   data <- data.frame(
-    name = c('Positive', 'Negative', 'Dark'),
-    value = c(x$positive, x$negative, x$dark)
+    type = c('Positive', 'Negative', 'Dark'),
+    value = c(x$positive, x$negative, x$dark),
+    stringsAsFactors = FALSE
   )
-  coul <- c("#5BA3CF", "#F6583E", "#6A51A3")
   
-  graphics::barplot(height = data$value,
-          names.arg = data$name,
-          col = coul,
-          border = "white",
-          ylim = c(0, max(data$value) * 1.2),
-          ylab = "Strength")
+  # Set colors - corrected order
+  colors <- c(
+    "Positive" = "#5BA3CF",  # Blue
+    "Negative" = "#F6583E",  # Red
+    "Dark" = "#6A51A3"      # Purple
+  )
   
-  graphics::text(x = graphics::barplot(height = data$value, plot = FALSE),
-       y = data$value,
-       label = paste0(round(data$value * 100, 1), "%"),
-       pos = 3)
+  # Create plot
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = type, y = value, fill = type)) +
+    ggplot2::geom_col() +
+    ggplot2::geom_text(ggplot2::aes(
+      label = scales::percent(value, accuracy = 0.1)),
+      vjust = -0.5
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, max(data$value) * 1.1),
+      expand = ggplot2::expansion(mult = c(0, 0.1))
+    ) +
+    ggplot2::scale_fill_manual(values = colors) +
+    ggplot2::labs(y = "Strength") +
+    ggthemes::theme_few() +
+    ggplot2::theme(
+      panel.grid.major.x = ggplot2::element_blank(),
+      legend.position = "none",
+      axis.title.x = ggplot2::element_blank()
+    )
+  
+  print(p)
+  invisible(NULL)
 }
 
 #' Plot Pattern Causality Results
@@ -151,43 +185,70 @@ plot_components.pc_fit <- function(x, ...) {
 #' @export
 #' @method plot pc_fit
 plot.pc_fit <- function(x, ...) {
+  type <- value <- NULL
+  # Create data frames for both plots
   data1 <- data.frame(
-    name = c('Positive', 'Negative', 'Dark'),
-    value = c(x$positive, x$negative, x$dark)
+    type = c('Causality', 'Nocausality'),
+    value = c(x$total, 1 - x$total),
+    stringsAsFactors = FALSE
   )
-  coul1 <- c("#5BA3CF", "#F6583E", "#6A51A3")
   
   data2 <- data.frame(
-    name = c('Causality', 'Nocausality'),
-    value = c(x$total, 1 - x$total)
+    type = c('Positive', 'Negative', 'Dark'),
+    value = c(x$positive, x$negative, x$dark),
+    stringsAsFactors = FALSE
   )
-  coul2 <- c("#DCDCDC", "#696969")
   
-  graphics::par(mfrow = c(1, 2))
+  # Set up colors - corrected order
+  colors1 <- c("#DCDCDC", "#696969")  # Light gray, Dark gray
+  colors2 <- c(
+    "Positive" = "#5BA3CF",  # Blue
+    "Negative" = "#F6583E",  # Red
+    "Dark" = "#6A51A3"      # Purple
+  )
   
-  graphics::barplot(height = data1$value,
-          names.arg = data1$name,
-          col = coul1,
-          border = "white",
-          ylim = c(0, max(data1$value) * 1.2),
-          ylab = "Strength")
+  # Create first plot (Total Causality)
+  p1 <- ggplot2::ggplot(data1, ggplot2::aes(x = type, y = value, fill = type)) +
+    ggplot2::geom_col() +
+    ggplot2::geom_text(ggplot2::aes(
+      label = scales::percent(value, accuracy = 0.1)),
+      vjust = -0.5
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, 1),
+      expand = ggplot2::expansion(mult = c(0, 0.1))
+    ) +
+    ggplot2::scale_fill_manual(values = colors1) +
+    ggplot2::labs(y = "Strength") +
+    ggthemes::theme_few() +
+    ggplot2::theme(
+      panel.grid.major.x = ggplot2::element_blank(),
+      legend.position = "none",
+      axis.title.x = ggplot2::element_blank()
+    )
   
-  graphics::text(x = graphics::barplot(height = data1$value, plot = FALSE),
-       y = data1$value,
-       label = paste0(round(data1$value * 100, 1), "%"),
-       pos = 3)
+  # Create second plot (Components)
+  p2 <- ggplot2::ggplot(data2, ggplot2::aes(x = type, y = value, fill = type)) +
+    ggplot2::geom_col() +
+    ggplot2::geom_text(ggplot2::aes(
+      label = scales::percent(value, accuracy = 0.1)),
+      vjust = -0.5
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, max(data2$value) * 1.1),
+      expand = ggplot2::expansion(mult = c(0, 0.1))
+    ) +
+    ggplot2::scale_fill_manual(values = colors2) +
+    ggplot2::labs(y = "Strength") +
+    ggthemes::theme_few() +
+    ggplot2::theme(
+      panel.grid.major.x = ggplot2::element_blank(),
+      legend.position = "none",
+      axis.title.x = ggplot2::element_blank()
+    )
   
-  graphics::barplot(height = data2$value,
-          names.arg = data2$name,
-          col = coul2,
-          border = "white",
-          ylim = c(0, 1),
-          ylab = "Strength")
-  
-  graphics::text(x = graphics::barplot(height = data2$value, plot = FALSE),
-       y = data2$value,
-       label = paste0(round(data2$value * 100, 1), "%"),
-       pos = 3)
+  # Arrange plots side by side
+  gridExtra::grid.arrange(p1, p2, ncol = 2)
   
   invisible(NULL)
 }
@@ -480,16 +541,14 @@ plot.pc_matrix <- function(x, status,
 #'
 #' @param samples Numeric vector of sample sizes used.
 #' @param results Matrix containing causality results for each sample.
-#' @param summary Matrix of summary statistics.
 #' @param parameters List of analysis parameters.
 #' @return An object of class "pc_cv".
 #' @export
-pc_cv <- function(samples = NULL, results = NULL, summary = NULL, parameters = NULL) {
+pc_cv <- function(samples = NULL, results = NULL, parameters = NULL) {
   structure(
     list(
       samples = samples,
       results = results,
-      summary = summary,
       parameters = parameters
     ),
     class = "pc_cv"
@@ -522,13 +581,25 @@ print.pc_cv <- function(x, ...) {
   cat("  Time delay (tau):", x$parameters$tau, "\n")
   cat("  Metric:", x$parameters$metric, "\n")
   cat("  Horizon (h):", x$parameters$h, "\n")
-  cat("  Weighted:", x$parameters$weighted, "\n\n")
+  cat("  Weighted:", x$parameters$weighted, "\n")
+  cat("  Random:", x$parameters$random, "\n")
+  cat("  Bootstrap:", x$parameters$bootstrap, "\n\n")
   
   cat("Sample sizes:", paste(x$samples, collapse = ", "), "\n\n")
   
-  cat("Summary Statistics:\n")
-  print(round(x$summary, 4))
-  cat("\n")
+  # Print results based on structure
+  if(length(dim(x$results)) == 3 && dim(x$results)[2] > 1) {
+    # Bootstrap case
+    cat("Results (with bootstrap statistics):\n")
+    for(i in seq_along(x$samples)) {
+      cat("\nSample size:", x$samples[i], "\n")
+      print(round(x$results[i,,], 4))
+    }
+  } else {
+    # Non-bootstrap case
+    cat("Results:\n")
+    print(round(x$results[,,], 4))
+  }
 }
 
 #' Summary of Pattern Causality Cross Validation Results
@@ -571,6 +642,7 @@ summary.pc_cv <- function(object, ...) {
 #'
 #' @param x A `pc_cv` object.
 #' @param fr Boolean for frame display.
+#' @param separate Boolean for separate plots.
 #' @param ... Additional arguments passed to the `plot` function.
 #' @return Invisibly returns the input object.
 #' @examples
@@ -582,15 +654,151 @@ summary.pc_cv <- function(object, ...) {
 #' plot(cv_results)
 #' @export
 #' @method plot pc_cv
-plot.pc_cv <- function(x, fr = FALSE, ...) {
-  plot(x$samples, x$results[,2], type = "b", pch = 19, 
-       xlab = "Sample Size", ylab = "Causality Strength",
-       col = "#5BA3CF", frame = fr, ylim = c(0,1))
-  graphics::lines(x$samples, x$results[,3], pch = 19, col = "#F6583E", type = "b")
-  graphics::lines(x$samples, x$results[,4], pch = 19, col = "#6A51A3", type = "b")
-  graphics::legend("topright", c("positive", "negative", "dark"),
-         col = c("#5BA3CF","#F6583E","#6A51A3"),
-         pch = 19, lty = 1, bty = "n")
+plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
+  # Avoid R CMD check notes about undefined global variables
+  Statistic <- Value <- SampleSize <- Dimension <- `5%` <- `95%` <- NULL
+  
+  # Convert array to data frame
+  has_bootstrap <- length(dim(x$results)) == 3 && dim(x$results)[2] > 1
+  
+  if(has_bootstrap) {
+    # For bootstrap case with confidence intervals
+    result_df <- as.data.frame(as.table(x$results))
+    colnames(result_df) <- c("SampleSize", "Statistic", "Dimension", "Value")
+    result_df$SampleSize <- as.numeric(as.character(result_df$SampleSize))
+    
+    # Convert to wide format
+    result_wide <- tidyr::pivot_wider(result_df, 
+                                    names_from = Statistic, 
+                                    values_from = Value)
+    
+    y_min <- min(result_wide$`5%`, na.rm = TRUE)
+    
+    if(separate) {
+      # Create separate plots for each dimension
+      p <- ggplot2::ggplot(result_wide, ggplot2::aes(x = SampleSize, y = mean)) +
+        ggplot2::geom_line(ggplot2::aes(color = Dimension), size = 1.2) +
+        ggplot2::geom_ribbon(ggplot2::aes(ymin = `5%`, ymax = `95%`, 
+                                         fill = Dimension), 
+                            alpha = 0.2, color = NA) +
+        ggplot2::facet_wrap(~ Dimension, ncol = 1, scales = "free_y") +
+        ggplot2::scale_color_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::scale_fill_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::labs(x = "Sample Size",
+                     y = "Causality Strength") +
+        ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
+        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggthemes::theme_few() +
+        ggplot2::theme(
+          plot.title = ggplot2::element_text(hjust = 0.5),
+          legend.position = "none"
+        )
+    } else {
+      # Create combined plot
+      p <- ggplot2::ggplot(result_wide, 
+                          ggplot2::aes(x = SampleSize, y = mean, color = Dimension)) +
+        ggplot2::geom_line(size = 1.2) +
+        ggplot2::geom_ribbon(ggplot2::aes(ymin = `5%`, ymax = `95%`, 
+                                         fill = Dimension), 
+                            alpha = 0.2, color = NA) +
+        ggplot2::scale_color_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::scale_fill_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::labs(x = "Sample Size",
+                     y = "Causality Strength") +
+        ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
+        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggthemes::theme_few() +
+        ggplot2::theme(
+          plot.title = ggplot2::element_text(hjust = 0.5),
+          legend.position = "bottom",
+          legend.title = ggplot2::element_blank(),
+          legend.key.width = ggplot2::unit(1, "cm"),
+          legend.background = ggplot2::element_rect(
+            size = 0.2,
+            color = 'black',
+            linetype = 'solid'
+          )
+        )
+    }
+  } else {
+    # For non-bootstrap case
+    result_df <- data.frame(
+      SampleSize = rep(x$samples, 3),
+      Value = c(x$results[,1,"positive"],
+                x$results[,1,"negative"],
+                x$results[,1,"dark"]),
+      Dimension = rep(c("positive", "negative", "dark"), 
+                     each = length(x$samples))
+    )
+    
+    y_min <- min(result_df$Value, na.rm = TRUE)
+    
+    if(separate) {
+      # Create separate plots
+      p <- ggplot2::ggplot(result_df, 
+                          ggplot2::aes(x = SampleSize, y = Value)) +
+        ggplot2::geom_line(ggplot2::aes(color = Dimension), size = 1.2) +
+        ggplot2::facet_wrap(~ Dimension, ncol = 1, scales = "free_y") +
+        ggplot2::scale_color_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::labs(x = "Sample Size",
+                     y = "Causality Strength") +
+        ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
+        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggthemes::theme_few() +
+        ggplot2::theme(
+          plot.title = ggplot2::element_text(hjust = 0.5),
+          legend.position = "none"
+        )
+    } else {
+      # Create combined plot
+      p <- ggplot2::ggplot(result_df, 
+                          ggplot2::aes(x = SampleSize, y = Value, color = Dimension)) +
+        ggplot2::geom_line(size = 1.2) +
+        ggplot2::scale_color_manual(values = c(
+          "positive" = "#5BA3CF",
+          "negative" = "#F6583E",
+          "dark" = "#6A51A3"
+        )) +
+        ggplot2::labs(x = "Sample Size",
+                     y = "Causality Strength") +
+        ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
+        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggthemes::theme_few() +
+        ggplot2::theme(
+          plot.title = ggplot2::element_text(hjust = 0.5),
+          legend.position = "bottom",
+          legend.title = ggplot2::element_blank(),
+          legend.key.width = ggplot2::unit(1, "cm"),
+          legend.background = ggplot2::element_rect(
+            size = 0.2,
+            color = 'black',
+            linetype = 'solid'
+          )
+        )
+    }
+  }
+  
+  print(p)
   invisible(x)
 }
 
@@ -762,7 +970,7 @@ plot.pc_effect <- function(x, status = "positive", add_label = TRUE,
       x = "Influence Exerted",
       y = "Influence Received"
     ) +
-    ggthemes::theme_few(base_size = 12) +
+    ggthemes::theme_few() +
     ggplot2::theme(
       panel.grid = ggplot2::element_blank(),
       panel.border = ggplot2::element_blank(),

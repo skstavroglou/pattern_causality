@@ -14,7 +14,8 @@ pcCrossMatrix(
   weighted = TRUE,
   distance_fn = NULL,
   state_space_fn = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  n_cores = 1
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ pcCrossMatrix(
 \item{state_space_fn}{Optional custom state space reconstruction function}
 
 \item{verbose}{Logical; whether to print progress}
+
+\item{n_cores}{Integer; number of cores for parallel computation}
 }
 \value{
 A pc_matrix object containing causality matrices

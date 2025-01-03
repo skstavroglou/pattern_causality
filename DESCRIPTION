@@ -17,7 +17,6 @@ License: GPL-3 | file LICENSE
 Depends: R (>= 4.1.0)
 Imports: 
     stats,
-    graphics,
     plot3D,
     ggplot2,
     reshape2,
@@ -27,14 +26,17 @@ Imports:
     statebins,
     ggrepel,
     RColorBrewer,
-    scales
+    scales,
+    gridExtra,
+    parallel
 Suggests: 
     knitr,
     rmarkdown,
     stringr,
     testthat (>= 3.0.0),
     lintr,
-    zoo
+    zoo,
+    graphics,
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

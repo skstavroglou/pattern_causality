@@ -16,41 +16,56 @@ pcCrossValidation(
   state_space_fn = NULL,
   numberset,
   random = TRUE,
-  verbose = FALSE
+  bootstrap = 1,
+  verbose = FALSE,
+  n_cores = 1
 )
 }
 \arguments{
-\item{X}{Numeric vector; first time series}
+\item{X}{Numeric vector representing the first time series.}
 
-\item{Y}{Numeric vector; second time series}
+\item{Y}{Numeric vector representing the second time series.}
 
-\item{E}{Integer; embedding dimension for state space reconstruction (E > 1)}
+\item{E}{Integer specifying the embedding dimension.}
 
-\item{tau}{Integer; time delay for state space reconstruction (tau > 0)}
+\item{tau}{Integer specifying the time delay.}
 
-\item{metric}{Character; distance metric, one of "euclidean", "manhattan", "maximum"}
+\item{metric}{Character string specifying the distance metric to use.}
 
-\item{h}{Integer; prediction horizon (h > 0)}
+\item{h}{Integer specifying the prediction horizon.}
 
-\item{weighted}{Logical; whether to use weighted causality calculation}
+\item{weighted}{Logical indicating whether to use weighted calculations.}
 
-\item{distance_fn}{Optional custom distance function for computing distances}
+\item{distance_fn}{Optional custom distance function.}
 
-\item{state_space_fn}{Optional custom function for state space reconstruction}
+\item{state_space_fn}{Optional custom state space function.}
 
-\item{numberset}{Numeric vector; sample sizes for cross-validation}
+\item{numberset}{Numeric vector of sample sizes to analyze.}
 
-\item{random}{Logical; if TRUE, randomly sample data points; if FALSE, take sequential samples from start (default: TRUE)}
+\item{random}{Logical indicating whether to use random sampling (default: TRUE).}
 
-\item{verbose}{Logical; whether to display progress information (default: FALSE)}
+\item{bootstrap}{Integer specifying the number of bootstrap iterations (default: 1).}
+
+\item{verbose}{Logical indicating whether to display progress messages.}
+
+\item{n_cores}{Integer specifying the number of cores to use for parallel computation (default: 1).}
 }
 \value{
-An object of class "pc_cv" containing:
+A pc_cv object containing:
 \itemize{
 \item samples: Vector of sample sizes used
-\item results: Matrix of causality measures for each sample
-\item summary: Summary statistics across all samples
-\item parameters: List of input parameters
+\item results: Array of causality results
+\item parameters: List of analysis parameters
+}
+
+The results array structure depends on the bootstrap parameter:
+\itemize{
+\item If bootstrap>1: A three-dimensional array where first dimension represents
+sample sizes, second dimension contains statistics (mean, quantiles, median),
+and third dimension represents causality types (positive, negative, dark)
+\item If bootstrap=1: A three-dimensional array where first dimension represents
+sample sizes, second dimension contains single values, and third dimension
+represents causality types (positive, negative, dark)
 }
 }
 \description{
@@ -65,34 +80,45 @@ The function implements these key steps:
 \itemize{
 \item Validates input parameters and data
 \item Performs stratified sampling of time series data
+\item When random=TRUE and bootstrap>1, performs bootstrap sampling
 \item Computes pattern causality measures for each sample
 \item Aggregates results across all samples
 }
-}
-\section{Related Packages}{
 
-\itemize{
-\item \pkg{nonlinearTseries}: Provides nonlinear time series analysis tools
-\item \pkg{tseriesChaos}: Offers chaos theory analysis methods
-\item \pkg{rEDM}: Implements empirical dynamic modeling techniques
+When bootstrap sampling is enabled (random=TRUE and bootstrap>1), the function returns
+statistics including mean, 5\% quantile, 95\% quantile, and median for each sample size.
 }
-}
-
 \examples{
 \donttest{
 data(climate_indices)
 X <- climate_indices$AO
 Y <- climate_indices$AAO
-numberset <- c(100, 200, 300)
-result <- pcCrossValidation(X, Y, E = 3, tau = 1, 
-                           metric = "euclidean", h = 2,
-                           weighted = TRUE, numberset = numberset)
-print(result)
-plot(result)
-}
 
+# Basic cross-validation
+cv_result <- pcCrossValidation(
+  X, Y, 
+  E = 3, tau = 1,
+  metric = "euclidean",
+  h = 1,
+  weighted = FALSE,
+  numberset = c(100, 200, 300)
+)
+
+# Cross-validation with bootstrap
+cv_result_boot <- pcCrossValidation(
+  X, Y,
+  E = 3, tau = 1,
+  metric = "euclidean",
+  h = 1,
+  weighted = FALSE,
+  numberset = c(100, 200, 300),
+  random = TRUE,
+  bootstrap = 100
+)
+}
 }
 \seealso{
-\code{\link{pcLightweight}} for basic causality analysis
-\code{\link{pcFullDetails}} for detailed analysis
+\code{\link{plot.pc_cv}} for visualizing cross-validation results
+\code{\link{print.pc_cv}} for printing cross-validation results
+\code{\link{summary.pc_cv}} for summarizing cross-validation results
 }

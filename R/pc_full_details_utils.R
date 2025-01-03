@@ -327,7 +327,7 @@ plot_causality.pc_full_details <- function(x, type, ...) {
         x = "Time", 
         y = "Causality Strength",
       ) +
-      ggthemes::theme_few(base_size = 10) +
+      ggthemes::theme_few() +
       ggplot2::theme(
         plot.title = ggplot2::element_text(hjust = 0.5),
         legend.position = if(type == "total") "bottom" else "none",
@@ -455,7 +455,7 @@ plot_causality.pc_full_details <- function(x, type, ...) {
       ggplot2::scale_color_manual(values = colors) +
       ggplot2::scale_shape_manual(values = shapes) +
       ggplot2::labs(x = "Time", y = "Causality Strength") +
-      ggthemes::theme_few(base_size = 10)
+      ggthemes::theme_few()
     
     # Add theme settings based on type
     if(type == "total") {

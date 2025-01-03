@@ -29,20 +29,25 @@
 #' @param distance_fn Optional custom distance function
 #' @param state_space_fn Optional custom state space reconstruction function
 #' @param verbose Logical; whether to print progress
+#' @param n_cores Integer; number of cores for parallel computation
 #' @return A pc_matrix object containing causality matrices
 #' @export
-pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE, distance_fn = NULL,
-                             state_space_fn = NULL,verbose = FALSE) {
+pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE, 
+                    distance_fn = NULL, state_space_fn = NULL,
+                    verbose = FALSE, n_cores = 1) {
   if(verbose) {
     cat("Computing pattern causality matrices...\n")
   }
+  
   # Input validation
   if (!is.matrix(dataset) && !is.data.frame(dataset)) {
     stop("dataset must be a matrix or data frame", call. = FALSE)
   }
-  
   if(!is.character(metric) || !metric %in% c("euclidean", "manhattan", "maximum")) {
     stop("metric must be one of: 'euclidean', 'manhattan', 'maximum'", call. = FALSE)
+  }
+  if(!is.numeric(n_cores) || n_cores < 1) {
+    stop("n_cores must be a positive integer", call. = FALSE)
   }
   
   dataset <- as.matrix(dataset)
@@ -61,32 +66,73 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE, di
     dark = matrix(NA_real_, nrow = n, ncol = n)
   )
   
-  
-  # Main computation loop
-  for (i in 1:n) {
-    for (j in 1:n) {
-      if (i != j) {
-        pc <- pcLightweight(dataset[,i], dataset[,j], 
-                          E, tau, metric=metric, h, weighted, distance_fn=distance_fn,
-                          state_space_fn=state_space_fn, verbose = FALSE)
-        
-        matrices$positive[i,j] <- pc$positive
-        matrices$negative[i,j] <- pc$negative
-        matrices$dark[i,j] <- pc$dark
-        
-        if (verbose) {
-          counter <- (i-1)*(n-1) + j
-          report_progress(counter, n * (n-1), "Computing matrices", verbose)
+  # Parallel computation setup
+  if (n_cores > 1) {
+    if(verbose) cat("Setting up parallel computation with", n_cores, "cores...\n")
+    
+    cl <- parallel::makeCluster(n_cores)
+    on.exit(parallel::stopCluster(cl))
+    
+    # 设置工作环境
+    parallel::clusterEvalQ(cl, {
+      options(digits = 15)
+      options(scipen = 999)
+    })
+    
+    # Export required functions and data
+    parallel::clusterExport(cl, c("dataset", "E", "tau", "metric", 
+                                 "h", "weighted", "distance_fn", 
+                                 "state_space_fn", "pcLightweight"), 
+                           envir = environment())
+    
+    # Create computation grid for non-diagonal elements
+    grid <- expand.grid(i = 1:n, j = 1:n)
+    grid <- grid[grid$i != grid$j, ]
+    
+    # Parallel computation
+    results <- parallel::parLapply(cl, 1:nrow(grid), function(idx) {
+      i <- grid$i[idx]
+      j <- grid$j[idx]
+      pc <- pcLightweight(dataset[,i], dataset[,j], 
+                         E, tau, metric=metric, h, weighted,
+                         distance_fn=distance_fn,
+                         state_space_fn=state_space_fn,
+                         verbose = FALSE)
+      list(i=i, j=j, pc=pc)
+    })
+    
+    # Fill matrices with results
+    for (res in results) {
+      matrices$positive[res$i, res$j] <- res$pc$positive
+      matrices$negative[res$i, res$j] <- res$pc$negative
+      matrices$dark[res$i, res$j] <- res$pc$dark
+    }
+    
+  } else {
+    # Sequential computation
+    for (i in 1:n) {
+      for (j in 1:n) {
+        if (i != j) {
+          pc <- pcLightweight(dataset[,i], dataset[,j], 
+                            E, tau, metric=metric, h, weighted,
+                            distance_fn=distance_fn,
+                            state_space_fn=state_space_fn,
+                            verbose = FALSE)
+          
+          matrices$positive[i,j] <- pc$positive
+          matrices$negative[i,j] <- pc$negative
+          matrices$dark[i,j] <- pc$dark
+          
+          if (verbose) {
+            counter <- (i-1)*(n-1) + j
+            report_progress(counter, n * (n-1), "Computing matrices", verbose)
+          }
         }
       }
     }
   }
   
-  if (verbose) {
-    cat("\nCreating pc_matrix object...\n")
-  }
-  
-  # Use pc_matrix constructor
+  # Create pc_matrix object and return
   result <- pc_matrix(
     positive = matrices$positive,
     negative = matrices$negative,
@@ -95,20 +141,14 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE, di
     verbose = verbose
   )
   
-  # Check if the matrix is square
-  if (nrow(matrices$positive) != ncol(matrices$positive)) {
-    result$is_square <- FALSE
-  } else {
-    result$is_square <- TRUE
-  }
-  
-  # Add additional parameters
+  result$is_square <- TRUE
   result$parameters <- list(
     E = E,
     tau = tau,
     metric = metric,
     h = h,
-    weighted = weighted
+    weighted = weighted,
+    n_cores = n_cores
   )
   
   return(result)

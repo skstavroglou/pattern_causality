@@ -14,6 +14,8 @@
 * Added dynamic analysis
 * Added cross matrix analysis
 * Added custom distance and statespace methods
+* Added parallel computing
+* Added bootstrap analysis
 
 # patterncausality 0.1.3
 

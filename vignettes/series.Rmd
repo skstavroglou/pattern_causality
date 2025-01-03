@@ -96,3 +96,44 @@ plot(result_non_random)
 
 By comparing the results of the random and non-random cross-validation, you can gain a deeper understanding of how different sampling methods affect the stability and reliability of the causality analysis.
 
+## Cross-Validation with Bootstrap Analysis
+
+To obtain more robust results and understand the uncertainty in our causality measures, we can use bootstrap sampling in our cross-validation analysis. This approach repeatedly samples the data with replacement and provides statistical summaries of the causality measures.
+
+```{r}
+set.seed(123)
+X <- climate_indices$PNA
+Y <- climate_indices$NAO
+result_boot <- pcCrossValidation(
+  X = X,
+  Y = Y,
+  numberset = c(100, 200, 300, 400, 500),
+  E = 3,
+  tau = 2,
+  metric = "euclidean",
+  h = 1,
+  weighted = FALSE,
+  random = TRUE,
+  bootstrap = 100,  # Perform 100 bootstrap iterations
+  n_cores = 2       # Use parallel computation
+)
+```
+
+The bootstrap analysis provides several statistical measures for each sample size:
+- Mean: Average causality measure across bootstrap samples
+- 5% and 95% quantiles: Confidence intervals for the causality measure
+- Median: Central tendency measure robust to outliers
+
+Let's examine the results:
+
+```{r}
+print(result_boot$results)
+```
+
+We can visualize the bootstrap results using the plot function, which now shows confidence intervals:
+
+```{r}
+plot(result_boot, separate = TRUE)
+```
+
+The shaded area in the plot represents the range between the 5th and 95th percentiles of the bootstrap samples, providing a measure of uncertainty in our causality estimates. The solid line shows the median value, which is more robust to outliers than the mean.

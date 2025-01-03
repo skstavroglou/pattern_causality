@@ -4,14 +4,12 @@
 \alias{pc_cv}
 \title{Pattern Causality Cross-Validation Object}
 \usage{
-pc_cv(samples = NULL, results = NULL, summary = NULL, parameters = NULL)
+pc_cv(samples = NULL, results = NULL, parameters = NULL)
 }
 \arguments{
 \item{samples}{Numeric vector of sample sizes used.}
 
 \item{results}{Matrix containing causality results for each sample.}
-
-\item{summary}{Matrix of summary statistics.}
 
 \item{parameters}{List of analysis parameters.}
 }

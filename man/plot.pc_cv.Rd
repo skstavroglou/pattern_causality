@@ -4,12 +4,14 @@
 \alias{plot.pc_cv}
 \title{Plot Pattern Causality Cross Validation Results}
 \usage{
-\method{plot}{pc_cv}(x, fr = FALSE, ...)
+\method{plot}{pc_cv}(x, fr = FALSE, separate = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{pc_cv} object.}
 
 \item{fr}{Boolean for frame display.}
+
+\item{separate}{Boolean for separate plots.}
 
 \item{...}{Additional arguments passed to the \code{plot} function.}
 }

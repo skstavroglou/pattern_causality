@@ -30,13 +30,15 @@
 #' @param distance_fn Optional custom distance function
 #' @param state_space_fn Optional custom state space reconstruction function
 #' @param verbose Logical; whether to print progress
+#' @param n_cores Integer; number of cores for parallel computation
 #' @return A pc_matrix object containing causality matrices
 #' @export
 pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, distance_fn = NULL,
-                         state_space_fn = NULL,verbose = FALSE) {
+                         state_space_fn = NULL, verbose = FALSE, n_cores = 1) {
   if(verbose) {
     cat("Computing cross pattern causality matrix...\n")
   }
+  
   # Input validation
   if (!is.matrix(X) && !is.data.frame(X)) {
     stop("X must be a matrix or data frame", call. = FALSE)
@@ -44,9 +46,11 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
   if (!is.matrix(Y) && !is.data.frame(Y)) {
     stop("Y must be a matrix or data frame", call. = FALSE)
   }
-  
   if(!is.character(metric) || !metric %in% c("euclidean", "manhattan", "maximum")) {
     stop("metric must be one of: 'euclidean', 'manhattan', 'maximum'", call. = FALSE)
+  }
+  if(!is.numeric(n_cores) || n_cores < 1) {
+    stop("n_cores must be a positive integer", call. = FALSE)
   }
   
   X <- as.matrix(X)
@@ -75,20 +79,54 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
     cat("Computing cross pattern causality matrices...\n")
   }
   
-  # Main computation loop
-  for (i in 1:n_X) {
-    for (j in 1:n_Y) {
-      pc <- pcLightweight(X[,i], Y[,j],
-                        E, tau, metric=metric, h, weighted, distance_fn=distance_fn,
-                        state_space_fn=state_space_fn, verbose = FALSE)
-      
-      matrices$positive[i,j] <- pc$positive
-      matrices$negative[i,j] <- pc$negative
-      matrices$dark[i,j] <- pc$dark
-      
-      if (verbose) {
-        counter <- (i-1)*n_Y + j
-        report_progress(counter, n_X * n_Y, "Computing matrices", verbose)
+  # Parallel computation setup
+  if (n_cores > 1) {
+    if(verbose) cat("Setting up parallel computation with", n_cores, "cores...\n")
+    
+    cl <- parallel::makeCluster(n_cores)
+    on.exit(parallel::stopCluster(cl))
+    
+    # Export required functions and data to worker nodes
+    parallel::clusterExport(cl, c("pcLightweight", "X", "Y", "E", "tau", "metric", 
+                                 "h", "weighted", "distance_fn", "state_space_fn"), 
+                           envir = environment())
+    
+    # Create computation grid
+    grid <- expand.grid(i = 1:n_X, j = 1:n_Y)
+    
+    # Parallel computation
+    results <- parallel::parLapply(cl, 1:nrow(grid), function(idx) {
+      i <- grid$i[idx]
+      j <- grid$j[idx]
+      pc <- pcLightweight(X[,i], Y[,j], E, tau, metric=metric, h, weighted,
+                         distance_fn=distance_fn, state_space_fn=state_space_fn,
+                         verbose = FALSE)
+      list(i=i, j=j, pc=pc)
+    })
+    
+    # Fill matrices with results
+    for (res in results) {
+      matrices$positive[res$i, res$j] <- res$pc$positive
+      matrices$negative[res$i, res$j] <- res$pc$negative
+      matrices$dark[res$i, res$j] <- res$pc$dark
+    }
+    
+  } else {
+    # Sequential computation
+    for (i in 1:n_X) {
+      for (j in 1:n_Y) {
+        pc <- pcLightweight(X[,i], Y[,j], E, tau, metric=metric, h, weighted,
+                           distance_fn=distance_fn, state_space_fn=state_space_fn,
+                           verbose = FALSE)
+        
+        matrices$positive[i,j] <- pc$positive
+        matrices$negative[i,j] <- pc$negative
+        matrices$dark[i,j] <- pc$dark
+        
+        if (verbose) {
+          counter <- (i-1)*n_Y + j
+          report_progress(counter, n_X * n_Y, "Computing matrices", verbose)
+        }
       }
     }
   }
@@ -107,11 +145,7 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
   )
   
   # Check if the matrix is square
-  if (nrow(matrices$positive) != ncol(matrices$positive)) {
-    result$is_square <- FALSE
-  } else {
-    result$is_square <- TRUE
-  }
+  result$is_square <- nrow(matrices$positive) == ncol(matrices$positive)
   
   # Add additional parameters
   result$parameters <- list(
@@ -119,7 +153,8 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
     tau = tau,
     metric = metric,
     h = h,
-    weighted = weighted
+    weighted = weighted,
+    n_cores = n_cores
   )
   
   return(result)
