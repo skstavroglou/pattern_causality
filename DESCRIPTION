@@ -28,8 +28,7 @@ Imports:
     RColorBrewer,
     scales,
     gridExtra,
-    parallel,
-    tibble
+    parallel
 Suggests: 
     knitr,
     rmarkdown,
