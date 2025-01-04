@@ -1151,3 +1151,9 @@ summary.pc_prediction <- function(object, ...) {
   )
 }
 
+#' @importFrom tibble type_sum
+#' @export
+type_sum.accel <- function(x) {
+  "accel"
+}
+
