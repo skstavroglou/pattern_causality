@@ -43,7 +43,7 @@ The parallel computing features in this package are particularly effective for:
 
 Let's explore how parallel computing can enhance the performance of different pattern causality analyses:
 
-```{r}
+```{r message = FALSE}
 library(patterncausality)
 data(climate_indices)
 ```
