@@ -46,7 +46,7 @@ Y <- climate_indices$NAO
 result <- pcCrossValidation(
   X = X, 
   Y = Y,  
-  numberset = c(100, 200, 300, 400, 500),
+  numberset = seq(100, 500, by = 10),
   E = 3,
   tau = 2,
   metric = "euclidean",
@@ -77,7 +77,7 @@ Y <- climate_indices$NAO
 result_non_random <- pcCrossValidation(
   X = X,
   Y = Y,
-  numberset = c(100, 200, 300, 400, 500),
+  numberset = seq(100, 500, by = 10),
   E = 3,
   tau = 2,
   metric = "euclidean",
@@ -107,7 +107,7 @@ Y <- climate_indices$NAO
 result_boot <- pcCrossValidation(
   X = X,
   Y = Y,
-  numberset = c(100, 200, 300, 400, 500),
+  numberset = seq(100, 500, by = 10),
   E = 3,
   tau = 2,
   metric = "euclidean",

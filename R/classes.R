@@ -122,7 +122,7 @@ plot_total.pc_fit <- function(x, ...) {
     )
   
   print(p)
-  invisible(NULL)
+  invisible(p)
 }
 
 #' Plot Causality Components
@@ -171,7 +171,7 @@ plot_components.pc_fit <- function(x, ...) {
     )
   
   print(p)
-  invisible(NULL)
+  invisible(p)
 }
 
 #' Plot Pattern Causality Results
@@ -695,7 +695,7 @@ plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
         ggplot2::labs(x = "Sample Size",
                      y = "Causality Strength") +
         ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
-        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggplot2::scale_x_continuous(expand = c(0.02, 0.02)) +
         ggthemes::theme_few() +
         ggplot2::theme(
           plot.title = ggplot2::element_text(hjust = 0.5),
@@ -722,7 +722,7 @@ plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
         ggplot2::labs(x = "Sample Size",
                      y = "Causality Strength") +
         ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
-        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggplot2::scale_x_continuous(expand = c(0.02, 0.02)) +
         ggthemes::theme_few() +
         ggplot2::theme(
           plot.title = ggplot2::element_text(hjust = 0.5),
@@ -763,7 +763,7 @@ plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
         ggplot2::labs(x = "Sample Size",
                      y = "Causality Strength") +
         ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
-        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggplot2::scale_x_continuous(expand = c(0.02, 0.02)) +
         ggthemes::theme_few() +
         ggplot2::theme(
           plot.title = ggplot2::element_text(hjust = 0.5),
@@ -782,7 +782,7 @@ plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
         ggplot2::labs(x = "Sample Size",
                      y = "Causality Strength") +
         ggplot2::scale_y_continuous(limits = c(y_min, 1)) +
-        ggplot2::scale_x_continuous(expand = c(0, 0)) +
+        ggplot2::scale_x_continuous(expand = c(0.02, 0.02)) +
         ggthemes::theme_few() +
         ggplot2::theme(
           plot.title = ggplot2::element_text(hjust = 0.5),
@@ -799,7 +799,7 @@ plot.pc_cv <- function(x, fr = FALSE, separate = FALSE, ...) {
   }
   
   print(p)
-  invisible(x)
+  invisible(p)
 }
 
 #' Pattern Causality Effect Object
