@@ -16,9 +16,7 @@
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/climate_indices.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/distanceMetric.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/index.html</loc></url>
-<url><loc>https://www.stavroglou.com/pattern_causality/reference/natureOfCausality.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/optimalParametersSearch.html</loc></url>
-<url><loc>https://www.stavroglou.com/pattern_causality/reference/patternSpace.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/pcAccuracy.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/pcCrossMatrix.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/pcCrossValidation.html</loc></url>
@@ -49,7 +47,6 @@
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/print.pc_params.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/print.pc_state.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/print.summary.pc_accuracy.html</loc></url>
-<url><loc>https://www.stavroglou.com/pattern_causality/reference/signatureSpace.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/stateSpace.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/stateSpaceMethod.html</loc></url>
 <url><loc>https://www.stavroglou.com/pattern_causality/reference/summary.pc_accuracy.html</loc></url>
