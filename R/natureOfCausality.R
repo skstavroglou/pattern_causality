@@ -35,7 +35,8 @@
 #' \code{\link{pcFullDetails}} for detailed analysis
 #' \code{\link{pcMatrix}} for causality matrix computation
 #'
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' \donttest{

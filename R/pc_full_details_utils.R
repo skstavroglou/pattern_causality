@@ -1,4 +1,4 @@
-#' Validate inputs for pattern causality analysis
+#' Validate Inputs for Pattern Causality Analysis
 #' @keywords internal
 #' @noRd
 validate_inputs <- function(X, Y, E, tau, metric, h, weighted, distance_fn = NULL) {
@@ -563,12 +563,45 @@ plot_causality.default <- function(x, type, ...) {
 
 #' Validate Custom Function Output
 #' 
-#' Validates the output format from custom distance and state space functions
+#' @title Validate Custom Function Output for Pattern Causality Analysis
+#' @description Validates the Output Format from Custom Distance and State Space Functions
+#' to ensure compatibility with the package's internal processing.
 #' 
 #' @param output The output from a custom function to validate
 #' @param fn_name The name of the function type being validated ("distance_fn" or "state_space_fn")
 #' @return Nothing. Throws an error if validation fails.
-#' @keywords internal
+#' 
+#' @examples
+#' # Example 1: Validating custom distance function output
+#' custom_dist <- function(x) {
+#'   # Create distance matrix
+#'   dist_mat <- as.matrix(dist(x))
+#'   # Validate output
+#'   validate_custom_fn_output(dist_mat, "distance_fn")
+#'   return(dist_mat)
+#' }
+#' 
+#' # Example 2: Validating custom state space function output
+#' custom_state_space <- function(x, E, tau) {
+#'   # Create state space matrix
+#'   n <- length(x) - (E-1)*tau
+#'   state_mat <- matrix(nrow = n, ncol = E)
+#'   for(i in 1:E) {
+#'     state_mat[,i] <- x[1:n + (i-1)*tau]
+#'   }
+#'   # Create output list
+#'   result <- list(matrix = state_mat, 
+#'                 parameters = list(E = E, tau = tau))
+#'   # Validate output
+#'   validate_custom_fn_output(result, "state_space_fn")
+#'   return(result)
+#' }
+#' 
+#' # Using the custom functions
+#' x <- sin(seq(0, 4*pi, length.out = 100))
+#' dist_result <- custom_dist(x)
+#' space_result <- custom_state_space(x, E = 3, tau = 2)
+#' 
 #' @export
 validate_custom_fn_output <- function(output, fn_name) {
   if(fn_name == "distance_fn" && !is.matrix(output)) {

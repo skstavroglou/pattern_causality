@@ -25,7 +25,8 @@
 #' patternSpaceMatrix <- patternSpace(signatureMatrix)
 #' print(patternSpaceMatrix)
 #'
-#' @export
+#' @keywords internal
+#' @noRd
 patternSpace <- function(SM) {
   # Input validation
   if (!is.matrix(SM) || !is.numeric(SM)) {

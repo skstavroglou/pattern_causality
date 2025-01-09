@@ -1,8 +1,8 @@
 #' Calculate Signature Space Matrix
 #' 
-#' @title Calculate Signature Space Matrix from State Space
-#' @description Calculates the signature space matrix from a state space matrix by 
-#' computing differences between successive elements in each row. This transformation 
+#' @title Calculate Signature Space Matrix From State Space
+#' @description Calculates the Signature Space Matrix From a State Space Matrix By 
+#' Computing Differences Between Successive Elements in Each Row. This transformation 
 #' helps capture the dynamic patterns in the time series data.
 #' 
 #' @param M A state space matrix where each row represents a point in state space
@@ -17,7 +17,8 @@
 #'   embedding functions, but this implementation is specifically tailored for 
 #'   pattern causality analysis.
 #' 
-#' @export
+#' @keywords internal
+#' @noRd
 signatureSpace <- function(M) {
   # Input validation
   if(!is.matrix(M)) {

@@ -12,7 +12,7 @@ Authors@R: c( person("Stavros", "Stavroglou", role = c("aut"),
                      email = "huiw1128@gmail.com",
                      comment = c(ORCID = "0009-0006-0095-0243")))
 Maintainer: Hui Wang <huiw1128@gmail.com>
-Description: A comprehensive package for detecting and analyzing causal relationships in complex systems using pattern-based approaches. Key features include state space reconstruction, pattern identification, and causality strength evaluation. Compared to existing packages: 'vars' provides linear vector autoregression but lacks nonlinear pattern detection; 'nonlinearTseries' offers general nonlinear analysis tools but no specific causality measures; 'rEDM' focuses on empirical dynamic modeling without pattern recognition; 'tseriesChaos' implements chaos theory methods but not pattern-based causality; 'CausalImpact' implements Bayesian structural time series models; 'pcalg' focuses on graphical causal models. This package uniquely combines these approaches with novel pattern recognition techniques for robust causality detection.
+Description: A comprehensive package for detecting and analyzing causal relationships in complex systems using pattern-based approaches. Key features include state space reconstruction, pattern identification, and causality strength evaluation.
 License: GPL-3 | file LICENSE
 Depends: R (>= 4.1.0)
 Imports: 

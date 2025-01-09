@@ -1,3 +1,4 @@
+#' Print Pattern Causality Pattern Analysis Results
 #' @keywords internal
 #' @noRd
 print.pc_pattern <- function(x, ...) {
@@ -10,14 +11,14 @@ print.pc_pattern <- function(x, ...) {
 
 #' @keywords internal
 #' @noRd
-summary.pc_pattern <- function(x, ...) {
+summary.pc_pattern <- function(object, ...) {
   structure(
     list(
-      n_patterns = nrow(x$patterns),
-      dimension = ncol(x$patterns),
-      hash_range = range(x$hashes),
-      pattern_stats = summary(as.vector(x$patterns)),
-      hash_stats = summary(x$hashes)
+      n_patterns = nrow(object$patterns),
+      dimension = ncol(object$patterns),
+      hash_range = range(object$hashes),
+      pattern_stats = summary(as.vector(object$patterns)),
+      hash_stats = summary(object$hashes)
     ),
     class = "summary.pc_pattern"
   )

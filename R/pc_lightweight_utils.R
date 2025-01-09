@@ -54,9 +54,8 @@ compute_causality_measures <- function(results, weighted) {
 
 #' Analyze Pattern Causality Between Time Series
 #' 
-#' @title Pattern Causality Analysis
-#' @description Internal function that performs the main causality analysis loop
-#' by analyzing patterns and signatures in reconstructed state spaces.
+#' @title Analyze Pattern Causality Between Time Series Using State Space Reconstruction
+#' @description Internal Function That Performs the Main Causality Analysis Loop
 #'
 #' @param spaces List containing state and pattern spaces
 #' @param matrices List containing initialized analysis matrices
