@@ -11,7 +11,7 @@ implements a grid search approach to evaluate different parameter combinations."
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@ implements a grid search approach to evaluate different parameter combinations.<
 <span>  <span class="va">dataset</span>,</span>
 <span>  h <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  weighted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -102,6 +103,10 @@ implements a grid search approach to evaluate different parameter combinations.<
 <dd><p>Logical; if TRUE, weighted causality analysis is performed.</p></dd>
 
 
+<dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
+<dd><p>Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.</p></dd>
+
+
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Logical; if TRUE, prints progress information. (default: FALSE)</p></dd>
 
@@ -138,7 +143,7 @@ delay for their effectiveness in detecting different types of causality:</p><ul>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">optimalParams</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pattern Causality Parameter Optimization Results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Computation time: 14.14161 secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Computation time: 14.13775 secs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters tested:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Emax: 3 </span>
@@ -146,13 +151,13 @@ delay for their effectiveness in detecting different types of causality:</p><ul>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Metric: euclidean </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First few values:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         E tau     Total  Positive  Negative         Dark</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 1 2   1 0.5006373 0.4970317 0.5022991 0.0006691879</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 2 2   2 0.5009615 0.5015466 0.4962184 0.0022350584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 3 2   3 0.5130561 0.5279035 0.4708467 0.0012498304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 4 3   1 0.2824968 0.2719238 0.2576842 0.4703920280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 5 3   2 0.2796224 0.2870213 0.2875241 0.4254546326</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 6 3   3 0.2944664 0.3240271 0.2823818 0.3935910495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         E tau     Total  Positive   Negative        Dark</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 1 2   1 0.5975379 0.6496739 0.34926445 0.001061640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 2 2   2 0.6243663 0.6783672 0.31961449 0.002018276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 3 2   3 0.6232506 0.6801496 0.31855924 0.001291195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 4 3   1 0.3461905 0.4235779 0.11284558 0.463576506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 5 3   2 0.3808381 0.4415254 0.07647193 0.482002660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Combo 6 3   3 0.3873308 0.4358821 0.10169533 0.462422572</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

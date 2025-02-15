@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,83 +154,25 @@
 <p>First of all, we need to determine the <code>E</code> and <code>tao</code>, it could be easy to complete by <code>optimalParametersSearch</code> function like this:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
-<span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th>E</th>
-<th>tau</th>
-<th>Total</th>
-<th>Positive</th>
-<th>Negative</th>
-<th>Dark</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>2</td>
-<td>1</td>
-<td>0.5503802</td>
-<td>0.5529091</td>
-<td>0.44647239</td>
-<td>0.0006185057</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>2</td>
-<td>0.5672403</td>
-<td>0.5722529</td>
-<td>0.42461112</td>
-<td>0.0031359329</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>3</td>
-<td>0.5647436</td>
-<td>0.5471488</td>
-<td>0.45106762</td>
-<td>0.0017836150</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>4</td>
-<td>0.5538362</td>
-<td>0.5485637</td>
-<td>0.44961187</td>
-<td>0.0018243903</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>5</td>
-<td>0.5616083</td>
-<td>0.5433907</td>
-<td>0.45513014</td>
-<td>0.0014791531</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>1</td>
-<td>0.3203775</td>
-<td>0.3460809</td>
-<td>0.24690959</td>
-<td>0.4070094904</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>2</td>
-<td>0.3362460</td>
-<td>0.4010403</td>
-<td>0.25410446</td>
-<td>0.3448552507</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>3</td>
-<td>0.3388998</td>
-<td>0.3657369</td>
-<td>0.26857083</td>
-<td>0.3656922393</td>
-</tr>
-</tbody>
-</table>
+<span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">3</span>, tauMax <span class="op">=</span> <span class="fl">3</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, dataset <span class="op">=</span> <span class="va">dataset</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">parameter</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Pattern Causality Parameter Optimization Results</span></span>
+<span><span class="co">#&gt; ---------------------------------------------</span></span>
+<span><span class="co">#&gt; Computation time: 5.272785 secs </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parameters tested:</span></span>
+<span><span class="co">#&gt;   Emax: 3 </span></span>
+<span><span class="co">#&gt;   tauMax: 3 </span></span>
+<span><span class="co">#&gt;   Metric: euclidean </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; First few values:</span></span>
+<span><span class="co">#&gt;         E tau     Total  Positive   Negative        Dark</span></span>
+<span><span class="co">#&gt; Combo 1 2   1 0.6042453 0.6849813 0.31421642 0.000802264</span></span>
+<span><span class="co">#&gt; Combo 2 2   2 0.6305240 0.7056670 0.29186182 0.002471206</span></span>
+<span><span class="co">#&gt; Combo 3 2   3 0.6313371 0.7034166 0.29455531 0.002028052</span></span>
+<span><span class="co">#&gt; Combo 4 3   1 0.3437698 0.4459306 0.10253491 0.451534540</span></span>
+<span><span class="co">#&gt; Combo 5 3   2 0.3760357 0.4722030 0.07746789 0.450329129</span></span>
+<span><span class="co">#&gt; Combo 6 3   3 0.3991651 0.4647719 0.07249595 0.462732182</span></span></code></pre></div>
 <p>Of course, we can also change the distance style to calculate the distance matrix or even custom distance function, we can find more inforation on our website. Then according the combo that produces the highest percentages collectively, we can choose the best parameters here.</p>
 <p>After the parameters are confirmed, we could calculate the pattern causality.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -239,17 +181,17 @@
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Pattern Causality Analysis Results:</span></span>
-<span><span class="co">#&gt; Total: 0.2336</span></span>
-<span><span class="co">#&gt; Positive: 0.4471</span></span>
-<span><span class="co">#&gt; Negative: 0.1380</span></span>
-<span><span class="co">#&gt; Dark: 0.4150</span></span></code></pre></div>
+<span><span class="co">#&gt; Total: 0.3505</span></span>
+<span><span class="co">#&gt; Positive: 0.5125</span></span>
+<span><span class="co">#&gt; Negative: 0.1039</span></span>
+<span><span class="co">#&gt; Dark: 0.3837</span></span></code></pre></div>
 <p>The percentages of each causality status will be displayed below.</p>
 <p>To examine the causality status at each time point, we can run the following code and find the causality strength at each time point by function <code>pcFullDetails</code>, the <code>causality_predict</code> is the predicted causality status at each point, the parameter <code>weighted = TRUE</code> is used to for erf function and if it’s FALSE, then it will just use the 1 or 0 to present the causality strength, however, whatever which one is used, the total causality points will be the same.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AO</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">$</span><span class="va">AAO</span></span>
 <span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_predict</span></span>
+<span><span class="va">predict_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_pred</span></span>
 <span><span class="va">real_status</span> <span class="op">&lt;-</span> <span class="va">detail</span><span class="op">$</span><span class="va">causality_real</span></span></code></pre></div>
 <p>Then the causality strength series will be saved in <code>predict_status</code> and <code>real_status</code>, if we want to plot the causality strength series, we can use the <code>plot_causality</code> function for the <code>pc_full_details</code> class, and it will show the continuous causality strength series in the whole time period, we can find the dynamic pattern causality strength by this way.</p>
 </div>
@@ -259,12 +201,12 @@
 <p>After calculating the causality, we can get the result here.</p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="22%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
+<col width="28%">
+<col width="10%">
 <col width="13%">
+<col width="13%">
+<col width="10%">
+<col width="22%">
 </colgroup>
 <thead><tr class="header">
 <th>Pairs</th>
@@ -276,51 +218,51 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>AAPL –&gt; MSFT</td>
-<td>0.2698665</td>
-<td>0.3881279</td>
-<td>0.1369863</td>
-<td>0.4748858</td>
-<td>stock</td>
+<td>Apple –&gt; Microsoft</td>
+<td>0.2778</td>
+<td>0.2342</td>
+<td>0.2641</td>
+<td>0.5017</td>
+<td>DJS</td>
 </tr>
 <tr class="even">
-<td>MSFT –&gt; AAPL</td>
-<td>0.2759887</td>
-<td>0.4075893</td>
-<td>0.1388393</td>
-<td>0.4535714</td>
-<td>stock</td>
+<td>Microsoft –&gt; Apple</td>
+<td>0.2820</td>
+<td>0.2278</td>
+<td>0.2226</td>
+<td>0.5496</td>
+<td>DJS</td>
 </tr>
 <tr class="odd">
 <td>AO –&gt; AAO</td>
-<td>0.2841121</td>
-<td>0.326087</td>
-<td>0.2318841</td>
-<td>0.442029</td>
-<td>climate</td>
+<td>0.3505</td>
+<td>0.5125</td>
+<td>0.1039</td>
+<td>0.3837</td>
+<td>climate_indices</td>
 </tr>
 <tr class="even">
 <td>AAO –&gt; AO</td>
-<td>0.2803738</td>
-<td>0.3602941</td>
-<td>0.2647059</td>
-<td>0.375</td>
-<td>climate</td>
+<td>0.3010</td>
+<td>0.3914</td>
+<td>0.1085</td>
+<td>0.5000</td>
+<td>climate_indices</td>
 </tr>
 <tr class="odd">
 <td>AO –&gt; P</td>
-<td>0.3084112</td>
-<td>0.1192053</td>
-<td>0.4503311</td>
-<td>0.4304636</td>
+<td>0.4091</td>
+<td>0.1197</td>
+<td>0.7808</td>
+<td>0.0995</td>
 <td>AUCO</td>
 </tr>
 <tr class="even">
 <td>P –&gt; AO</td>
-<td>0.3308411</td>
-<td>0.3374233</td>
-<td>0.2515337</td>
-<td>0.4110429</td>
+<td>0.3636</td>
+<td>0.2924</td>
+<td>0.2171</td>
+<td>0.4905</td>
 <td>AUCO</td>
 </tr>
 </tbody>
@@ -364,6 +306,26 @@
 <h2 id="downstream-dependencies">Downstream dependencies<a class="anchor" aria-label="anchor" href="#downstream-dependencies"></a>
 </h2>
 <p>There are currently no downstream dependencies for this package</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example with relative parameter (default is TRUE)</span></span>
+<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                   weighted <span class="op">=</span> <span class="cn">TRUE</span>, relative <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Example with optimal parameter search</span></span>
+<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">climate_indices</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># remove the date column</span></span>
+<span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimalParametersSearch.html">optimalParametersSearch</a></span><span class="op">(</span>Emax <span class="op">=</span> <span class="fl">5</span>, tauMax <span class="op">=</span> <span class="fl">5</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, </span>
+<span>                                   dataset <span class="op">=</span> <span class="va">dataset</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Example with full details</span></span>
+<span><span class="va">detail</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pcFullDetails.html">pcFullDetails</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, E <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, h <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                       weighted <span class="op">=</span> <span class="cn">TRUE</span>, relative <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>relative</code> parameter (default is TRUE) determines whether to calculate relative changes ((new-old)/old) or absolute changes (new-old) in signature space. Using relative changes is particularly useful when:</p>
+<ol style="list-style-type: decimal">
+<li>Analyzing time series with different scales</li>
+<li>Comparing percentage changes rather than absolute differences</li>
+<li>Studying the relative importance of changes in the system</li>
+</ol>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

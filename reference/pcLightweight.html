@@ -13,7 +13,7 @@ and hashed pattern analysis."><meta property="og:image" content="https://www.sta
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@ and hashed pattern analysis.</p>
 <span>  metric <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
 <span>  distance_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  state_space_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -111,6 +112,10 @@ and hashed pattern analysis.</p>
 <dd><p>Custom function for state space transformation</p></dd>
 
 
+<dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
+<dd><p>Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.</p></dd>
+
+
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Logical; whether to display progress information (default: FALSE)</p></dd>
 
@@ -147,19 +152,19 @@ and hashed pattern analysis.</p>
 <span class="r-in"><span>                       weighted <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pattern Causality Analysis Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total: 0.3010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Positive: 0.2205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Negative: 0.3951</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dark: 0.3844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total: 0.3805</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Positive: 0.3777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Negative: 0.0674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dark: 0.5549</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pattern Causality Summary:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Causality Strengths:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Type     Value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Total 0.3009709</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Positive 0.2204697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Negative 0.3951284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Dark 0.3844019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Type      Value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Total 0.38049713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Positive 0.37770764</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Negative 0.06739703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Dark 0.55489533</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pcLightweight-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

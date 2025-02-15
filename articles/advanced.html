@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,10 +197,10 @@ remaining NA values by replacing them with the mean.</p>
 <span><span class="co">#&gt; [1] "Result with adaptive distance:"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Pattern Causality Analysis Results:</span></span>
-<span><span class="co">#&gt; Total: 0.3051</span></span>
-<span><span class="co">#&gt; Positive: 0.3719</span></span>
-<span><span class="co">#&gt; Negative: 0.2036</span></span>
-<span><span class="co">#&gt; Dark: 0.4245</span></span>
+<span><span class="co">#&gt; Total: 0.3925</span></span>
+<span><span class="co">#&gt; Positive: 0.4661</span></span>
+<span><span class="co">#&gt; Negative: 0.0593</span></span>
+<span><span class="co">#&gt; Dark: 0.4746</span></span>
 <span></span>
 <span><span class="co"># Example 2: Using only improved state space</span></span>
 <span><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pcLightweight.html">pcLightweight</a></span><span class="op">(</span></span>
@@ -217,10 +217,10 @@ remaining NA values by replacing them with the mean.</p>
 <span><span class="co">#&gt; [1] "\nResult with denoised state space:"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Pattern Causality Analysis Results:</span></span>
-<span><span class="co">#&gt; Total: 0.1808</span></span>
-<span><span class="co">#&gt; Positive: 0.2867</span></span>
-<span><span class="co">#&gt; Negative: 0.0516</span></span>
-<span><span class="co">#&gt; Dark: 0.6617</span></span></code></pre></div>
+<span><span class="co">#&gt; Total: 0.1183</span></span>
+<span><span class="co">#&gt; Positive: 0.2178</span></span>
+<span><span class="co">#&gt; Negative: 0.0927</span></span>
+<span><span class="co">#&gt; Dark: 0.6896</span></span></code></pre></div>
 <p>In the first example, we use the <code>adaptive_distance</code>
 function as the <code>distance_fn</code> argument. In the second
 example, we use the <code>denoised_state_space</code> function as the
@@ -244,8 +244,8 @@ functions.</p>
 <span><span class="co">#&gt; [1] "\nComparison of different approaches:"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">compare_results</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              Method     Total  Positive   Negative      Dark</span></span>
-<span><span class="co">#&gt; 1 Adaptive Distance 0.3050847 0.3718733 0.20362022 0.4245065</span></span>
-<span><span class="co">#&gt; 2    Denoised Space 0.1807910 0.2867278 0.05159743 0.6616748</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Adaptive Distance 0.3924731 0.4660910 0.05931635 0.4745926</span></span>
+<span><span class="co">#&gt; 2    Denoised Space 0.1182796 0.2177571 0.09265175 0.6895911</span></span></code></pre></div>
 <p>This table shows the total, positive, negative, and dark causality
 values for each method, allowing you to compare the impact of using
 custom functions.</p>

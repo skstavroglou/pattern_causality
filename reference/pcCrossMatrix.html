@@ -9,7 +9,7 @@ by computing pairwise causality measures and organizing them into a matrix."><me
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,7 @@ by computing pairwise causality measures and organizing them into a matrix.</p>
 <span>  weighted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  distance_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  state_space_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -103,6 +104,10 @@ by computing pairwise causality measures and organizing them into a matrix.</p>
 
 <dt id="arg-state-space-fn">state_space_fn<a class="anchor" aria-label="anchor" href="#arg-state-space-fn"></a></dt>
 <dd><p>Optional custom state space reconstruction function</p></dd>
+
+
+<dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
+<dd><p>Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

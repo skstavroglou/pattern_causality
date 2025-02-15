@@ -11,7 +11,7 @@ causality relationships and computes different types of causality measures."><me
 
     <a class="navbar-brand me-2" href="../index.html">patterncausality</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@ causality relationships and computes different types of causality measures.</p>
 <span>  <span class="va">weighted</span>,</span>
 <span>  distance_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  state_space_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,6 +101,10 @@ causality relationships and computes different types of causality measures.</p>
 
 <dt id="arg-state-space-fn">state_space_fn<a class="anchor" aria-label="anchor" href="#arg-state-space-fn"></a></dt>
 <dd><p>Optional custom function for state space reconstruction (default: NULL)</p></dd>
+
+
+<dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
+<dd><p>Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -147,10 +152,10 @@ causality relationships and computes different types of causality measures.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   h: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Causality measures:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Total: 0.2825 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Positive: 0.2773 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Negative: 0.2569 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Dark: 0.4657 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Total: 0.3459 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Positive: 0.4143 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Negative: 0.1156 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Dark: 0.4701 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
