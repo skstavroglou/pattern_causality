@@ -22,6 +22,7 @@
 #' @param weighted Logical; if TRUE, weighted causality analysis is performed.
 #' @param distance_fn Optional custom distance function; takes two numeric vectors as input and returns a numeric distance. (default: NULL)
 #' @param state_space_fn Optional custom function for state space reconstruction; takes a numeric vector and parameters E and tau as input and returns a reconstructed state space. (default: NULL)
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #' @param verbose Logical; if TRUE, prints progress information. (default: FALSE)
 #'
 #' @return A `pc_params` object containing:
@@ -47,7 +48,8 @@
 #' print(optimalParams)
 #' }
 optimalParametersSearch <- function(Emax, tauMax, metric = "euclidean", distance_fn = NULL,
-                                   state_space_fn = NULL, dataset, h = 0, weighted = FALSE, verbose = FALSE) {
+                                   state_space_fn = NULL, dataset, h = 0, weighted = FALSE, 
+                                   relative = TRUE, verbose = FALSE) {
   # Input validation
   if (!is.numeric(Emax) || Emax <= 2 || Emax != round(Emax)) {
     stop("Emax must be an integer greater than 2", call. = FALSE)
@@ -104,6 +106,7 @@ optimalParametersSearch <- function(Emax, tauMax, metric = "euclidean", distance
         weighted = weighted,
         distance_fn = distance_fn,
         state_space_fn = state_space_fn,
+        relative = relative,
         verbose = FALSE
       )
       

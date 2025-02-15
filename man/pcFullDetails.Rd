@@ -14,6 +14,7 @@ pcFullDetails(
   metric = "euclidean",
   distance_fn = NULL,
   state_space_fn = NULL,
+  relative = TRUE,
   verbose = FALSE
 )
 }
@@ -35,6 +36,8 @@ pcFullDetails(
 \item{distance_fn}{Optional custom distance function for computing distances (default: NULL)}
 
 \item{state_space_fn}{Optional custom function for state space reconstruction (default: NULL)}
+
+\item{relative}{Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.}
 
 \item{verbose}{Logical; if TRUE, prints computation progress (default: FALSE)}
 }

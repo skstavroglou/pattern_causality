@@ -13,6 +13,7 @@ optimalParametersSearch(
   dataset,
   h = 0,
   weighted = FALSE,
+  relative = TRUE,
   verbose = FALSE
 )
 }
@@ -32,6 +33,8 @@ optimalParametersSearch(
 \item{h}{Positive integer; prediction horizon.}
 
 \item{weighted}{Logical; if TRUE, weighted causality analysis is performed.}
+
+\item{relative}{Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.}
 
 \item{verbose}{Logical; if TRUE, prints progress information. (default: FALSE)}
 }

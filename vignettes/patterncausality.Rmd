@@ -91,15 +91,8 @@ print(pc)
 ```
 
 The `pcLightweight` function performs a lightweight pattern causality analysis.
-  - `X`: The first time series (Apple stock prices).
-  - `Y`: The second time series (Microsoft stock prices).
-  - `E`: The embedding dimension.
-  - `tau`: The time delay.
-  - `metric`: The distance metric to use.
-  - `h`: The prediction horizon.
-  - `weighted`: A boolean indicating whether to use erf function.
 
-The `print(pc)` function displays the results of the causality analysis, including the total, positive, negative, and dark causality percentages.
+The `print(pc)` method displays the results of the causality analysis, including the total, positive, negative, and dark causality percentages.
 
 Finally, we can visualize the results to better understand the causal relationships using the `plot_total` and `plot_components` functions.
 
@@ -125,4 +118,27 @@ print(causality_pred)
 ```
 
 This completes the entire process of the pattern causality algorithm.
+
+### Parameter Description
+
+The pattern causality functions accept several important parameters:
+
+- `E`: Embedding dimension (integer > 1)
+- `tau`: Time delay (integer > 0)
+- `metric`: Distance metric ("euclidean", "manhattan", or "maximum")
+- `h`: Prediction horizon (integer >= 0)
+- `weighted`: If TRUE, uses weighted causality strength calculation
+- `relative`: If TRUE, calculates relative changes ((new-old)/old) instead of absolute changes (new-old) in signature space. Default is TRUE.
+
+The combination of `weighted = TRUE` and `relative = TRUE` is particularly useful when:
+1. You want to analyze percentage changes rather than absolute changes
+2. The time series have different scales or units
+3. You're interested in the relative importance of changes
+
+```{r}
+# Example with both weighted and relative TRUE
+pc_rel_weighted <- pcLightweight(X, Y, E = 3, tau = 2, metric = "euclidean", 
+                               h = 1, weighted = TRUE, relative = TRUE)
+print(pc_rel_weighted)
+```
 

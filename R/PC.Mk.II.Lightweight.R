@@ -16,6 +16,7 @@
 #' @param weighted Logical; whether to use weighted causality strength calculations
 #' @param distance_fn Custom distance function for state space reconstruction
 #' @param state_space_fn Custom function for state space transformation
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #' @param verbose Logical; whether to display progress information (default: FALSE)
 #'
 #' @return An object of class "pc_fit" containing:
@@ -56,6 +57,7 @@ pcLightweight <- function(X, Y, E, tau, h, weighted,
                          metric = "euclidean",
                          distance_fn = NULL,
                          state_space_fn = NULL,
+                         relative = TRUE,
                          verbose = FALSE) {
   # Input validation
   validate_inputs(X, Y, E, tau, metric, h, weighted, distance_fn)
@@ -67,6 +69,7 @@ pcLightweight <- function(X, Y, E, tau, h, weighted,
   spaces <- compute_spaces(X, Y, E, tau, metric,
                          distance_fn = distance_fn,
                          state_space_fn = state_space_fn,
+                         relative = relative,
                          verbose = verbose)
   
   # Check causality feasibility

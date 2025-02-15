@@ -19,6 +19,7 @@
 #' @param bootstrap Integer specifying the number of bootstrap iterations (default: 1).
 #' @param verbose Logical indicating whether to display progress messages.
 #' @param n_cores Integer specifying the number of cores to use for parallel computation (default: 1).
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #'
 #' @details
 #' The function implements these key steps:
@@ -89,7 +90,8 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
                              state_space_fn = NULL,
                              numberset, random = TRUE, bootstrap = 1, 
                              verbose = FALSE,
-                             n_cores = 1) {
+                             n_cores = 1,
+                             relative = TRUE) {
   
   # Input validation
   if(!is.logical(random)) {
@@ -148,7 +150,7 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
     # Export required objects to worker nodes
     parallel::clusterExport(cl, c("X", "Y", "E", "tau", "h", "weighted", 
                                  "metric", "distance_fn", "state_space_fn",
-                                 "pcLightweight"), 
+                                 "pcLightweight", "relative"), 
                            envir = environment())
   }
   
@@ -164,13 +166,18 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
             samplex <- X[idx]
             sampley <- Y[idx]
             
-            pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
+            tryCatch({
+              pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
                                      metric = metric,
                                      distance_fn = distance_fn,
                                      state_space_fn = state_space_fn,
-                                     verbose = FALSE)
-            
-            c(pc_result$positive, pc_result$negative, pc_result$dark)
+                                     verbose = FALSE,
+                                     relative = relative)
+              
+              c(pc_result$positive, pc_result$negative, pc_result$dark)
+            }, error = function(e) {
+              c(NA_real_, NA_real_, NA_real_)
+            })
           }))
         } else {
           # Sequential bootstrap computation
@@ -180,24 +187,29 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
             samplex <- X[idx]
             sampley <- Y[idx]
             
-            pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
+            tryCatch({
+              pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
                                      metric = metric,
                                      distance_fn = distance_fn,
                                      state_space_fn = state_space_fn,
-                                     verbose = FALSE)
-            
-            bootstrap_results[b, ] <- c(pc_result$positive,
+                                     verbose = FALSE,
+                                     relative = relative)
+              
+              bootstrap_results[b, ] <- c(pc_result$positive,
                                       pc_result$negative,
                                       pc_result$dark)
+            }, error = function(e) {
+              bootstrap_results[b, ] <- c(NA_real_, NA_real_, NA_real_)
+            })
           }
         }
         
-        # Calculate statistics
+        # Calculate statistics, handling NAs appropriately
         results[i, , ] <- rbind(
-          colMeans(bootstrap_results),
-          apply(bootstrap_results, 2, function(x) stats::quantile(x, 0.05)),
-          apply(bootstrap_results, 2, function(x) stats::quantile(x, 0.95)),
-          apply(bootstrap_results, 2, stats::median)
+          colMeans(bootstrap_results, na.rm = TRUE),
+          apply(bootstrap_results, 2, function(x) stats::quantile(x, 0.05, na.rm = TRUE)),
+          apply(bootstrap_results, 2, function(x) stats::quantile(x, 0.95, na.rm = TRUE)),
+          apply(bootstrap_results, 2, stats::median, na.rm = TRUE)
         )
       } else {
         # Single random sample
@@ -205,30 +217,40 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
         samplex <- X[idx:(idx + numbers[i] - 1)]
         sampley <- Y[idx:(idx + numbers[i] - 1)]
         
-        pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
+        tryCatch({
+          pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
                                  metric = metric,
                                  distance_fn = distance_fn,
                                  state_space_fn = state_space_fn,
-                                 verbose = FALSE)
-        
-        results[i, 1, ] <- c(pc_result$positive,
+                                 verbose = FALSE,
+                                 relative = relative)
+          
+          results[i, 1, ] <- c(pc_result$positive,
                             pc_result$negative,
                             pc_result$dark)
+        }, error = function(e) {
+          results[i, 1, ] <- c(NA_real_, NA_real_, NA_real_)
+        })
       }
     } else {
       # Sequential sampling
       samplex <- X[1:numbers[i]]
       sampley <- Y[1:numbers[i]]
       
-      pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
+      tryCatch({
+        pc_result <- pcLightweight(samplex, sampley, E, tau, h, weighted,
                                metric = metric,
                                distance_fn = distance_fn,
                                state_space_fn = state_space_fn,
-                               verbose = FALSE)
-      
-      results[i, 1, ] <- c(pc_result$positive,
+                               verbose = FALSE,
+                               relative = relative)
+        
+        results[i, 1, ] <- c(pc_result$positive,
                           pc_result$negative,
                           pc_result$dark)
+      }, error = function(e) {
+        results[i, 1, ] <- c(NA_real_, NA_real_, NA_real_)
+      })
     }
     
     if(verbose) {
@@ -248,7 +270,8 @@ pcCrossValidation <- function(X, Y, E, tau, metric = "euclidean", h, weighted,
       weighted = weighted,
       random = random,
       bootstrap = bootstrap,
-      n_cores = n_cores
+      n_cores = n_cores,
+      relative = relative
     )
   )
   

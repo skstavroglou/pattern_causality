@@ -13,6 +13,7 @@ pcMatrix(
   weighted = TRUE,
   distance_fn = NULL,
   state_space_fn = NULL,
+  relative = TRUE,
   verbose = FALSE,
   n_cores = 1
 )
@@ -33,6 +34,8 @@ pcMatrix(
 \item{distance_fn}{Optional custom distance function}
 
 \item{state_space_fn}{Optional custom state space reconstruction function}
+
+\item{relative}{Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.}
 
 \item{verbose}{Logical; whether to print progress}
 

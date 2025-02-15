@@ -95,19 +95,26 @@ to complete by `optimalParametersSearch` function like this:
 
 ``` r
 dataset <- climate_indices[, -1] # remove the date column
-parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", dataset = dataset)
+parameter <- optimalParametersSearch(Emax = 3, tauMax = 3, metric = "euclidean", dataset = dataset)
+print(parameter)
+#> Pattern Causality Parameter Optimization Results
+#> ---------------------------------------------
+#> Computation time: 5.272785 secs 
+#> 
+#> Parameters tested:
+#>   Emax: 3 
+#>   tauMax: 3 
+#>   Metric: euclidean 
+#> 
+#> First few values:
+#>         E tau     Total  Positive   Negative        Dark
+#> Combo 1 2   1 0.6042453 0.6849813 0.31421642 0.000802264
+#> Combo 2 2   2 0.6305240 0.7056670 0.29186182 0.002471206
+#> Combo 3 2   3 0.6313371 0.7034166 0.29455531 0.002028052
+#> Combo 4 3   1 0.3437698 0.4459306 0.10253491 0.451534540
+#> Combo 5 3   2 0.3760357 0.4722030 0.07746789 0.450329129
+#> Combo 6 3   3 0.3991651 0.4647719 0.07249595 0.462732182
 ```
-
-| E   | tau | Total     | Positive  | Negative   | Dark         |
-|-----|-----|-----------|-----------|------------|--------------|
-| 2   | 1   | 0.5503802 | 0.5529091 | 0.44647239 | 0.0006185057 |
-| 2   | 2   | 0.5672403 | 0.5722529 | 0.42461112 | 0.0031359329 |
-| 2   | 3   | 0.5647436 | 0.5471488 | 0.45106762 | 0.0017836150 |
-| 2   | 4   | 0.5538362 | 0.5485637 | 0.44961187 | 0.0018243903 |
-| 2   | 5   | 0.5616083 | 0.5433907 | 0.45513014 | 0.0014791531 |
-| 3   | 1   | 0.3203775 | 0.3460809 | 0.24690959 | 0.4070094904 |
-| 3   | 2   | 0.3362460 | 0.4010403 | 0.25410446 | 0.3448552507 |
-| 3   | 3   | 0.3388998 | 0.3657369 | 0.26857083 | 0.3656922393 |
 
 Of course, we can also change the distance style to calculate the
 distance matrix or even custom distance function, we can find more
@@ -124,10 +131,10 @@ Y <- climate_indices$AAO
 pc <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE, verbose = FALSE)
 print(pc)
 #> Pattern Causality Analysis Results:
-#> Total: 0.2336
-#> Positive: 0.4471
-#> Negative: 0.1380
-#> Dark: 0.4150
+#> Total: 0.3505
+#> Positive: 0.5125
+#> Negative: 0.1039
+#> Dark: 0.3837
 ```
 
 The percentages of each causality status will be displayed below.
@@ -144,7 +151,7 @@ the total causality points will be the same.
 X <- climate_indices$AO
 Y <- climate_indices$AAO
 detail <- pcFullDetails(X, Y, E = 3, tau = 1, metric = "euclidean", h = 1, weighted = TRUE, verbose = FALSE)
-predict_status <- detail$causality_predict
+predict_status <- detail$causality_pred
 real_status <- detail$causality_real
 ```
 
@@ -158,14 +165,14 @@ period, we can find the dynamic pattern causality strength by this way.
 
 After calculating the causality, we can get the result here.
 
-| Pairs         | total     | positive  | negative  | dark      | Dataset |
-|---------------|-----------|-----------|-----------|-----------|---------|
-| AAPL –\> MSFT | 0.2698665 | 0.3881279 | 0.1369863 | 0.4748858 | stock   |
-| MSFT –\> AAPL | 0.2759887 | 0.4075893 | 0.1388393 | 0.4535714 | stock   |
-| AO –\> AAO    | 0.2841121 | 0.326087  | 0.2318841 | 0.442029  | climate |
-| AAO –\> AO    | 0.2803738 | 0.3602941 | 0.2647059 | 0.375     | climate |
-| AO –\> P      | 0.3084112 | 0.1192053 | 0.4503311 | 0.4304636 | AUCO    |
-| P –\> AO      | 0.3308411 | 0.3374233 | 0.2515337 | 0.4110429 | AUCO    |
+| Pairs               | total  | positive | negative | dark   | Dataset         |
+|---------------------|--------|----------|----------|--------|-----------------|
+| Apple –\> Microsoft | 0.2778 | 0.2342   | 0.2641   | 0.5017 | DJS             |
+| Microsoft –\> Apple | 0.2820 | 0.2278   | 0.2226   | 0.5496 | DJS             |
+| AO –\> AAO          | 0.3505 | 0.5125   | 0.1039   | 0.3837 | climate_indices |
+| AAO –\> AO          | 0.3010 | 0.3914   | 0.1085   | 0.5000 | climate_indices |
+| AO –\> P            | 0.4091 | 0.1197   | 0.7808   | 0.0995 | AUCO            |
+| P –\> AO            | 0.3636 | 0.2924   | 0.2171   | 0.4905 | AUCO            |
 
 ## About the authors
 
@@ -246,3 +253,27 @@ Monash Business School and is the author and maintainer of the
 ## Downstream dependencies
 
 There are currently no downstream dependencies for this package
+
+``` r
+# Example with relative parameter (default is TRUE)
+pc <- pcLightweight(X, Y, E = 3, tau = 1, metric = "euclidean", h = 1, 
+                   weighted = TRUE, relative = TRUE, verbose = FALSE)
+print(pc)
+
+# Example with optimal parameter search
+dataset <- climate_indices[, -1] # remove the date column
+parameter <- optimalParametersSearch(Emax = 5, tauMax = 5, metric = "euclidean", 
+                                   dataset = dataset, relative = TRUE)
+
+# Example with full details
+detail <- pcFullDetails(X, Y, E = 3, tau = 1, metric = "euclidean", h = 1, 
+                       weighted = TRUE, relative = TRUE, verbose = FALSE)
+```
+
+The `relative` parameter (default is TRUE) determines whether to
+calculate relative changes ((new-old)/old) or absolute changes (new-old)
+in signature space. Using relative changes is particularly useful when:
+
+1.  Analyzing time series with different scales
+2.  Comparing percentage changes rather than absolute differences
+3.  Studying the relative importance of changes in the system

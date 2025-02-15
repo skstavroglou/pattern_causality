@@ -29,12 +29,13 @@
 #' @param weighted Logical; whether to use weighted causality
 #' @param distance_fn Optional custom distance function
 #' @param state_space_fn Optional custom state space reconstruction function
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #' @param verbose Logical; whether to print progress
 #' @param n_cores Integer; number of cores for parallel computation
 #' @return A pc_matrix object containing causality matrices
 #' @export
 pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, distance_fn = NULL,
-                         state_space_fn = NULL, verbose = FALSE, n_cores = 1) {
+                         state_space_fn = NULL, relative = TRUE, verbose = FALSE, n_cores = 1) {
   if(verbose) {
     cat("Computing cross pattern causality matrix...\n")
   }
@@ -88,7 +89,8 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
     
     # Export required functions and data to worker nodes
     parallel::clusterExport(cl, c("pcLightweight", "X", "Y", "E", "tau", "metric", 
-                                 "h", "weighted", "distance_fn", "state_space_fn"), 
+                                 "h", "weighted", "distance_fn", "state_space_fn", 
+                                 "relative"), 
                            envir = environment())
     
     # Create computation grid
@@ -100,7 +102,7 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
       j <- grid$j[idx]
       pc <- pcLightweight(X[,i], Y[,j], E, tau, metric=metric, h, weighted,
                          distance_fn=distance_fn, state_space_fn=state_space_fn,
-                         verbose = FALSE)
+                         relative=relative, verbose = FALSE)
       list(i=i, j=j, pc=pc)
     })
     
@@ -117,7 +119,7 @@ pcCrossMatrix <- function(X, Y, E, tau, metric="euclidean", h, weighted = TRUE, 
       for (j in 1:n_Y) {
         pc <- pcLightweight(X[,i], Y[,j], E, tau, metric=metric, h, weighted,
                            distance_fn=distance_fn, state_space_fn=state_space_fn,
-                           verbose = FALSE)
+                           relative=relative, verbose = FALSE)
         
         matrices$positive[i,j] <- pc$positive
         matrices$negative[i,j] <- pc$negative

@@ -14,6 +14,7 @@ pcLightweight(
   metric = "euclidean",
   distance_fn = NULL,
   state_space_fn = NULL,
+  relative = TRUE,
   verbose = FALSE
 )
 }
@@ -36,6 +37,8 @@ pcLightweight(
 \item{distance_fn}{Custom distance function for state space reconstruction}
 
 \item{state_space_fn}{Custom function for state space transformation}
+
+\item{relative}{Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.}
 
 \item{verbose}{Logical; whether to display progress information (default: FALSE)}
 }

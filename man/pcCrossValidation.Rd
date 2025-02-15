@@ -18,7 +18,8 @@ pcCrossValidation(
   random = TRUE,
   bootstrap = 1,
   verbose = FALSE,
-  n_cores = 1
+  n_cores = 1,
+  relative = TRUE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ pcCrossValidation(
 \item{verbose}{Logical indicating whether to display progress messages.}
 
 \item{n_cores}{Integer specifying the number of cores to use for parallel computation (default: 1).}
+
+\item{relative}{Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.}
 }
 \value{
 A pc_cv object containing:

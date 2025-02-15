@@ -88,11 +88,18 @@ natureOfCausality <- function(PC, dur, hashedpatterns, X, weighted = TRUE,
       # Determine causality type
       is_diagonal <- cell[1] == cell[2]
       is_antidiagonal <- (cell[1] + cell[2]) == (length(hashedpatterns) + 1)
-      is_center <- cell[1] == mid_point
+      is_center <- !is.na(mid_point) && cell[1] == mid_point
       
       # Set causality values
-      results <- determine_causality(results, t, strength, is_diagonal, 
-                                   is_antidiagonal, is_center, weighted)
+      if(!is.na(strength)) {
+        results <- determine_causality(results, t, strength, is_diagonal, 
+                                     is_antidiagonal, is_center, weighted)
+      } else {
+        results$no_causality[t] <- NA_real_
+        results$positive[t] <- NA_real_
+        results$negative[t] <- NA_real_
+        results$dark[t] <- NA_real_
+      }
     }
     
     if(verbose) {

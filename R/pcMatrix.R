@@ -28,13 +28,14 @@
 #' @param weighted Logical; whether to use weighted causality
 #' @param distance_fn Optional custom distance function
 #' @param state_space_fn Optional custom state space reconstruction function
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #' @param verbose Logical; whether to print progress
 #' @param n_cores Integer; number of cores for parallel computation
 #' @return A pc_matrix object containing causality matrices
 #' @export
 pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE, 
                     distance_fn = NULL, state_space_fn = NULL,
-                    verbose = FALSE, n_cores = 1) {
+                    relative = TRUE, verbose = FALSE, n_cores = 1) {
   if(verbose) {
     cat("Computing pattern causality matrices...\n")
   }
@@ -73,7 +74,7 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE,
     cl <- parallel::makeCluster(n_cores)
     on.exit(parallel::stopCluster(cl))
     
-    # 设置工作环境
+    # Setup working environment
     parallel::clusterEvalQ(cl, {
       options(digits = 15)
       options(scipen = 999)
@@ -82,7 +83,7 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE,
     # Export required functions and data
     parallel::clusterExport(cl, c("dataset", "E", "tau", "metric", 
                                  "h", "weighted", "distance_fn", 
-                                 "state_space_fn", "pcLightweight"), 
+                                 "state_space_fn", "relative", "pcLightweight"), 
                            envir = environment())
     
     # Create computation grid for non-diagonal elements
@@ -97,6 +98,7 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE,
                          E, tau, metric=metric, h, weighted,
                          distance_fn=distance_fn,
                          state_space_fn=state_space_fn,
+                         relative=relative,
                          verbose = FALSE)
       list(i=i, j=j, pc=pc)
     })
@@ -117,6 +119,7 @@ pcMatrix <- function(dataset, E, tau, metric="euclidean", h, weighted = TRUE,
                             E, tau, metric=metric, h, weighted,
                             distance_fn=distance_fn,
                             state_space_fn=state_space_fn,
+                            relative=relative,
                             verbose = FALSE)
           
           matrices$positive[i,j] <- pc$positive

@@ -13,6 +13,7 @@
 #' @param weighted Logical; whether to use weighted approach in calculating causality strengths
 #' @param distance_fn Optional custom distance function for computing distances (default: NULL)
 #' @param state_space_fn Optional custom function for state space reconstruction (default: NULL)
+#' @param relative Logical; if TRUE calculates relative changes ((new-old)/old), if FALSE calculates absolute changes (new-old) in signature space. Default is TRUE.
 #' @param verbose Logical; whether to display progress information (default: FALSE)
 #'
 #' @return An object of class "pc_accuracy" containing:
@@ -41,7 +42,7 @@
 #'
 #' @export
 pcAccuracy <- function(dataset, E, tau, metric="euclidean", h, weighted, distance_fn = NULL,
-                             state_space_fn = NULL,verbose = FALSE) {
+                             state_space_fn = NULL, relative = TRUE, verbose = FALSE) {
   # Input validation
   if (!is.matrix(dataset) && !is.data.frame(dataset)) {
     stop("dataset must be a matrix or data frame", call. = FALSE)
@@ -77,7 +78,9 @@ pcAccuracy <- function(dataset, E, tau, metric="euclidean", h, weighted, distanc
       if (i != j) {
         result <- pcLightweight(dataset[,i], dataset[,j],
                               E, tau, metric=metric, h, weighted, distance_fn,
-                              state_space_fn = state_space_fn, verbose = FALSE)
+                              state_space_fn = state_space_fn, 
+                              relative = relative,
+                              verbose = FALSE)
         
         matrices$total[i,j] <- result$total
         matrices$positive[i,j] <- result$positive

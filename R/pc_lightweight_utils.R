@@ -18,25 +18,29 @@ compute_causality_measures <- function(results, weighted) {
     ))
   }
   
-  # Only use valid points in real_loop
-  valid_indices <- which(results$noCausality != 1)
-  
   # Calculate total causality
-  total_causality <- 1-mean(results$noCausality,na.rm = TRUE)
+  total_causality <- 1 - mean(results$noCausality, na.rm = TRUE)
   
-  # Calculate component measures
-  positive <- mean(results$Positive[valid_indices], na.rm = TRUE)
-  negative <- mean(results$Negative[valid_indices], na.rm = TRUE)
-  dark <- mean(results$Dark[valid_indices], na.rm = TRUE)
-  
-  # Normalize (if needed)
-  if (weighted && !anyNA(c(positive, negative, dark))) {
-    total <- sum(c(positive, negative, dark))
-    if (total > 0) {
-      positive <- positive / total
-      negative <- negative / total
-      dark <- dark / total
+  # Calculate component measures (only using points where noCausality != 1)
+  causality_indices <- which(results$noCausality != 1)
+  if (length(causality_indices) > 0) {
+    positive <- mean(results$Positive[causality_indices], na.rm = TRUE)
+    negative <- mean(results$Negative[causality_indices], na.rm = TRUE)
+    dark <- mean(results$Dark[causality_indices], na.rm = TRUE)
+    
+    # Normalize (if needed)
+    if (weighted && !anyNA(c(positive, negative, dark))) {
+      total <- sum(c(positive, negative, dark))
+      if (total > 0) {
+        positive <- positive / total
+        negative <- negative / total
+        dark <- dark / total
+      }
     }
+  } else {
+    positive <- 0
+    negative <- 0
+    dark <- 0
   }
   
   # Ensure all values are finite
@@ -76,14 +80,6 @@ compute_causality_measures <- function(results, weighted) {
 #' @keywords internal
 #' @noRd
 analyze_causality <- function(spaces, matrices, components, check, h, weighted, verbose) {
-  
-  # Initialize results
-  results <- list(
-    noCausality = rep(NA_real_, length(check$al_loop_dur)),
-    Positive = rep(NA_real_, length(check$al_loop_dur)),
-    Negative = rep(NA_real_, length(check$al_loop_dur)),
-    Dark = rep(NA_real_, length(check$al_loop_dur))
-  )
   
   real_loop <- numeric(0)
   
@@ -137,16 +133,23 @@ analyze_causality <- function(spaces, matrices, components, check, h, weighted, 
   if(length(real_loop) > 0) {
     spectrums <- compute_causality_spectrums(matrices$pc_matrices, real_loop, components$hashedpatterns, spaces$Mx[,1])
 
-    # Update results
-    for(i in seq_along(real_loop)) {
-      idx <- which(check$al_loop_dur == real_loop[i])
-      results$noCausality[idx] <- spectrums$predicted$no_causality[i]
-      results$Positive[idx] <- spectrums$predicted$positive[i]
-      results$Negative[idx] <- spectrums$predicted$negative[i]
-      results$Dark[idx] <- spectrums$predicted$dark[i]
-    }
+    # Initialize results with the correct length
+    results <- list(
+      noCausality = spectrums$predicted$no_causality,
+      Positive = spectrums$predicted$positive,
+      Negative = spectrums$predicted$negative,
+      Dark = spectrums$predicted$dark,
+      real_loop = real_loop
+    )
+  } else {
+    results <- list(
+      noCausality = numeric(0),
+      Positive = numeric(0),
+      Negative = numeric(0),
+      Dark = numeric(0),
+      real_loop = real_loop
+    )
   }
   
-  results$real_loop <- real_loop
   results
 }

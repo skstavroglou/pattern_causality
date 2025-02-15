@@ -53,6 +53,7 @@ validate_inputs <- function(X, Y, E, tau, metric, h, weighted, distance_fn = NUL
 compute_spaces <- function(X, Y, E, tau, metric,
                          distance_fn = NULL,
                          state_space_fn = NULL,
+                         relative = TRUE,
                          verbose = FALSE) {
   tryCatch({
     if(verbose) cat("Computing spaces...\n")
@@ -66,8 +67,8 @@ compute_spaces <- function(X, Y, E, tau, metric,
     
     # Signature Space  
     if(verbose) cat("  - Computing signature spaces... ")
-    SMx <- signatureSpace(Mx)
-    SMy <- signatureSpace(My)
+    SMx <- signatureSpace(Mx, relative = relative)
+    SMy <- signatureSpace(My, relative = relative)
     if(verbose) cat("Done\n")
     
     # Pattern Space
