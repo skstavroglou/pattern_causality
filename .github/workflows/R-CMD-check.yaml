@@ -33,8 +33,12 @@ jobs:
     steps:
       - name: Install XQuartz on macOS
         if: runner.os == 'macOS'
-        run: brew install xquartz --cask
-        
+        run: |
+          brew install xquartz --cask
+          brew install pkg-config
+          brew install cairo
+          brew install libgit2
+          
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
@@ -45,16 +49,42 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install system dependencies on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew install --cask xquartz
+          brew install pkg-config
+          brew install cairo
+          brew install libgit2
+          brew install imagemagick
+          brew install ghostscript
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
+          cache-version: 2
 
       - uses: r-lib/actions/check-r-package@v2
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_DONTTEST_EXAMPLES_: false
           DISPLAY: 99.0
+          PKG_CONFIG_PATH: /usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
